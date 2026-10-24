@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "recipes/flint",
+  "provider": {
+    "recipes": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "recipes / FreeToken local",
+      "options": {
+        "baseURL": "http://127.0.0.1:1919/v1"
+      },
+      "models": {
+        "flint": {
+          "name": "Flint 39.8B A2.5B",
+          "limit": {
+            "context": 73728,
+            "output": 8192
+          }
+        }
+      }
+    }
+  }
+}

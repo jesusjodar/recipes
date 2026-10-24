@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0+gfe5a5ec9c",
+  "python": "3.12",
+  "platform": "Linux x86_64 CUDA 13",
+  "wheels": [
+    {
+      "filename": "freetoken-0.2.0+gfe5a5ec9c-cp312-cp312-linux_x86_64.whl",
+      "url": "https://github.com/FlashML-org/FreeToken-Web/releases/download/beta/freetoken-0.2.0%2Bgfe5a5ec9c-cp312-cp312-linux_x86_64.whl",
+      "sha256": "83405c5c875e70546ad069a606bfc385f4b4efa4656bb02b239db9b3867242c7"
+    },
+    {
+      "filename": "freetoken_kernel_cache-0.2.0+cu130.gfe5a5ec9c-py3-none-linux_x86_64.whl",
+      "url": "https://github.com/FlashML-org/FreeToken-Web/releases/download/beta/freetoken_kernel_cache-0.2.0%2Bcu130.gfe5a5ec9c-py3-none-linux_x86_64.whl",
+      "sha256": "3dc10b7a8b689c7febd69c058bd65d1dcb9d5b02e69d1e45ffa1cb37697b6b8c"
+    }
+  ],
+  "flint_overlay": {
+    "repository": "https://github.com/jesusjodar/FreeToken.git",
+    "commit": "6ee048e3cca92da2a85cdc9ca6fd21cceed527ad",
+    "pull_request": "https://github.com/FlashML-org/FreeToken/pull/797",
+    "performance_snapshot_tree": "edfba5e13d4ff2fae6f50208d4d58c1433b20cf8",
+    "performance_rerun_on_install_commit": false
+  },
+  "note": "Versiones de dependencias clave fijadas en constraints.txt. Los transitivos pueden cambiar; install guarda uv pip freeze. Overlay Python reutiliza ABI nativa; no es una compilación limpia."
+}

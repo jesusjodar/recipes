@@ -1,0 +1,40 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "recipes/flint",
+  "providers": {
+    "recipes": {
+      "name": "recipes / FreeToken local",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://127.0.0.1:1919/v1",
+        "encoding": "none"
+      },
+      "models": {
+        "flint": {
+          "modelID": "flint",
+          "name": "Flint 39.8B A2.5B",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "compatibility": {
+            "reasoningField": "reasoning_content"
+          },
+          "limit": {
+            "context": 73728,
+            "input": 65536,
+            "output": 8192
+          },
+          "body": {
+            "max_tokens": 8192
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-24",
+  "source": "Perfil persistente de FreeToken Desktop; sin log local de throughput de generación recuperado",
+  "reserved_context_tokens": 66560,
+  "prefill_tok_s": null,
+  "decode_tok_s": null,
+  "drafter": false,
+  "full_context_generation_validated": false,
+  "output_default_8192": "Nueva elección explícita del catálogo; no medición histórica",
+  "status": "configured_only"
+}

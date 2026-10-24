@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "recipes/gpt-oss",
+  "provider": {
+    "recipes": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "recipes / FreeToken local",
+      "options": {
+        "baseURL": "http://127.0.0.1:1919/v1"
+      },
+      "models": {
+        "gpt-oss": {
+          "name": "GPT-OSS 20B",
+          "limit": {
+            "context": 66560,
+            "output": 8192
+          }
+        }
+      }
+    }
+  }
+}

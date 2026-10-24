@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-22",
+  "source": "Extracto de salida real de herramientas conservada en la sesión local; logs temporales originales no disponibles",
+  "reserved_context_tokens": 66560,
+  "prompt_tokens": 4096,
+  "completion_tokens": 200,
+  "prefix_cache_tokens": 0,
+  "samples": 1,
+  "prefill_engine_tok_s": 328.21,
+  "decode_engine_steady_samples_tok_s": [
+    41.31,
+    40.95,
+    41.46
+  ],
+  "decode_engine_steady_mean_tok_s": 41.24,
+  "client_elapsed_s": 6.566,
+  "method": "Throughput periódico del motor; se excluye el primer intervalo de decode, contaminado por prefill. No equivale a prefill/decode HTTP de Flint.",
+  "runtime": "FreeToken 0.2.0+gfe5a5ec9c",
+  "historical_output_default": 32768,
+  "historical_max_tokens_request": 200,
+  "recipe_output_default": 8192,
+  "historical_swa_pool_tokens": 13312,
+  "desktop_swa_tokens": 1024,
+  "historical_weights_revision": null,
+  "raw_log_excerpt": [
+    "[2026-10-22|09:21:57|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.06, #swa-token: 1040/13312, swa usage: 0.08, #running-req: 1, #queue-req: 0, input throughput (token/s): 328.21",
+    "[2026-10-22|09:21:58|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 4137, token usage: 0.06, #swa-token: 1080/13312, swa usage: 0.08, gen throughput (token/s): 2.95, #queue-req: 0",
+    "[2026-10-22|09:21:59|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 4177, token usage: 0.06, #swa-token: 1120/13312, swa usage: 0.08, gen throughput (token/s): 41.31, #queue-req: 0",
+    "[2026-10-22|09:22:00|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 4217, token usage: 0.06, #swa-token: 1160/13312, swa usage: 0.09, gen throughput (token/s): 40.95, #queue-req: 0",
+    "[2026-10-22|09:22:01|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 4257, token usage: 0.06, #swa-token: 1200/13312, swa usage: 0.09, gen throughput (token/s): 41.46, #queue-req: 0",
+    "prompt_tokens_local 4096",
+    "client_elapsed_s 6.566 completion_tokens 200 prompt_tokens 4096"
+  ],
+  "full_context_and_output_generation_validated": false
+}

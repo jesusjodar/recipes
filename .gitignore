@@ -1,0 +1,14 @@
+.venv/
+.runtime/
+__pycache__/
+*.pyc
+models/
+.local/
+.env
+.env.*
+*.safetensors
+*.gguf
+*.bin
+*.whl
+*.log
+*.recipes-backup-*

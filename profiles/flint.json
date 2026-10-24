@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "id": "flint",
+  "name": "Flint 39.8B A2.5B",
+  "status": "Medido a 65536 + 8192, con ciclo de herramienta >64k",
+  "hardware": "ryzen-5600x-rtx3060",
+  "engine": "flint-overlay",
+  "model": {
+    "repository": "RecursiveSI/flint-nvfp4-gguf",
+    "original_url": "https://huggingface.co/RecursiveSI/flint",
+    "local_directory": "Flint-NVFP4-GGUF",
+    "download_revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf",
+    "historical_weight_revision_verified": true,
+    "download_patterns": [
+      "flint-nvfp4.gguf",
+      "README.md"
+    ],
+    "filename": "flint-nvfp4.gguf",
+    "file_bytes": 22863084160
+  },
+  "quantization": "NVFP4 GGUF oficial",
+  "modalities": [
+    "text"
+  ],
+  "drafter": {
+    "enabled": false,
+    "model": null
+  },
+  "context": {
+    "total_tokens": 73728,
+    "input_budget_with_reserved_output": 65536,
+    "output_tokens": 8192,
+    "output_status": "measured_full_budget"
+  },
+  "server_arguments": [
+    "--moe-strategy",
+    "hybrid",
+    "--moe-hybrid-max-fetch",
+    "1",
+    "--moe-cpu-threads",
+    "0",
+    "--max-running-requests",
+    "1",
+    "--text-model-only",
+    "--moe-cache-size",
+    "1024",
+    "--num-tokens",
+    "73728",
+    "--max-seq-len-override",
+    "73728",
+    "--max-output-tokens",
+    "8192",
+    "--memory-ratio",
+    "0.90",
+    "--max-prefill-length",
+    "4096",
+    "--kv-reserve-tokens",
+    "73728",
+    "--cuda-graph-max-bs",
+    "1",
+    "--enable-cache-report",
+    "--enable-special-token-ckpt",
+    "--moe-prefill-hit-d2d"
+  ],
+  "cache_rebuild": {
+    "moe_cache_size": 3456,
+    "num_pages": 73728,
+    "num_swa_pages": 5120
+  },
+  "desktop_cache": {
+    "kvSize": 73728,
+    "moeExperts": 3456,
+    "swaTokens": 5120,
+    "mambaSlots": 4
+  },
+  "sampling": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20
+  },
+  "environment": {
+    "FLASHINFER_USE_CUDA_NORM": "1"
+  },
+  "evidence": "evidence/flint.json"
+}

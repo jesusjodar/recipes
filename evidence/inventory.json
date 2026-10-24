@@ -1,0 +1,85 @@
+{
+  "captured": "2026-10-24",
+  "model_metadata": {
+    "qwen3.6": {
+      "repo": "nvidia/Qwen3.6-35B-A3B-NVFP4",
+      "current_revision": "1355db6a052410cfd62085d94b58866fd0f2c3c5",
+      "local_config_sha256": "58aefa1c9eff7989f431d748f2ddec39446cb1fd2a69acc46e285c6a37b0cecc",
+      "local_config_matches_current": true,
+      "weight_revision_verified": false,
+      "local_weights_bytes": 23424338320
+    },
+    "gemma4": {
+      "repo": "nvidia/Gemma-4-26B-A4B-NVFP4",
+      "current_revision": "a19cfe00be84568a6867111c9a68c9c44fdcffe6",
+      "local_config_sha256": "4e379cc809c617a49179a49140f553a2d6a5ec538ed480832b0c54f6ace43d98",
+      "local_config_matches_current": true,
+      "weight_revision_verified": false,
+      "local_weights_bytes": 18788485588
+    },
+    "gpt-oss": {
+      "repo": "openai/gpt-oss-20b",
+      "current_revision": "6cee5e81ee83917806bbde320786a8fb61efebee",
+      "local_config_sha256": "3a2a26ded679375b7928ddeca59764df7cea83220c1961035f6d6e232659e9ce",
+      "local_config_matches_current": true,
+      "weight_revision_verified": false,
+      "local_weights_bytes": 13761316904
+    },
+    "flint": {
+      "repo": "RecursiveSI/flint-nvfp4-gguf",
+      "current_revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf"
+    }
+  },
+  "desktop_cache_profiles": {
+    "Qwen3.6-35B-A3B-NVFP4": {
+      "kvSize": 66560,
+      "moeExperts": 3328,
+      "swaTokens": 2048,
+      "mambaSlots": 4
+    },
+    "Flint-NVFP4-GGUF": {
+      "kvSize": 73728,
+      "moeExperts": 3456,
+      "swaTokens": 5120,
+      "mambaSlots": 4
+    },
+    "Gemma-4-26B-A4B-NVFP4": {
+      "kvSize": 66560,
+      "moeExperts": 448,
+      "swaTokens": 1024,
+      "mambaSlots": 4
+    },
+    "gpt-oss-20b": {
+      "kvSize": 66560,
+      "moeExperts": 256,
+      "swaTokens": 512,
+      "mambaSlots": 4
+    }
+  },
+  "global_settings": {
+    "extraArgs": "--moe-hybrid-max-fetch 1",
+    "concurrency": 1,
+    "moeMode": "hybrid",
+    "cpuThreads": 0,
+    "memoryRatio": 0.95
+  },
+  "weight_files_in_repository": false,
+  "weight_revision_note": "Las configs de Qwen/Gemma/GPT coinciden byte a byte con el config remoto del pin de descarga; no demuestra que los pesos correspondan al mismo commit. Se desconoce la revisión histórica de esos pesos.",
+  "additional_local_checkpoints": [
+    {
+      "repository": "FutureMLS-Lab/flint-nvfp4-coldgptq",
+      "revision": "56f37fcfc7bd17834512ec2e53696b8da15f3658",
+      "storage": "Directorio de investigación fuera de la biblioteca Desktop",
+      "local_layout": "50 shards safetensors redistribuidos por capa para el cargador; no se asume layout original del Hub",
+      "purpose": "Validación de loaders, paridad, AIME y reconstrucción de caché en PR #797",
+      "optimized_long_context_profile": false,
+      "prefill_decode_measurement": null
+    },
+    {
+      "repository": "RecursiveSI/flint-nvfp4-gguf",
+      "revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf",
+      "storage": "Copia o enlace adicional en el área de investigación",
+      "same_recipe_as": "flint"
+    }
+  ]
+}

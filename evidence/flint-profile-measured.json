@@ -1,0 +1,68 @@
+{
+  "name": "Flint oficial NVFP4 GGUF — 64k entrada + 8k salida",
+  "status": "validado",
+  "runtime": {
+    "repository": "<LOCAL_HOME>/Documents/Codex/2026-10-22/localiza-la-configuraci-n-especifica-que/work/flint-research/FreeToken",
+    "python": "<LOCAL_HOME>/Documents/Codex/2026-10-22/localiza-la-configuraci-n-especifica-que/work/flint-research/dev-venv/bin/python",
+    "source_pr": "https://github.com/FlashML-org/FreeToken/pull/797",
+    "validated_tree": "edfba5e13d4ff2fae6f50208d4d58c1433b20cf8"
+  },
+  "model": {
+    "repository": "RecursiveSI/flint-nvfp4-gguf",
+    "revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf",
+    "path": "<LOCAL_HOME>/Documents/Codex/2026-10-22/localiza-la-configuraci-n-especifica-que/work/flint-research/models/flint-gguf/flint-nvfp4.gguf"
+  },
+  "gpu_uuid": "<RTX_3060_UUID>",
+  "context": {
+    "input_tokens": 65536,
+    "default_output_tokens": 8192,
+    "total_tokens": 73728
+  },
+  "server_arguments": [
+    "--moe-strategy",
+    "hybrid",
+    "--moe-hybrid-max-fetch",
+    "1",
+    "--moe-cache-size",
+    "1024",
+    "--num-tokens",
+    "73728",
+    "--kv-reserve-tokens",
+    "73728",
+    "--max-seq-len-override",
+    "73728",
+    "--max-output-tokens",
+    "8192",
+    "--max-prefill-length",
+    "4096",
+    "--max-running-requests",
+    "1",
+    "--cuda-graph-max-bs",
+    "1",
+    "--enable-cache-report",
+    "--enable-special-token-ckpt",
+    "--moe-prefill-hit-d2d",
+    "--memory-ratio",
+    "0.90"
+  ],
+  "cache_rebuild": {
+    "moe_cache_size": 3456,
+    "num_pages": 73728,
+    "num_swa_pages": 5120
+  },
+  "sampling": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20
+  },
+  "note": "Arranca con 1024 expertos y después reconstruye las cachés para aplicar la geometría medida sin sobrerreservar la ventana SWA inicial. Requiere el código del PR; la instalación Desktop actual no incluye Flint.",
+  "measured_64k": {
+    "prompt_tokens": 65536,
+    "completion_tokens": 8192,
+    "ttft_s": 42.456968071999654,
+    "effective_prefill_tok_s": 1543.5864353022644,
+    "decode_tok_s": 49.96602663233037,
+    "total_s": 206.38953015699917
+  },
+  "launcher_validated": true
+}

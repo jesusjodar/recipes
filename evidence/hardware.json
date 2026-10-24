@@ -1,0 +1,17 @@
+{
+  "cpu": "AMD Ryzen 5 5600X",
+  "physical_cores": 6,
+  "logical_threads": 12,
+  "ram_gib_nominal": 32,
+  "gpu_used": "NVIDIA GeForce RTX 3060",
+  "gpu_vram_gib": 12,
+  "additional_gpu": "NVIDIA GeForce RTX 2070 8 GiB; no usada en recetas principales",
+  "driver_measured": "615.78.08",
+  "concurrency": 1,
+  "cpu_moe_threads": {
+    "setting": 0,
+    "meaning": "auto",
+    "observed_flint": 5
+  },
+  "scope": "Single GPU with hybrid CPU expert offload; no drafter/speculative decoding"
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "recipes/gemma4",
+  "providers": {
+    "recipes": {
+      "name": "recipes / FreeToken local",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://127.0.0.1:1919/v1",
+        "encoding": "none"
+      },
+      "models": {
+        "gemma4": {
+          "modelID": "gemma4",
+          "name": "Gemma 4 26B A4B",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "compatibility": {
+            "reasoningField": "reasoning_content"
+          },
+          "limit": {
+            "context": 66560,
+            "input": 58368,
+            "output": 8192
+          },
+          "body": {
+            "max_tokens": 8192
+          }
+        }
+      }
+    }
+  }
+}

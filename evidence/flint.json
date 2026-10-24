@@ -1,0 +1,530 @@
+{
+  "date": "2026-10-22",
+  "model": "RecursiveSI/flint-nvfp4-gguf",
+  "revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf",
+  "hardware": {
+    "gpu": "NVIDIA RTX 3060 12 GiB",
+    "cpu": "Ryzen 5 5600X",
+    "host_ram_gib": 32,
+    "driver": "615.78.08"
+  },
+  "context_reservation": 73728,
+  "input_budget": 65536,
+  "output_budget": 8192,
+  "method": {
+    "prefill": "(usage.prompt_tokens - cached_tokens) / elapsed request-to-first-nonempty-SSE token; includes tokenization, scheduling and the first generated token",
+    "decode": "(usage.completion_tokens - 1) / elapsed first-to-last-nonempty-SSE token",
+    "throughput_sampling": {
+      "temperature": 1,
+      "top_p": 0.95,
+      "top_k": 20,
+      "ignore_eos": true
+    },
+    "timing": "time.perf_counter, localhost HTTP streaming, one request at a time; warmup excluded"
+  },
+  "sweep": [
+    {
+      "tag": "sweep-hybrid-fetch0-chunk2048-d2d0",
+      "strategy": "hybrid",
+      "fetch": 0,
+      "prefill_chunk": 2048,
+      "d2d": false,
+      "memory_ratio": 0.88,
+      "expert_cache": 3328,
+      "swa_tokens": 4096,
+      "samples": 2,
+      "input_tokens": 8192,
+      "output_tokens": 256,
+      "prefill_mean_tok_s": 2263.0558692925797,
+      "prefill_min_tok_s": 2255.769563460075,
+      "prefill_max_tok_s": 2270.342175125085,
+      "decode_mean_tok_s": 45.15990113171274,
+      "decode_min_tok_s": 44.99506253298279,
+      "decode_max_tok_s": 45.324739730442694
+    },
+    {
+      "tag": "sweep-hybrid-fetch1-chunk2048-d2d0",
+      "strategy": "hybrid",
+      "fetch": 1,
+      "prefill_chunk": 2048,
+      "d2d": false,
+      "memory_ratio": 0.88,
+      "expert_cache": 3328,
+      "swa_tokens": 4096,
+      "samples": 2,
+      "input_tokens": 8192,
+      "output_tokens": 256,
+      "prefill_mean_tok_s": 2248.8743927923742,
+      "prefill_min_tok_s": 2241.7658577932834,
+      "prefill_max_tok_s": 2255.982927791465,
+      "decode_mean_tok_s": 65.7634418835611,
+      "decode_min_tok_s": 63.733678983879976,
+      "decode_max_tok_s": 67.79320478324222
+    },
+    {
+      "tag": "sweep-hybrid-fetch1-chunk4096-d2d1",
+      "strategy": "hybrid",
+      "fetch": 1,
+      "prefill_chunk": 4096,
+      "d2d": true,
+      "memory_ratio": 0.9,
+      "expert_cache": 3456,
+      "swa_tokens": 5120,
+      "samples": 3,
+      "input_tokens": 8192,
+      "output_tokens": 256,
+      "prefill_mean_tok_s": 2783.3148573180665,
+      "prefill_min_tok_s": 2719.2593438070853,
+      "prefill_max_tok_s": 2825.8290122619933,
+      "decode_mean_tok_s": 66.53156590489486,
+      "decode_min_tok_s": 65.45926171944218,
+      "decode_max_tok_s": 67.7647965050412
+    },
+    {
+      "tag": "sweep-hybrid-fetch1-chunk8192-d2d1",
+      "strategy": "hybrid",
+      "fetch": 1,
+      "prefill_chunk": 8192,
+      "d2d": true,
+      "memory_ratio": 0.9,
+      "expert_cache": 3328,
+      "swa_tokens": 9216,
+      "samples": 3,
+      "input_tokens": 8192,
+      "output_tokens": 256,
+      "prefill_mean_tok_s": 3047.5543321221626,
+      "prefill_min_tok_s": 3022.043754404347,
+      "prefill_max_tok_s": 3061.6453069953955,
+      "decode_mean_tok_s": 57.838479425554894,
+      "decode_min_tok_s": 52.21406946076329,
+      "decode_max_tok_s": 65.50093424460393
+    },
+    {
+      "tag": "sweep-hybrid-fetch2-chunk2048-d2d0",
+      "strategy": "hybrid",
+      "fetch": 2,
+      "prefill_chunk": 2048,
+      "d2d": false,
+      "memory_ratio": 0.88,
+      "expert_cache": 3328,
+      "swa_tokens": 4096,
+      "samples": 2,
+      "input_tokens": 8192,
+      "output_tokens": 256,
+      "prefill_mean_tok_s": 2236.7827807549147,
+      "prefill_min_tok_s": 2225.5364616117963,
+      "prefill_max_tok_s": 2248.0290998980327,
+      "decode_mean_tok_s": 60.18683781641687,
+      "decode_min_tok_s": 58.696814984822176,
+      "decode_max_tok_s": 61.67686064801157
+    },
+    {
+      "tag": "sweep-hybrid-fetch3-chunk2048-d2d0",
+      "strategy": "hybrid",
+      "fetch": 3,
+      "prefill_chunk": 2048,
+      "d2d": false,
+      "memory_ratio": 0.88,
+      "expert_cache": 3328,
+      "swa_tokens": 4096,
+      "samples": 2,
+      "input_tokens": 8192,
+      "output_tokens": 256,
+      "prefill_mean_tok_s": 2255.7255163128602,
+      "prefill_min_tok_s": 2248.126704926189,
+      "prefill_max_tok_s": 2263.324327699531,
+      "decode_mean_tok_s": 56.94811335163787,
+      "decode_min_tok_s": 55.805319167262866,
+      "decode_max_tok_s": 58.09090753601288
+    },
+    {
+      "tag": "sweep-offload-fetch1-chunk2048-d2d0",
+      "strategy": "offload",
+      "fetch": 1,
+      "prefill_chunk": 2048,
+      "d2d": false,
+      "memory_ratio": 0.88,
+      "expert_cache": 1024,
+      "swa_tokens": 4096,
+      "samples": 3,
+      "input_tokens": 8192,
+      "output_tokens": 256,
+      "prefill_mean_tok_s": 2252.043214164815,
+      "prefill_min_tok_s": 2244.6078041135747,
+      "prefill_max_tok_s": 2256.674361108859,
+      "decode_mean_tok_s": 42.92656398602665,
+      "decode_min_tok_s": 41.97365216474077,
+      "decode_max_tok_s": 43.59738363997653
+    },
+    {
+      "tag": "sweep-offload-fetch1-chunk2048-d2d0",
+      "strategy": "offload",
+      "fetch": 1,
+      "prefill_chunk": 2048,
+      "d2d": false,
+      "memory_ratio": 0.88,
+      "expert_cache": 2048,
+      "swa_tokens": 4096,
+      "samples": 3,
+      "input_tokens": 8192,
+      "output_tokens": 256,
+      "prefill_mean_tok_s": 2258.9689832780496,
+      "prefill_min_tok_s": 2251.8975601598827,
+      "prefill_max_tok_s": 2270.51763264336,
+      "decode_mean_tok_s": 49.34922247706407,
+      "decode_min_tok_s": 47.49104009222016,
+      "decode_max_tok_s": 51.06524634099422
+    },
+    {
+      "tag": "sweep-offload-fetch1-chunk2048-d2d0",
+      "strategy": "offload",
+      "fetch": 1,
+      "prefill_chunk": 2048,
+      "d2d": false,
+      "memory_ratio": 0.88,
+      "expert_cache": 3328,
+      "swa_tokens": 4096,
+      "samples": 3,
+      "input_tokens": 8192,
+      "output_tokens": 256,
+      "prefill_mean_tok_s": 2263.3801077547455,
+      "prefill_min_tok_s": 2257.192221532714,
+      "prefill_max_tok_s": 2273.2654553075395,
+      "decode_mean_tok_s": 54.691020947669486,
+      "decode_min_tok_s": 53.73733582215675,
+      "decode_max_tok_s": 56.12120856500461
+    }
+  ],
+  "long": {
+    "tag": "long-hybrid-fetch1-chunk4096-d2d1",
+    "context": 73728,
+    "output_budget": 8192,
+    "args": {
+      "strategy": "hybrid",
+      "fetch": 1,
+      "chunk": 4096,
+      "d2d": true,
+      "phase": "long",
+      "cache": 3456,
+      "runs": 3,
+      "memory_ratio": 0.9,
+      "long_decode": 8192
+    },
+    "command": [
+      "<LOCAL_HOME>/Documents/Codex/2026-10-22/localiza-la-configuraci-n-especifica-que/work/flint-research/dev-venv/bin/python",
+      "-m",
+      "freetoken",
+      "--model",
+      "<LOCAL_HOME>/Documents/Codex/2026-10-22/localiza-la-configuraci-n-especifica-que/work/flint-research/models/flint-gguf/flint-nvfp4.gguf",
+      "--gpu",
+      "0",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "22400",
+      "--served-model-name",
+      "flint-profile",
+      "--moe-strategy",
+      "hybrid",
+      "--moe-hybrid-max-fetch",
+      "1",
+      "--moe-cache-size",
+      "1024",
+      "--num-tokens",
+      "73728",
+      "--kv-reserve-tokens",
+      "73728",
+      "--max-seq-len-override",
+      "73728",
+      "--max-output-tokens",
+      "8192",
+      "--max-prefill-length",
+      "4096",
+      "--max-running-requests",
+      "1",
+      "--cuda-graph-max-bs",
+      "1",
+      "--enable-cache-report",
+      "--enable-special-token-ckpt",
+      "--memory-ratio",
+      "0.9",
+      "--moe-prefill-hit-d2d"
+    ],
+    "initial_status": {
+      "state": "serving",
+      "last_rebuild": null,
+      "geometry": {
+        "num_pages": 73728,
+        "page_size": 1,
+        "moe_cache_size": 1024,
+        "num_mamba_slots": 0,
+        "num_experts": 256,
+        "num_moe_layers": 47,
+        "moe_cache_policy": "lru",
+        "unit_bytes": {
+          "kv_per_token": 28672,
+          "moe_per_expert": 1769488,
+          "mamba_per_slot": 0,
+          "swa_per_token": 71680
+        },
+        "swa_full_tokens_ratio": 0.2,
+        "swa_page_size": 1,
+        "num_swa_pages": 14745,
+        "cache_budget_bytes": 8967343308,
+        "reasoning": {
+          "gears": [
+            "on"
+          ],
+          "default": "on",
+          "kwargs": {
+            "on": {}
+          }
+        },
+        "limits": {
+          "kv_tokens": {
+            "min": 1,
+            "max": 312756
+          },
+          "moe_experts": {
+            "min": 256,
+            "max": 5067
+          },
+          "mamba_slots": {
+            "min": 0,
+            "max": 0
+          },
+          "swa_tokens": {
+            "min": 1829,
+            "max": 125102
+          }
+        }
+      }
+    },
+    "max_cache_candidate": 3456,
+    "swa_pages": 5120,
+    "rebuilds": [
+      {
+        "request_id": "1274ce56-e4f4-4bdd-b231-6e8949b2a79f",
+        "status": "ok",
+        "moe_cache_size": 3456,
+        "num_pages": 73728,
+        "mamba_slots": 0,
+        "num_swa_pages": 5120,
+        "error": null
+      }
+    ],
+    "tool_validation": {
+      "id": "chatcmpl-3",
+      "object": "chat.completion",
+      "created": 1792662841,
+      "model": "flint-profile",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "",
+            "reasoning_content": "The user wants me to call the lookup_codeword tool with key \"flint\" and then report its result.\n\nLet me do that.",
+            "tool_calls": [
+              {
+                "id": "call_lookup-codeword_0_9d968637",
+                "index": 0,
+                "type": "function",
+                "function": {
+                  "name": "lookup_codeword",
+                  "arguments": "{\"key\": \"flint\"}"
+                }
+              }
+            ]
+          },
+          "finish_reason": "tool_calls"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 65686,
+        "completion_tokens": 43,
+        "total_tokens": 65729
+      }
+    },
+    "tool_followup": {
+      "id": "chatcmpl-4",
+      "object": "chat.completion",
+      "created": 1792662843,
+      "model": "flint-profile",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "The codeword for key **flint** is:\n\n**ORCHID-42**",
+            "reasoning_content": "The user asked me to use lookup_codeword with key \"flint\" and then report its result.\n\nThe tool returned: ORCHID-42\n\nI should report this result clearly."
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 65737,
+        "completion_tokens": 58,
+        "total_tokens": 65795,
+        "prompt_tokens_details": {
+          "cached_tokens": 65729
+        }
+      }
+    },
+    "final_status": {
+      "state": "serving",
+      "last_rebuild": {
+        "request_id": "1274ce56-e4f4-4bdd-b231-6e8949b2a79f",
+        "status": "ok",
+        "moe_cache_size": 3456,
+        "num_pages": 73728,
+        "mamba_slots": 0,
+        "num_swa_pages": 5120,
+        "error": null
+      },
+      "geometry": {
+        "num_pages": 73728,
+        "page_size": 1,
+        "moe_cache_size": 3456,
+        "num_mamba_slots": 0,
+        "num_experts": 256,
+        "num_moe_layers": 47,
+        "moe_cache_policy": "lru",
+        "unit_bytes": {
+          "kv_per_token": 28672,
+          "moe_per_expert": 1769488,
+          "mamba_per_slot": 0,
+          "swa_per_token": 71680
+        },
+        "swa_full_tokens_ratio": 0.06944444444444445,
+        "swa_page_size": 1,
+        "num_swa_pages": 5120,
+        "cache_budget_bytes": 8967343308,
+        "reasoning": {
+          "gears": [
+            "on"
+          ],
+          "default": "on",
+          "kwargs": {
+            "on": {}
+          }
+        },
+        "limits": {
+          "kv_tokens": {
+            "min": 1,
+            "max": 312756
+          },
+          "moe_experts": {
+            "min": 256,
+            "max": 5067
+          },
+          "mamba_slots": {
+            "min": 0,
+            "max": 0
+          },
+          "swa_tokens": {
+            "min": 1829,
+            "max": 125102
+          }
+        }
+      }
+    },
+    "stats": {
+      "instance_id": "d2eb0496-af44-444e-8d9e-57c17c5b000c",
+      "model": {
+        "id": "flint-profile",
+        "ctx": 73728,
+        "attn": "hybrid_swa",
+        "moe": true,
+        "input_modalities": [
+          "text"
+        ],
+        "sampling": {
+          "temperature": 1.0,
+          "top_k": 20,
+          "top_p": 0.949999988079071
+        }
+      },
+      "uptime_s": 264,
+      "kv": {
+        "used_pages": 0,
+        "total_pages": 73728,
+        "page_size": 1
+      },
+      "mamba": null,
+      "swa": {
+        "used_pages": 0,
+        "total_pages": 5120,
+        "page_size": 1
+      },
+      "vram_bytes": 10643046400,
+      "gpus": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 3060",
+          "uuid": "<RTX_3060_UUID>",
+          "total_bytes": 12534939648
+        }
+      ],
+      "throughput": {
+        "decode_tps": 35.3,
+        "prefill_tps": 36095.2
+      },
+      "requests": {
+        "active": 0,
+        "completed": 5,
+        "p95_ms": 44339,
+        "ttft_mean_ms": 0,
+        "prompt_tokens_total": 264543,
+        "completion_tokens_total": 8677
+      }
+    },
+    "requests": [
+      {
+        "label": "long-hybrid-fetch1-chunk4096-d2d1-c3456-warmup",
+        "cache": 3456,
+        "prompt_tokens": 2048,
+        "cached_tokens": 0,
+        "completion_tokens": 128,
+        "events": 128,
+        "ttft_s": 0.9849667260004935,
+        "effective_prefill_tok_s": 2079.258056072621,
+        "decode_tok_s": 59.94862564222256,
+        "total_s": 3.104369136999594,
+        "output_sha256": "b6cbec9b49c8d4529cf0264e279cddccf0f85c38be5991ca76f384a4fbea73a4"
+      },
+      {
+        "label": "long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold",
+        "cache": 3456,
+        "prompt_tokens": 65536,
+        "cached_tokens": 0,
+        "completion_tokens": 8192,
+        "events": 8192,
+        "ttft_s": 42.456968071999654,
+        "effective_prefill_tok_s": 1543.5864353022644,
+        "decode_tok_s": 49.96602663233037,
+        "total_s": 206.38953015699917,
+        "output_sha256": "7d0891d001785bf82327de1b724eafc181f766aa50c9aab1af3de08472adb4e3"
+      },
+      {
+        "label": "long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-warm",
+        "cache": 3456,
+        "prompt_tokens": 65536,
+        "cached_tokens": 65535,
+        "completion_tokens": 256,
+        "events": 256,
+        "ttft_s": 0.8844108459998097,
+        "effective_prefill_tok_s": 1.1306962194357975,
+        "decode_tok_s": 50.376462971943624,
+        "total_s": 5.946843125000669,
+        "output_sha256": "99da18b3630161c6622c715b028f087cb9a7cb21729a4abc8a095423441309ca"
+      }
+    ]
+  },
+  "gpu_measurement": {
+    "max_used_mib_including_desktop": 10862.0,
+    "min_free_mib": 1094.0,
+    "max_temperature_c": 77.0,
+    "samples": 621
+  }
+}

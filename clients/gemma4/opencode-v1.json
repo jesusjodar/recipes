@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "recipes/gemma4",
+  "provider": {
+    "recipes": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "recipes / FreeToken local",
+      "options": {
+        "baseURL": "http://127.0.0.1:1919/v1"
+      },
+      "models": {
+        "gemma4": {
+          "name": "Gemma 4 26B A4B",
+          "limit": {
+            "context": 66560,
+            "output": 8192
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,259 @@
+{
+  "version": 6,
+  "timestamp": "2026-10-23T12:19:16+02:00",
+  "epoch": 1792750760,
+  "gpu": {
+    "index": 0,
+    "name": "NVIDIA GeForce RTX 3060"
+  },
+  "cpu": {
+    "model": "AMD Ryzen 5 5600X 6-Core Processor",
+    "physical_cores": 6,
+    "numa_nodes": 1
+  },
+  "ceilings": {
+    "cpu_stream_read_gbs": 34.31,
+    "cpu_stream_threads": 6,
+    "pcie_linear_h2d_gbs": 21.73,
+    "pcie_linear_d2h_gbs": 20.06
+  },
+  "layer_kinds": {
+    "bf16:2048x768:top8:t5": {
+      "format": "bf16",
+      "options": {},
+      "hidden": 2048,
+      "inter": 768,
+      "top_k": 8,
+      "cpu_threads": 5,
+      "activation": "silu",
+      "sources": [
+        "dtype:bf16"
+      ],
+      "threshold": 2.0,
+      "measured_at": "2026-10-21T11:55:07+02:00",
+      "freetoken": {
+        "version": "0.2.0+gfe5a5ec9c",
+        "commit": null
+      },
+      "cpu_moe_gbs": 30.74,
+      "cpu_moe_isa": "avx2",
+      "cpu_cores": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "isa_sweep": null,
+      "pcie_gather_gbs": 19.05,
+      "cpu_moe_overlap_gbs": 17.08,
+      "pcie_gather_overlap_gbs": 17.17,
+      "recommended": "offload",
+      "note": null
+    },
+    "nvfp4:3072x1536:top8:t5": {
+      "format": "nvfp4",
+      "options": {},
+      "hidden": 3072,
+      "inter": 1536,
+      "top_k": 8,
+      "cpu_threads": 5,
+      "activation": "silu",
+      "sources": [
+        "dtype:nvfp4"
+      ],
+      "threshold": 2.0,
+      "measured_at": "2026-10-21T11:55:07+02:00",
+      "freetoken": {
+        "version": "0.2.0+gfe5a5ec9c",
+        "commit": null
+      },
+      "cpu_moe_gbs": 22.4,
+      "cpu_moe_isa": "avx2",
+      "cpu_cores": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "isa_sweep": null,
+      "pcie_gather_gbs": 19.03,
+      "cpu_moe_overlap_gbs": 14.41,
+      "pcie_gather_overlap_gbs": 16.51,
+      "recommended": "offload",
+      "note": null
+    },
+    "fp8_block:2048x512:top8:t5": {
+      "format": "fp8_block",
+      "options": {},
+      "hidden": 2048,
+      "inter": 512,
+      "top_k": 8,
+      "cpu_threads": 5,
+      "activation": "silu",
+      "sources": [
+        "dtype:fp8"
+      ],
+      "threshold": 2.0,
+      "measured_at": "2026-10-21T11:55:07+02:00",
+      "freetoken": {
+        "version": "0.2.0+gfe5a5ec9c",
+        "commit": null
+      },
+      "cpu_moe_gbs": 24.71,
+      "cpu_moe_isa": "avx2",
+      "cpu_cores": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "isa_sweep": null,
+      "pcie_gather_gbs": 18.83,
+      "cpu_moe_overlap_gbs": 14.82,
+      "pcie_gather_overlap_gbs": 16.45,
+      "recommended": "offload",
+      "note": null
+    },
+    "mxfp4_triton:2880x2880:top4:t5": {
+      "format": "mxfp4_triton",
+      "options": {},
+      "hidden": 2880,
+      "inter": 2880,
+      "top_k": 4,
+      "cpu_threads": 5,
+      "activation": "gpt_oss_swiglu",
+      "sources": [
+        "<LOCAL_HOME>/.freetoken/models/gpt-oss-20b",
+        "dtype:mxfp4"
+      ],
+      "threshold": 2.0,
+      "measured_at": "2026-10-22T09:14:01+02:00",
+      "freetoken": {
+        "version": "0.2.0+gfe5a5ec9c",
+        "commit": null
+      },
+      "cpu_moe_gbs": 23.94,
+      "cpu_moe_isa": "avx2",
+      "cpu_cores": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "isa_sweep": null,
+      "pcie_gather_gbs": 25.64,
+      "cpu_moe_overlap_gbs": 15.76,
+      "pcie_gather_overlap_gbs": 23.1,
+      "recommended": "offload",
+      "note": null
+    },
+    "ds_fp4[act_block=128]:4096x2048:top6:t5": {
+      "format": "ds_fp4",
+      "options": {
+        "act_block": 128
+      },
+      "hidden": 4096,
+      "inter": 2048,
+      "top_k": 6,
+      "cpu_threads": 5,
+      "activation": "silu",
+      "sources": [
+        "dtype:ds_fp4"
+      ],
+      "threshold": 2.0,
+      "measured_at": "2026-10-21T11:55:07+02:00",
+      "freetoken": {
+        "version": "0.2.0+gfe5a5ec9c",
+        "commit": null
+      },
+      "cpu_moe_gbs": 23.27,
+      "cpu_moe_isa": "avx2",
+      "cpu_cores": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "isa_sweep": null,
+      "pcie_gather_gbs": 19.14,
+      "cpu_moe_overlap_gbs": 15.63,
+      "pcie_gather_overlap_gbs": 16.78,
+      "recommended": "offload",
+      "note": null
+    },
+    "nvfp4:2816x704:top8:t5": {
+      "format": "nvfp4",
+      "options": {},
+      "hidden": 2816,
+      "inter": 704,
+      "top_k": 8,
+      "cpu_threads": 5,
+      "activation": "gelu_tanh",
+      "sources": [
+        "<LOCAL_HOME>/.freetoken/models/Gemma-4-26B-A4B-NVFP4"
+      ],
+      "threshold": 2.0,
+      "measured_at": "2026-10-22T09:05:34+02:00",
+      "freetoken": {
+        "version": "0.2.0+gfe5a5ec9c",
+        "commit": null
+      },
+      "cpu_moe_gbs": 27.17,
+      "cpu_moe_isa": "avx2",
+      "cpu_cores": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "isa_sweep": null,
+      "pcie_gather_gbs": 25.64,
+      "cpu_moe_overlap_gbs": 20.56,
+      "pcie_gather_overlap_gbs": 21.75,
+      "recommended": "offload",
+      "note": null
+    },
+    "gguf_scaled[down_type=40,gate_up_type=40]:2048x512:top6:t5": {
+      "format": "gguf_scaled",
+      "options": {
+        "down_type": 40,
+        "gate_up_type": 40
+      },
+      "hidden": 2048,
+      "inter": 512,
+      "top_k": 6,
+      "cpu_threads": 5,
+      "activation": "silu",
+      "sources": [
+        "<LOCAL_HOME>/.freetoken/models/Flint-NVFP4-GGUF/flint-nvfp4.gguf"
+      ],
+      "threshold": 2.0,
+      "measured_at": "2026-10-23T12:19:16+02:00",
+      "freetoken": {
+        "version": "0.2.0",
+        "commit": null
+      },
+      "cpu_moe_gbs": 25.98,
+      "cpu_moe_isa": "haswell(ggml-cpu)",
+      "cpu_cores": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "isa_sweep": null,
+      "pcie_gather_gbs": 19.01,
+      "cpu_moe_overlap_gbs": 15.26,
+      "pcie_gather_overlap_gbs": 17.09,
+      "recommended": "offload",
+      "note": null
+    }
+  }
+}
