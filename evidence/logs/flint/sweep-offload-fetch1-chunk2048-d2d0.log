@@ -1,0 +1,186 @@
+[2026-10-22|11:36:15] INFO     Parsed arguments:
+ServerArgs(model_path='<research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf', tp_info=DistributedInfo(rank=0, size=1), dtype=torch.bfloat16, hf_overrides={}, max_running_req=1, attention_backend='auto', moe_strategy='offload', quant_backend=None, ple_backend='disk', swa_decoder_replay='bounded', expert_load='auto', moe_cache_size=1024, moe_cache_rate=None, moe_cache_auto=False, moe_cache_mem=None, moe_cache_scope='unified', moe_cache_split='equal', kv_reserve_tokens=73728, moe_cache_policy='lru', moe_prefill_overlap=True, moe_prefill_hit_d2d=False, moe_collect_stats=False, moe_cpu_threads=0, moe_cpu_layers=None, moe_hybrid_max_fetch=1, moe_locked_fetch=-1.0, moe_locked_max_fetch=8, cuda_graph_bs=None, cuda_graph_max_bs=1, page_size=1, memory_ratio=0.88, linear_state_cache_ratio=2.0, swa_full_tokens_ratio=0.2, swa_num_pages_override=None, distributed_timeout=60.0, use_dummy_weight=False, use_pynccl=True, max_seq_len_override=73728, num_page_override=None, num_token_override=73728, mm=MultimodalConfig(disabled_encoders=frozenset(), embed_cache_device='cpu', encoder_weights='host', image_min_tokens=None, image_max_tokens=None, processor_kwargs={}), max_extend_tokens=2048, cache_type='radix', offline_mode=False, decode_log_interval=40, special_token_ckpt=True, _unique_suffix='.pid=27447', server_host='127.0.0.1', server_port=22400, num_tokenizer=0, silent_output=False, shell_mode=False, served_model_name='flint-profile', tool_call_parser='flint', reasoning_parser='flint', sampling_defaults='model', max_output_tokens=8192, enable_cache_report=True, anthropic_inline_system='auto', allowed_media_domains='', allowed_local_media_path='', cors_origins='tauri://localhost,http://tauri.localhost,http://localhost:1420', gpu=('0',), gpu_assigned=None)
+[2026-10-22|11:36:15|initializer] INFO     --gpu 0 -> <GPU-UUID>
+[2026-10-22|11:36:15|FrontendAPI] INFO     Default sampling config (source=model): temperature=1.0, top_k=20, top_p=0.949999988079071
+INFO:     Started server process [27447]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:22400 (Press CTRL+C to quit)
+<research-workspace>/work/flint-research/FreeToken/python/freetoken/engine/engine.py:1370: FutureWarning: torch.cuda._set_allocator_settings is deprecated. Use torch._C._accelerator_setAllocatorSettings instead.
+  torch.cuda.memory._set_allocator_settings("expandable_segments:True")
+[2026-10-22|11:36:17|core|rank=0] INFO     Enabled expandable_segments (override via PYTORCH_ALLOC_CONF)
+[2026-10-22|11:36:18] INFO     reasoning-effort profile: supported=['high', 'low', 'max', 'medium', 'minimal', 'none', 'xhigh'] default=None
+[2026-10-22|11:36:23|core|rank=0] INFO     Auto-selected attention backend: triton
+[2026-10-22|11:36:23|core|rank=0] INFO     Resolved config: moe_strategy='offload', attention_backend='triton', cache_type='swa_radix', page_size=1
+[2026-10-22|11:36:23|core|rank=0] INFO     Free memory before loading model: 11.05 GiB
+<research-workspace>/work/flint-research/FreeToken/python/freetoken/models/gguf/tensors.py:25: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+  return torch.from_numpy(info.data()).view(rows, info.nbytes // rows)
+[2026-10-22|11:36:24|core|rank=0] INFO     MoE experts: gguf via ggml
+[2026-10-22|11:36:24|core|rank=0] WARNING  no usable model.safetensors.index.json for <research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf (Repo id must be in the form 'repo_name' or 'namespace/repo_name': '<research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf'. Use `repo_type` argument if needed.); falling back to *.safetensors
+[2026-10-22|11:36:24|core|rank=0] INFO     expert banks: slow path (serial build)
+[2026-10-22|11:36:47|core|rank=0] INFO     GGUF expert banks: 47 layers, 19.8 GiB in host RAM
+[2026-10-22|11:36:47|core|rank=0] INFO     Allocating 73728 tokens for KV cache, K + V = 3.08 GiB
+[2026-10-22|11:36:47|core|rank=0] INFO     Free memory after initialization: 4.75 GiB
+[2026-10-22|11:36:47|core|rank=0] INFO     Start capturing CUDA graphs with sizes: [1]
+[2026-10-22|11:36:47|core|rank=0] INFO     Free GPU memory before capturing CUDA graphs: 4.75 GiB
+Preparing for capturing CUDA graphs...:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 4.76 GiB:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 4.76 GiB: 100%|██████████| 1/1 [00:00<00:00,  1.79batch/s]Capturing graphs: bs = 1   | avail_mem = 4.76 GiB: 100%|██████████| 1/1 [00:00<00:00,  1.79batch/s]
+[2026-10-22|11:36:48|core|rank=0] INFO     Free GPU memory after capturing CUDA graphs: 4.73 GiB
+[2026-10-22|11:36:50|core|rank=0] INFO     Prefill warmup complete for lengths [80, 128] in 1.751 s
+[2026-10-22|11:36:52|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+[2026-10-22|11:36:52|FrontendAPI] INFO     API server is ready to serve on 127.0.0.1:22400
+[2026-10-22|11:36:53|core|rank=0] INFO     Start capturing CUDA graphs with sizes: [1]
+[2026-10-22|11:36:53|core|rank=0] INFO     Free GPU memory before capturing CUDA graphs: 5.42 GiB
+Preparing for capturing CUDA graphs...:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 5.42 GiB:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 5.42 GiB: 100%|██████████| 1/1 [00:00<00:00, 14.48batch/s]
+[2026-10-22|11:36:53|core|rank=0] INFO     Free GPU memory after capturing CUDA graphs: 5.40 GiB
+[2026-10-22|11:36:53|core|rank=0] INFO     Cache rebuilt: KV 73728 pages (73728 tokens, 1.97 GiB), swa 4096 pages (4096 tokens, 0.27 GiB), MoE cache 1024/12032 (1.69 GiB)
+[2026-10-22|11:36:53|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:46176 - "POST /v1/cache/rebuild HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46182 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:36:54|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.03, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 739.22
+[2026-10-22|11:36:55|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2089, token usage: 0.03, #swa-token: 569/4096, swa usage: 0.14, gen throughput (token/s): 10.86, #queue-req: 0
+[2026-10-22|11:36:56|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2129, token usage: 0.03, #swa-token: 609/4096, swa usage: 0.15, gen throughput (token/s): 42.10, #queue-req: 0
+[2026-10-22|11:36:57|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2169, token usage: 0.03, #swa-token: 649/4096, swa usage: 0.16, gen throughput (token/s): 43.69, #queue-req: 0
+[2026-10-22|11:36:57|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:45818 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:36:59|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.06, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 430.01
+[2026-10-22|11:37:00|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.08, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 2295.10
+[2026-10-22|11:37:01|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 1, #queue-req: 0, input throughput (token/s): 2196.94
+[2026-10-22|11:37:01|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 58311.50
+[2026-10-22|11:37:02|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8226, token usage: 0.11, #swa-token: 562/4096, swa usage: 0.14, gen throughput (token/s): 8.67, #queue-req: 0
+[2026-10-22|11:37:03|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8266, token usage: 0.11, #swa-token: 602/4096, swa usage: 0.15, gen throughput (token/s): 42.38, #queue-req: 0
+[2026-10-22|11:37:04|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8306, token usage: 0.11, #swa-token: 642/4096, swa usage: 0.16, gen throughput (token/s): 40.87, #queue-req: 0
+[2026-10-22|11:37:05|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8346, token usage: 0.11, #swa-token: 682/4096, swa usage: 0.17, gen throughput (token/s): 44.24, #queue-req: 0
+[2026-10-22|11:37:06|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8386, token usage: 0.11, #swa-token: 722/4096, swa usage: 0.18, gen throughput (token/s): 40.82, #queue-req: 0
+[2026-10-22|11:37:07|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8426, token usage: 0.11, #swa-token: 762/4096, swa usage: 0.19, gen throughput (token/s): 41.60, #queue-req: 0
+[2026-10-22|11:37:07|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:43116 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:37:09|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.06, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 260.88
+[2026-10-22|11:37:10|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.08, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 2289.43
+[2026-10-22|11:37:11|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 1, #queue-req: 0, input throughput (token/s): 2196.12
+[2026-10-22|11:37:11|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 31872.47
+[2026-10-22|11:37:11|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8211, token usage: 0.11, #swa-token: 547/4096, swa usage: 0.13, gen throughput (token/s): 8.70, #queue-req: 0
+[2026-10-22|11:37:12|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8251, token usage: 0.11, #swa-token: 587/4096, swa usage: 0.14, gen throughput (token/s): 44.92, #queue-req: 0
+[2026-10-22|11:37:13|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8291, token usage: 0.11, #swa-token: 627/4096, swa usage: 0.15, gen throughput (token/s): 41.87, #queue-req: 0
+[2026-10-22|11:37:14|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8331, token usage: 0.11, #swa-token: 667/4096, swa usage: 0.16, gen throughput (token/s): 42.11, #queue-req: 0
+[2026-10-22|11:37:15|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8371, token usage: 0.11, #swa-token: 707/4096, swa usage: 0.17, gen throughput (token/s): 43.33, #queue-req: 0
+[2026-10-22|11:37:16|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8411, token usage: 0.11, #swa-token: 747/4096, swa usage: 0.18, gen throughput (token/s): 43.33, #queue-req: 0
+[2026-10-22|11:37:17|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:37248 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:37:18|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.06, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 268.58
+[2026-10-22|11:37:19|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.08, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 2295.38
+[2026-10-22|11:37:20|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 1, #queue-req: 0, input throughput (token/s): 2200.39
+[2026-10-22|11:37:20|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 31802.90
+[2026-10-22|11:37:20|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8196, token usage: 0.11, #swa-token: 532/4096, swa usage: 0.13, gen throughput (token/s): 8.83, #queue-req: 0
+[2026-10-22|11:37:21|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8236, token usage: 0.11, #swa-token: 572/4096, swa usage: 0.14, gen throughput (token/s): 44.49, #queue-req: 0
+[2026-10-22|11:37:22|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8276, token usage: 0.11, #swa-token: 612/4096, swa usage: 0.15, gen throughput (token/s): 42.36, #queue-req: 0
+[2026-10-22|11:37:23|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8316, token usage: 0.11, #swa-token: 652/4096, swa usage: 0.16, gen throughput (token/s): 42.06, #queue-req: 0
+[2026-10-22|11:37:24|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8356, token usage: 0.11, #swa-token: 692/4096, swa usage: 0.17, gen throughput (token/s): 42.94, #queue-req: 0
+[2026-10-22|11:37:25|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8396, token usage: 0.11, #swa-token: 732/4096, swa usage: 0.18, gen throughput (token/s): 43.04, #queue-req: 0
+[2026-10-22|11:37:26|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8436, token usage: 0.11, #swa-token: 772/4096, swa usage: 0.19, gen throughput (token/s): 43.28, #queue-req: 0
+[2026-10-22|11:37:26|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+[2026-10-22|11:37:27|core|rank=0] INFO     Start capturing CUDA graphs with sizes: [1]
+[2026-10-22|11:37:27|core|rank=0] INFO     Free GPU memory before capturing CUDA graphs: 3.72 GiB
+Preparing for capturing CUDA graphs...:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 3.72 GiB:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 3.72 GiB: 100%|██████████| 1/1 [00:00<00:00, 13.67batch/s]
+[2026-10-22|11:37:27|core|rank=0] INFO     Free GPU memory after capturing CUDA graphs: 3.70 GiB
+[2026-10-22|11:37:27|core|rank=0] INFO     Cache rebuilt: KV 73728 pages (73728 tokens, 1.97 GiB), swa 4096 pages (4096 tokens, 0.27 GiB), MoE cache 2048/12032 (3.38 GiB)
+[2026-10-22|11:37:27|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:34872 - "POST /v1/cache/rebuild HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34886 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:37:28|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.03, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 266.07
+[2026-10-22|11:37:29|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2077, token usage: 0.03, #swa-token: 557/4096, swa usage: 0.14, gen throughput (token/s): 15.10, #queue-req: 0
+[2026-10-22|11:37:29|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2117, token usage: 0.03, #swa-token: 597/4096, swa usage: 0.15, gen throughput (token/s): 49.25, #queue-req: 0
+[2026-10-22|11:37:30|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2157, token usage: 0.03, #swa-token: 637/4096, swa usage: 0.16, gen throughput (token/s): 51.22, #queue-req: 0
+[2026-10-22|11:37:31|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:34888 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:37:32|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.06, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 475.53
+[2026-10-22|11:37:33|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.08, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 2294.57
+[2026-10-22|11:37:34|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 1, #queue-req: 0, input throughput (token/s): 2184.16
+[2026-10-22|11:37:34|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 57960.03
+[2026-10-22|11:37:35|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8214, token usage: 0.11, #swa-token: 550/4096, swa usage: 0.13, gen throughput (token/s): 9.04, #queue-req: 0
+[2026-10-22|11:37:35|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8254, token usage: 0.11, #swa-token: 590/4096, swa usage: 0.14, gen throughput (token/s): 48.20, #queue-req: 0
+[2026-10-22|11:37:36|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8294, token usage: 0.11, #swa-token: 630/4096, swa usage: 0.15, gen throughput (token/s): 49.63, #queue-req: 0
+[2026-10-22|11:37:37|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8334, token usage: 0.11, #swa-token: 670/4096, swa usage: 0.16, gen throughput (token/s): 52.16, #queue-req: 0
+[2026-10-22|11:37:38|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8374, token usage: 0.11, #swa-token: 710/4096, swa usage: 0.17, gen throughput (token/s): 52.15, #queue-req: 0
+[2026-10-22|11:37:39|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8414, token usage: 0.11, #swa-token: 750/4096, swa usage: 0.18, gen throughput (token/s): 49.96, #queue-req: 0
+[2026-10-22|11:37:39|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:49762 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:37:41|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.06, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 302.58
+[2026-10-22|11:37:42|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.08, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 2286.06
+[2026-10-22|11:37:43|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 1, #queue-req: 0, input throughput (token/s): 2193.05
+[2026-10-22|11:37:43|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 32193.40
+[2026-10-22|11:37:43|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8199, token usage: 0.11, #swa-token: 535/4096, swa usage: 0.13, gen throughput (token/s): 9.14, #queue-req: 0
+[2026-10-22|11:37:44|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8239, token usage: 0.11, #swa-token: 575/4096, swa usage: 0.14, gen throughput (token/s): 47.79, #queue-req: 0
+[2026-10-22|11:37:45|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8279, token usage: 0.11, #swa-token: 615/4096, swa usage: 0.15, gen throughput (token/s): 46.99, #queue-req: 0
+[2026-10-22|11:37:45|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8319, token usage: 0.11, #swa-token: 655/4096, swa usage: 0.16, gen throughput (token/s): 47.94, #queue-req: 0
+[2026-10-22|11:37:46|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8359, token usage: 0.11, #swa-token: 695/4096, swa usage: 0.17, gen throughput (token/s): 51.29, #queue-req: 0
+[2026-10-22|11:37:47|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8399, token usage: 0.11, #swa-token: 735/4096, swa usage: 0.18, gen throughput (token/s): 45.48, #queue-req: 0
+[2026-10-22|11:37:48|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8439, token usage: 0.11, #swa-token: 775/4096, swa usage: 0.19, gen throughput (token/s): 45.68, #queue-req: 0
+[2026-10-22|11:37:48|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:45706 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:37:50|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.06, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 286.30
+[2026-10-22|11:37:51|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.08, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 2290.33
+[2026-10-22|11:37:52|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 1, #queue-req: 0, input throughput (token/s): 2190.84
+[2026-10-22|11:37:52|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 34280.11
+[2026-10-22|11:37:53|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8224, token usage: 0.11, #swa-token: 560/4096, swa usage: 0.14, gen throughput (token/s): 8.91, #queue-req: 0
+[2026-10-22|11:37:53|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8264, token usage: 0.11, #swa-token: 600/4096, swa usage: 0.15, gen throughput (token/s): 48.02, #queue-req: 0
+[2026-10-22|11:37:54|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8304, token usage: 0.11, #swa-token: 640/4096, swa usage: 0.16, gen throughput (token/s): 48.27, #queue-req: 0
+[2026-10-22|11:37:55|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8344, token usage: 0.11, #swa-token: 680/4096, swa usage: 0.17, gen throughput (token/s): 50.21, #queue-req: 0
+[2026-10-22|11:37:56|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8384, token usage: 0.11, #swa-token: 720/4096, swa usage: 0.18, gen throughput (token/s): 48.80, #queue-req: 0
+[2026-10-22|11:37:57|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8424, token usage: 0.11, #swa-token: 760/4096, swa usage: 0.19, gen throughput (token/s): 49.59, #queue-req: 0
+[2026-10-22|11:37:57|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+[2026-10-22|11:37:58|core|rank=0] INFO     Start capturing CUDA graphs with sizes: [1]
+[2026-10-22|11:37:58|core|rank=0] INFO     Free GPU memory before capturing CUDA graphs: 1.61 GiB
+Preparing for capturing CUDA graphs...:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 1.61 GiB:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 1.61 GiB: 100%|██████████| 1/1 [00:00<00:00, 12.70batch/s]
+[2026-10-22|11:37:58|core|rank=0] INFO     Free GPU memory after capturing CUDA graphs: 1.59 GiB
+[2026-10-22|11:37:58|core|rank=0] INFO     Cache rebuilt: KV 73728 pages (73728 tokens, 1.97 GiB), swa 4096 pages (4096 tokens, 0.27 GiB), MoE cache 3328/12032 (5.48 GiB)
+[2026-10-22|11:37:58|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:41626 - "POST /v1/cache/rebuild HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41640 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:37:59|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.03, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 295.61
+[2026-10-22|11:37:59|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2065, token usage: 0.03, #swa-token: 545/4096, swa usage: 0.13, gen throughput (token/s): 15.61, #queue-req: 0
+[2026-10-22|11:38:00|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2105, token usage: 0.03, #swa-token: 585/4096, swa usage: 0.14, gen throughput (token/s): 53.68, #queue-req: 0
+[2026-10-22|11:38:01|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2145, token usage: 0.03, #swa-token: 625/4096, swa usage: 0.15, gen throughput (token/s): 59.53, #queue-req: 0
+[2026-10-22|11:38:01|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:41644 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:38:03|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.06, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 501.65
+[2026-10-22|11:38:04|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.08, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 2292.91
+[2026-10-22|11:38:05|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 1, #queue-req: 0, input throughput (token/s): 2194.92
+[2026-10-22|11:38:05|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 57920.64
+[2026-10-22|11:38:05|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8202, token usage: 0.11, #swa-token: 538/4096, swa usage: 0.13, gen throughput (token/s): 9.13, #queue-req: 0
+[2026-10-22|11:38:06|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8242, token usage: 0.11, #swa-token: 578/4096, swa usage: 0.14, gen throughput (token/s): 53.84, #queue-req: 0
+[2026-10-22|11:38:06|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8282, token usage: 0.11, #swa-token: 618/4096, swa usage: 0.15, gen throughput (token/s): 51.23, #queue-req: 0
+[2026-10-22|11:38:07|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8322, token usage: 0.11, #swa-token: 658/4096, swa usage: 0.16, gen throughput (token/s): 51.94, #queue-req: 0
+[2026-10-22|11:38:08|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8362, token usage: 0.11, #swa-token: 698/4096, swa usage: 0.17, gen throughput (token/s): 55.39, #queue-req: 0
+[2026-10-22|11:38:09|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8402, token usage: 0.11, #swa-token: 738/4096, swa usage: 0.18, gen throughput (token/s): 60.65, #queue-req: 0
+[2026-10-22|11:38:09|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8442, token usage: 0.11, #swa-token: 778/4096, swa usage: 0.19, gen throughput (token/s): 52.07, #queue-req: 0
+[2026-10-22|11:38:10|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:38822 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:38:11|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.06, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 314.03
+[2026-10-22|11:38:12|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.08, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 2291.69
+[2026-10-22|11:38:13|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 1, #queue-req: 0, input throughput (token/s): 2193.63
+[2026-10-22|11:38:13|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 35812.67
+[2026-10-22|11:38:14|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8227, token usage: 0.11, #swa-token: 563/4096, swa usage: 0.14, gen throughput (token/s): 9.12, #queue-req: 0
+[2026-10-22|11:38:15|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8267, token usage: 0.11, #swa-token: 603/4096, swa usage: 0.15, gen throughput (token/s): 53.56, #queue-req: 0
+[2026-10-22|11:38:15|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8307, token usage: 0.11, #swa-token: 643/4096, swa usage: 0.16, gen throughput (token/s): 57.12, #queue-req: 0
+[2026-10-22|11:38:16|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8347, token usage: 0.11, #swa-token: 683/4096, swa usage: 0.17, gen throughput (token/s): 57.83, #queue-req: 0
+[2026-10-22|11:38:17|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8387, token usage: 0.11, #swa-token: 723/4096, swa usage: 0.18, gen throughput (token/s): 54.42, #queue-req: 0
+[2026-10-22|11:38:17|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8427, token usage: 0.11, #swa-token: 763/4096, swa usage: 0.19, gen throughput (token/s): 58.54, #queue-req: 0
+[2026-10-22|11:38:18|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:43250 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:38:20|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.06, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 324.02
+[2026-10-22|11:38:20|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.08, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 0, #queue-req: 1, input throughput (token/s): 2291.58
+[2026-10-22|11:38:21|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 2562/4096, swa usage: 0.63, #running-req: 1, #queue-req: 0, input throughput (token/s): 2188.97
+[2026-10-22|11:38:21|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.11, #swa-token: 529/4096, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 35347.81
+[2026-10-22|11:38:22|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8212, token usage: 0.11, #swa-token: 548/4096, swa usage: 0.13, gen throughput (token/s): 9.15, #queue-req: 0
+[2026-10-22|11:38:23|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8252, token usage: 0.11, #swa-token: 588/4096, swa usage: 0.14, gen throughput (token/s): 51.40, #queue-req: 0
+[2026-10-22|11:38:23|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8292, token usage: 0.11, #swa-token: 628/4096, swa usage: 0.15, gen throughput (token/s): 51.67, #queue-req: 0
+[2026-10-22|11:38:24|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8332, token usage: 0.11, #swa-token: 668/4096, swa usage: 0.16, gen throughput (token/s): 53.93, #queue-req: 0
+[2026-10-22|11:38:25|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8372, token usage: 0.11, #swa-token: 708/4096, swa usage: 0.17, gen throughput (token/s): 55.61, #queue-req: 0
+[2026-10-22|11:38:25|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 8412, token usage: 0.11, #swa-token: 748/4096, swa usage: 0.18, gen throughput (token/s): 56.01, #queue-req: 0
+[2026-10-22|11:38:26|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27447]
+<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

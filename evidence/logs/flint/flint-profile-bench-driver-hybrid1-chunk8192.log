@@ -1,0 +1,7 @@
+READY sweep-hybrid-fetch1-chunk8192-d2d1
+CACHE 3328, SWA 9216, max 3328
+{'label': 'sweep-hybrid-fetch1-chunk8192-d2d1-c3328-warmup', 'cache': 3328, 'prompt_tokens': 2048, 'cached_tokens': 0, 'completion_tokens': 128, 'events': 128, 'ttft_s': 0.9808505220007646, 'effective_prefill_tok_s': 2087.983799837753, 'decode_tok_s': 61.09510289531548, 'total_s': 3.060552266000741}
+{'label': 'sweep-hybrid-fetch1-chunk8192-d2d1-c3328-run0', 'cache': 3328, 'prompt_tokens': 8192, 'cached_tokens': 0, 'completion_tokens': 256, 'events': 256, 'ttft_s': 2.710748310000781, 'effective_prefill_tok_s': 3022.043754404347, 'decode_tok_s': 65.50093424460393, 'total_s': 6.604511948999061}
+{'label': 'sweep-hybrid-fetch1-chunk8192-d2d1-c3328-run1', 'cache': 3328, 'prompt_tokens': 8192, 'cached_tokens': 0, 'completion_tokens': 256, 'events': 256, 'ttft_s': 2.678022165000584, 'effective_prefill_tok_s': 3058.9739349667457, 'decode_tok_s': 52.21406946076329, 'total_s': 7.562478257999828}
+{'label': 'sweep-hybrid-fetch1-chunk8192-d2d1-c3328-run2', 'cache': 3328, 'prompt_tokens': 8192, 'cached_tokens': 0, 'completion_tokens': 256, 'events': 256, 'ttft_s': 2.6756855150015326, 'effective_prefill_tok_s': 3061.6453069953955, 'decode_tok_s': 55.80043457129747, 'total_s': 7.246235474000059}
+DONE sweep-hybrid-fetch1-chunk8192-d2d1

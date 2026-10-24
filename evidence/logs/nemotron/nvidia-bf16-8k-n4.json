@@ -1,0 +1,91 @@
+{
+  "url": "http://127.0.0.1:8011/v1/chat/completions",
+  "runs": [
+    {
+      "elapsed_s": 2.6712260570000126,
+      "completion_tokens": 256,
+      "prompt_tokens": 81,
+      "tok_s": 95.83614210753366,
+      "text": "**Hypotheses (H):**\n1. **H1 (Idempotency Failure):** The API endpoint lacks proper idempotency keys, allowing retries to execute the write operation multiple times if the initial request failed *after* the database commit but *before* the client received confirmation.\n2. **H2 (Race Condition):** Concurrent requests (including retries) are modifying shared state",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 53,
+        "prompt_ms": 72.975,
+        "prompt_per_token_ms": 1.37688679245283,
+        "prompt_per_second": 726.2761219595753,
+        "predicted_n": 256,
+        "predicted_ms": 2592.558,
+        "predicted_per_token_ms": 10.16689411764706,
+        "predicted_per_second": 98.35845523995992,
+        "draft_n": 415,
+        "draft_n_accepted": 150
+      },
+      "task": "bug-triage"
+    },
+    {
+      "elapsed_s": 2.070124821000036,
+      "completion_tokens": 256,
+      "prompt_tokens": 76,
+      "tok_s": 123.66404064288815,
+      "text": "This task requires a meticulous, phased approach to ensure the new feature is robust, performant, and integrates seamlessly with the existing application architecture.\n\n## 🚀 Detailed Action Sequence\n\n### Phase 1: Repository Inspection & Planning (Discovery)\n\n**Goal:** Understand current data retrieval, serialization, and front-end constraints.\n**Actions:**\n1.  **Identify Data Source:** Locate the API endpoint(s) or database service responsible for the data to be exported.\n2",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 48,
+        "prompt_ms": 70.223,
+        "prompt_per_token_ms": 1.4629791666666667,
+        "prompt_per_second": 683.5367329792233,
+        "predicted_n": 256,
+        "predicted_ms": 1989.624,
+        "predicted_per_token_ms": 7.802447058823529,
+        "predicted_per_second": 128.16491960289986,
+        "draft_n": 313,
+        "draft_n_accepted": 175
+      },
+      "task": "tool-workflow"
+    },
+    {
+      "elapsed_s": 2.0505952080000043,
+      "completion_tokens": 256,
+      "prompt_tokens": 82,
+      "tok_s": 124.84180154194502,
+      "text": "## ⚙️ Local Agent Incident Response: Single Endpoint 500 Error\n\nThe primary goal is **diagnosis and verification**, not immediate repair. We must ensure the error is code-related, configuration-related, or environment-specific before committing a fix.\n\n---\n\n### 🚶 Step-by-Step Local Agent Response\n\n1. **Verify Environment:** Ensure the local development environment is running the *exact* code version deployed (e.g., by",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 54,
+        "prompt_ms": 72.26,
+        "prompt_per_token_ms": 1.3381481481481483,
+        "prompt_per_second": 747.3014115693329,
+        "predicted_n": 256,
+        "predicted_ms": 1969.151,
+        "predicted_per_token_ms": 7.722160784313726,
+        "predicted_per_second": 129.4974331577416,
+        "draft_n": 315,
+        "draft_n_accepted": 176
+      },
+      "task": "incident-response"
+    },
+    {
+      "elapsed_s": 2.4759328320000122,
+      "completion_tokens": 256,
+      "prompt_tokens": 73,
+      "tok_s": 103.39537353006786,
+      "text": "## Review of Proposed Behavior\n\nThe proposal to cache API responses for 10 minutes using **only the URL** as the cache key introduces significant correctness, integrity, and security risks. This approach assumes the URL is the *only* factor determining the response, which is rarely true in real-world APIs.\n\n---\n\n### 🔴 Concrete Risks\n\n#### 1. Correctness & Data Integrity Risks\n* **State-Dependent Data:** If an API endpoint uses query parameters (e.g., `?page=2`, `?sort=desc`)",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 45,
+        "prompt_ms": 68.364,
+        "prompt_per_token_ms": 1.5192,
+        "prompt_per_second": 658.2411795681937,
+        "predicted_n": 256,
+        "predicted_ms": 2398.482,
+        "predicted_per_token_ms": 9.405811764705883,
+        "predicted_per_second": 106.3172456578786,
+        "draft_n": 383,
+        "draft_n_accepted": 158
+      },
+      "task": "code-review"
+    }
+  ],
+  "mean_tok_s": 111.93433945560867,
+  "mean_elapsed_s": 2.3169697295000162
+}

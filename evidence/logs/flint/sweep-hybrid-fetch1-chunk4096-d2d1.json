@@ -1,0 +1,285 @@
+{
+  "tag": "sweep-hybrid-fetch1-chunk4096-d2d1",
+  "requests": [
+    {
+      "label": "sweep-hybrid-fetch1-chunk4096-d2d1-c3456-warmup",
+      "cache": 3456,
+      "prompt_tokens": 2048,
+      "cached_tokens": 0,
+      "completion_tokens": 128,
+      "events": 128,
+      "ttft_s": 0.9835052840007847,
+      "effective_prefill_tok_s": 2082.3477344920557,
+      "decode_tok_s": 61.60316846188345,
+      "total_s": 3.0458429620011884,
+      "output_sha256": "4426a26e0259ff28361f1b1c5657a697aae63d670b88c99b61fc62628b97860f",
+      "text": "<think>We need answer user. Need inspect repo excerpts? They ask task: explain how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give detailed design, implementation plan and Python code.\n\nWe need likely produce engineering answer. We have repository excerpts only maybe context. Need perhaps infer existing prefix cache implementation. Must be careful. We need maybe inspect repository? We can't browse unless tools? We have no tool listed. We can rely on excerpts and maybe repository knowledge? We should probably answer with design. But maybe expected to review repo excerpts and propose concrete implementation with tests. User specifically task. We should provide detailed design"
+    },
+    {
+      "label": "sweep-hybrid-fetch1-chunk4096-d2d1-c3456-run0",
+      "cache": 3456,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.012585033000505,
+      "effective_prefill_tok_s": 2719.2593438070853,
+      "decode_tok_s": 66.3706394902012,
+      "total_s": 6.855306391998965,
+      "output_sha256": "d9d432b869cde6d31a3b94e1a56d6fbd8ead2fe123438499ecaf3a4edc451d79",
+      "text": "<think>We need answer task. Need inspect repo excerpts? User asks: \"Request sweep-hybrid-fetch1-chunk4096-d2d1-c3456-run0. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need likely respond with design/implementation. Need understand code context. We have excerpts. Need craft detailed design, plan, Python code. Must be careful. We can inspect repository? We have only excerpts, but maybe enough. The instruction says review repository excerpts and propose concrete implementation with tests. Current task specifically add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. We should likely use code context. We need maybe not actually run. We can propose.\n\nWe need decide content. We should probably structure:\n- Scope and assumptions\n- Requirements\n- Current architecture from excerpts\n- Design goals\n- Disk-backed persistent prefix cache design\n  - Data model: serialized entries keyed by prompt hash / prefix hashes; version metadata; TTL? eviction; atomic writes; fsync.\n  - Key computation: cryptographic hash over normalized prompt/messages, tokenizer ids, model identity, cache namespace. Maybe SHA-256.\n "
+    },
+    {
+      "label": "sweep-hybrid-fetch1-chunk4096-d2d1-c3456-run1",
+      "cache": 3456,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 2.898972289000085,
+      "effective_prefill_tok_s": 2825.8290122619933,
+      "decode_tok_s": 65.45926171944218,
+      "total_s": 6.795067605999066,
+      "output_sha256": "9ff236ed5264270e58555721fb35d9c5c401fe8ff5b96b8a9470adb2373e8253",
+      "text": "<think>We need answer user. Need parse. They provided repo excerpts and task: \"Request sweep-hybrid-fetch1-chunk4096-d2d1-c3456-run1. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need likely respond with detailed design, implementation plan, Python code. We need inspect excerpts mentally. Need maybe mention request id? sweep-hybrid-fetch1-chunk4096-d2d1-c3456-run1 maybe test id? We should probably focus task.\n\nWe need craft answer. As software engineering agent, careful review excerpts and propose concrete implementation with tests. They ask explain how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give detailed design, implementation plan and Python code.\n\nWe need likely design for existing freetoken repo. Excerpts show hybrid cache? scheduler/prefill mentions hybrid GDN, linear_state_pool, prefix cache, cache manager. Need infer architecture. We should maybe use excerpts to tailor. We need not actually modify repo, but propose.\n\nWe need decide scope. The task: add disk-backed persistent prefix cache with correct invalidation and concurrent request handling."
+    },
+    {
+      "label": "sweep-hybrid-fetch1-chunk4096-d2d1-c3456-run2",
+      "cache": 3456,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 2.9206488210002135,
+      "effective_prefill_tok_s": 2804.8562158851214,
+      "decode_tok_s": 67.7647965050412,
+      "total_s": 6.684231297000224,
+      "output_sha256": "1050c7e13faab3287bb051a5df4b12a82b445ce1f83f04b5267c8ec7415ac8d0",
+      "text": "<think>We need answer user's task. Need parse context. They provided repository excerpts and task: \"Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need respond as careful software engineering agent. We need likely review repo excerpts and propose concrete implementation with tests. But final task asks explain how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give detailed design, implementation plan and Python code.\n\nWe must use commentary commentary only. We need not use analysis. We need craft answer. We should probably base on excerpts. Need maybe infer architecture: freetoken, scheduler prefill, cache manager hybrid GDN, prefix cache. Need design disk-backed persistent prefix cache. We need be careful: repository excerpts show PrefillAdder, CacheManager likely has prefix_replay_tokens, match_req, cuda_handle, linear_state_pool, is_hybrid, etc. Disk-backed persistent prefix cache likely means persisting KV states to disk for reuse across restarts, invalidation on writes, concurrent request handling. Need propose design, implementation plan, Python code.\n\nWe need maybe not just generic. Should tie to code. We can outline.\n\nLet's inspect snippets mentally:\n- Pref"
+    }
+  ],
+  "context": 73728,
+  "output_budget": 8192,
+  "args": {
+    "strategy": "hybrid",
+    "fetch": 1,
+    "chunk": 4096,
+    "d2d": true,
+    "phase": "sweep",
+    "cache": 0,
+    "runs": 3,
+    "memory_ratio": 0.9,
+    "long_decode": 8192
+  },
+  "command": [
+    "<research-workspace>/work/flint-research/dev-venv/bin/python",
+    "-m",
+    "freetoken",
+    "--model",
+    "<research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf",
+    "--gpu",
+    "0",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "22402",
+    "--served-model-name",
+    "flint-profile",
+    "--moe-strategy",
+    "hybrid",
+    "--moe-hybrid-max-fetch",
+    "1",
+    "--moe-cache-size",
+    "1024",
+    "--num-tokens",
+    "73728",
+    "--kv-reserve-tokens",
+    "73728",
+    "--max-seq-len-override",
+    "73728",
+    "--max-output-tokens",
+    "8192",
+    "--max-prefill-length",
+    "4096",
+    "--max-running-requests",
+    "1",
+    "--cuda-graph-max-bs",
+    "1",
+    "--enable-cache-report",
+    "--enable-special-token-ckpt",
+    "--memory-ratio",
+    "0.9",
+    "--moe-prefill-hit-d2d"
+  ],
+  "initial_status": {
+    "state": "serving",
+    "last_rebuild": null,
+    "geometry": {
+      "num_pages": 73728,
+      "page_size": 1,
+      "moe_cache_size": 1024,
+      "num_mamba_slots": 0,
+      "num_experts": 256,
+      "num_moe_layers": 47,
+      "moe_cache_policy": "lru",
+      "unit_bytes": {
+        "kv_per_token": 28672,
+        "moe_per_expert": 1769488,
+        "mamba_per_slot": 0,
+        "swa_per_token": 71680
+      },
+      "swa_full_tokens_ratio": 0.2,
+      "swa_page_size": 1,
+      "num_swa_pages": 14745,
+      "cache_budget_bytes": 8963666739,
+      "reasoning": {
+        "gears": [
+          "on"
+        ],
+        "default": "on",
+        "kwargs": {
+          "on": {}
+        }
+      },
+      "limits": {
+        "kv_tokens": {
+          "min": 1,
+          "max": 312627
+        },
+        "moe_experts": {
+          "min": 256,
+          "max": 5065
+        },
+        "mamba_slots": {
+          "min": 0,
+          "max": 0
+        },
+        "swa_tokens": {
+          "min": 1829,
+          "max": 125051
+        }
+      }
+    }
+  },
+  "max_cache_candidate": 3456,
+  "swa_pages": 5120,
+  "rebuilds": [
+    {
+      "request_id": "9fca3217-8a94-45f1-a135-48fad1d5832e",
+      "status": "ok",
+      "moe_cache_size": 3456,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 5120,
+      "error": null
+    }
+  ],
+  "final_status": {
+    "state": "serving",
+    "last_rebuild": {
+      "request_id": "9fca3217-8a94-45f1-a135-48fad1d5832e",
+      "status": "ok",
+      "moe_cache_size": 3456,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 5120,
+      "error": null
+    },
+    "geometry": {
+      "num_pages": 73728,
+      "page_size": 1,
+      "moe_cache_size": 3456,
+      "num_mamba_slots": 0,
+      "num_experts": 256,
+      "num_moe_layers": 47,
+      "moe_cache_policy": "lru",
+      "unit_bytes": {
+        "kv_per_token": 28672,
+        "moe_per_expert": 1769488,
+        "mamba_per_slot": 0,
+        "swa_per_token": 71680
+      },
+      "swa_full_tokens_ratio": 0.06944444444444445,
+      "swa_page_size": 1,
+      "num_swa_pages": 5120,
+      "cache_budget_bytes": 8963666739,
+      "reasoning": {
+        "gears": [
+          "on"
+        ],
+        "default": "on",
+        "kwargs": {
+          "on": {}
+        }
+      },
+      "limits": {
+        "kv_tokens": {
+          "min": 1,
+          "max": 312627
+        },
+        "moe_experts": {
+          "min": 256,
+          "max": 5065
+        },
+        "mamba_slots": {
+          "min": 0,
+          "max": 0
+        },
+        "swa_tokens": {
+          "min": 1829,
+          "max": 125051
+        }
+      }
+    }
+  },
+  "stats": {
+    "instance_id": "ad092668-9d73-4d6f-90cf-51385d3db881",
+    "model": {
+      "id": "flint-profile",
+      "ctx": 73728,
+      "attn": "hybrid_swa",
+      "moe": true,
+      "input_modalities": [
+        "text"
+      ],
+      "sampling": {
+        "temperature": 1.0,
+        "top_k": 20,
+        "top_p": 0.949999988079071
+      }
+    },
+    "uptime_s": 25,
+    "kv": {
+      "used_pages": 0,
+      "total_pages": 73728,
+      "page_size": 1
+    },
+    "mamba": null,
+    "swa": {
+      "used_pages": 0,
+      "total_pages": 5120,
+      "page_size": 1
+    },
+    "vram_bytes": 10638852096,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3060",
+        "uuid": "<GPU-UUID>",
+        "total_bytes": 12534939648
+      }
+    ],
+    "throughput": {
+      "decode_tps": 67.8,
+      "prefill_tps": 0.0
+    },
+    "requests": {
+      "active": 0,
+      "completed": 4,
+      "p95_ms": 3,
+      "ttft_mean_ms": 0,
+      "prompt_tokens_total": 26624,
+      "completion_tokens_total": 896
+    }
+  }
+}

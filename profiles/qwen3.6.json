@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "qwen3.6",
   "name": "Qwen 3.6 35B A3B",
-  "status": "Configurado; falta medición de generación conservada",
+  "status": "Measured: 66560 capacity; 4106 input + 200 output, three runs",
   "hardware": "ryzen-5600x-rtx3060",
   "engine": "desktop-wheel",
   "model": {
@@ -34,7 +34,7 @@
     "total_tokens": 66560,
     "input_budget_with_reserved_output": 58368,
     "output_tokens": 8192,
-    "output_status": "new_explicit_agent_default; no_generation_measurement"
+    "output_status": "new_explicit_agent_default; measured requests use 200 tokens"
   },
   "server_arguments": [
     "--moe-strategy",
@@ -62,7 +62,6 @@
   "cache_rebuild": {
     "moe_cache_size": 3328,
     "num_pages": 66560,
-    "num_swa_pages": 2048,
     "num_mamba_slots": 4
   },
   "desktop_cache": {
@@ -77,5 +76,6 @@
     "top_k": 20
   },
   "environment": {},
-  "evidence": "evidence/qwen3.6.json"
+  "evidence": "evidence/qwen3.6.json",
+  "cache_rebuild_note": "Qwen uses GDN/recurrent state, not a sliding-window pool. Desktop swaTokens=2048 is an unused stored field and must not be sent to the rebuild API."
 }

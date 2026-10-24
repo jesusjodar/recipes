@@ -1,0 +1,91 @@
+{
+  "url": "http://127.0.0.1:8011/v1/chat/completions",
+  "runs": [
+    {
+      "elapsed_s": 2.3451785559999507,
+      "completion_tokens": 256,
+      "prompt_tokens": 81,
+      "tok_s": 109.16013168594118,
+      "text": "### 🔍 Investigation Plan: Duplicate Records After Retries\n\n**Hypotheses:**\n1. **Non-Idempotent Endpoint:** The API endpoint is not designed to safely handle repeated identical requests (e.g., generating a unique ID, creating a resource without",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 53,
+        "prompt_ms": 73.554,
+        "prompt_per_token_ms": 1.387811320754717,
+        "prompt_per_second": 720.5590450553334,
+        "predicted_n": 256,
+        "predicted_ms": 2267.833,
+        "predicted_per_token_ms": 8.89346274509804,
+        "predicted_per_second": 112.44214190374689,
+        "draft_n": 521,
+        "draft_n_accepted": 178
+      },
+      "task": "bug-triage"
+    },
+    {
+      "elapsed_s": 2.0919920929999307,
+      "completion_tokens": 256,
+      "prompt_tokens": 76,
+      "tok_s": 122.37139942192337,
+      "text": "## 🚀 CSV Export Feature Implementation Plan\n\nAs a careful software engineering agent, I will approach this task using a structured, risk-mitigating workflow, ensuring the solution is robust, performant, and maintainable.\n\n---\n\n### 🔍 Phase 1: Repository Inspection and Planning (Discovery)\n\n**Goal:** Understand the existing architecture, data flow",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 48,
+        "prompt_ms": 70.279,
+        "prompt_per_token_ms": 1.4641458333333333,
+        "prompt_per_second": 682.9920744461361,
+        "predicted_n": 256,
+        "predicted_ms": 2011.59,
+        "predicted_per_token_ms": 7.888588235294117,
+        "predicted_per_second": 126.76539453864855,
+        "draft_n": 465,
+        "draft_n_accepted": 187
+      },
+      "task": "tool-workflow"
+    },
+    {
+      "elapsed_s": 2.4541047090000347,
+      "completion_tokens": 256,
+      "prompt_tokens": 82,
+      "tok_s": 104.31502741556264,
+      "text": "## 🛠️ Local Agent Diagnostic Plan\n\nThe immediate priority is **isolation** (is it code, environment, or configuration?) and **stability** (ensure we can roll back safely). Do *not* commit a fix until the root cause is confirmed and replicated locally.\n\n### ➡️ Step-by-Step Local Agent Response\n\n1.  **Verify Local Replication:** Deploy the *exact* problematic version (the one that failed in production) to",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 54,
+        "prompt_ms": 72.452,
+        "prompt_per_token_ms": 1.3417037037037036,
+        "prompt_per_second": 745.3210401369182,
+        "predicted_n": 256,
+        "predicted_ms": 2372.431,
+        "predicted_per_token_ms": 9.303650980392158,
+        "predicted_per_second": 107.48468553985343,
+        "draft_n": 548,
+        "draft_n_accepted": 175
+      },
+      "task": "incident-response"
+    },
+    {
+      "elapsed_s": 2.1021281250000357,
+      "completion_tokens": 256,
+      "prompt_tokens": 73,
+      "tok_s": 121.7813495549876,
+      "text": "## ⚠️ Risk Analysis\n\nThe proposed behavior—caching API responses for 10 minutes using **only the URL** as the cache key—is highly fragile and introduces significant correctness and security risks.\n\n### 🛑 Concrete Correctness Risks (Data Integrity)\n\n1. **Missing Query Parameter Variance:** If an API supports dynamic filtering or pagination via query parameters (e.g., `/items?page=1` vs. `/",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 45,
+        "prompt_ms": 68.622,
+        "prompt_per_token_ms": 1.5249333333333333,
+        "prompt_per_second": 655.7663723004284,
+        "predicted_n": 256,
+        "predicted_ms": 2022.581,
+        "predicted_per_token_ms": 7.931690196078431,
+        "predicted_per_second": 126.07653290523346,
+        "draft_n": 469,
+        "draft_n_accepted": 187
+      },
+      "task": "code-review"
+    }
+  ],
+  "mean_tok_s": 114.4069770196037,
+  "mean_elapsed_s": 2.248350870749988
+}

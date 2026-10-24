@@ -1,11 +1,28 @@
 {
   "date": "2026-10-24",
-  "source": "Perfil persistente de FreeToken Desktop; sin log local de throughput de generación recuperado",
+  "engine": "FreeToken 0.2.0+gfe5a5ec9c",
+  "source": "New local benchmark with complete server log and SSE event captures.",
   "reserved_context_tokens": 66560,
-  "prefill_tok_s": null,
-  "decode_tok_s": null,
-  "drafter": false,
+  "prompt_tokens": 4106,
+  "completion_tokens": 200,
+  "samples": 3,
+  "warmups_excluded": 1,
+  "prefill_effective_mean_tok_s": 2841.168416523141,
+  "decode_http_mean_tok_s": 70.50823824707302,
+  "prefix_cache_tokens_per_sample": [
+    0,
+    0,
+    0
+  ],
+  "method": "HTTP stream: prompt_tokens / TTFT to first nonempty content OR reasoning event; decode (completion_tokens - 1) / (last - first content or reasoning event). API special tokens/chunking may affect rates. Distinct synthetic prefixes; no cached tokens in server log.",
   "full_context_generation_validated": false,
-  "output_default_8192": "Nueva elección explícita del catálogo; no medición histórica",
-  "status": "configured_only"
+  "output_default_8192": "Catalog default; measured requests used 200 tokens with ignore_eos only for benchmarking.",
+  "cache_rebuild": {
+    "moe_cache_size": 3328,
+    "num_pages": 66560,
+    "num_mamba_slots": 4
+  },
+  "raw_logs": "evidence/logs/qwen3.6",
+  "status": "measured_short_context_with_66560_capacity",
+  "environment": "evidence/environment-2026-10-24.json"
 }

@@ -1,0 +1,8 @@
+{
+  "repository": "math-ai/aime25",
+  "revision": "563bb8404243c5f09de6ec262f2db674fe5bce9b",
+  "file": "test.jsonl",
+  "source_sha256": "b4e273c02d3e7fe1b74b59eae768fc8230bfb0f79539890cb56f4361caac0331",
+  "converted_sha256": "54946a43be2e7975aa1cb0a2f0d75fb17e43db32941cf654c5d28e5951eb1b1f",
+  "rows": 30
+}

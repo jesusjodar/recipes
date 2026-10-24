@@ -12,6 +12,7 @@ import signal
 import socket
 import subprocess
 import sys
+import tarfile
 import time
 import urllib.error
 import urllib.request
@@ -87,9 +88,64 @@ def install(with_flint):
     print('Engine preparado. El overlay Flint se aplica solo al servir Flint.' if with_flint else 'Engine preparado.')
 
 
+def sha256(path):
+    digest = hashlib.sha256()
+    with Path(path).open('rb') as source:
+        for block in iter(lambda: source.read(8 * 1024 * 1024), b''):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def verified_download(item, destination, existing=None):
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    if not destination.exists():
+        partial = destination.with_name(destination.name + '.partial')
+        if existing and existing.is_file() and sha256(existing) == item['sha256']:
+            shutil.copyfile(existing, partial)
+        else:
+            urllib.request.urlretrieve(item['url'], partial)
+        if sha256(partial) != item['sha256']:
+            raise RuntimeError(f'SHA-256 mismatch: {partial}')
+        partial.replace(destination)
+    if sha256(destination) != item['sha256']:
+        raise RuntimeError(f'SHA-256 mismatch: {destination}')
+
+
+def install_llama():
+    lock = read_json(ROOT / 'runtime.json')['llama_cpp']
+    directory = RUNTIME / 'llama-cpp'
+    for item in lock['archives']:
+        archive = directory / 'archives' / item['filename']
+        legacy = ('llama-b11828-cuda13.tar.gz' if item['filename'].startswith('llama-')
+                  else 'cudart-b11828-cuda13.tar.gz')
+        verified_download(item, archive, Path.home() / 'Desktop/AI/bin' / legacy)
+        with tarfile.open(archive) as source:
+            source.extractall(directory, filter='data')
+    print('llama.cpp b11828 CUDA 13.4 installed; archive SHA-256 verified.')
+
+
+def llama_paths():
+    lock = read_json(ROOT / 'runtime.json')['llama_cpp']
+    directory = RUNTIME / 'llama-cpp'
+    return directory / lock['server_directory'], directory / lock['cuda_directory']
+
+
 def model_path(p):
     folder = MODEL_ROOT / p['model']['local_directory']
+    if p['engine'] == 'llama-cpp' and not (folder / p['model']['filename']).exists():
+        existing = Path.home() / 'Desktop/AI/models' / p['model']['filename']
+        if existing.is_file():
+            return existing
     return folder / p['model']['filename'] if p['model'].get('filename') else folder
+
+
+def drafter_path(p):
+    result = MODEL_ROOT / p['model']['local_directory'] / p['drafter']['filename']
+    if not result.exists():
+        existing = Path.home() / 'Desktop/AI/models' / p['drafter']['legacy_local_filename']
+        if existing.is_file():
+            return existing
+    return result
 
 
 def complete_model(p):
@@ -105,6 +161,13 @@ def complete_model(p):
 
 
 def download(p):
+    if p['engine'] == 'llama-cpp':
+        for item, destination in [(p['model'], model_path(p)), (p['drafter'], drafter_path(p))]:
+            blob = {**item, 'url': 'https://huggingface.co/' + item['repository'] + '/resolve/'
+                    + item['download_revision'] + '/' + item['filename']}
+            verified_download(blob, destination)
+            print(f'Verified weights: {destination}')
+        return
     if complete_model(p):
         print(f'Reutilizando pesos locales: {model_path(p)}')
         print('La existencia de los shards no certifica su revisión; consulta evidence/inventory.json.')
@@ -140,9 +203,18 @@ def serve(p, args):
     path = model_path(p)
     env = dict(os.environ)
     env.pop('PYTHONPATH', None)
-    command = [str(python_bin(required=not args.print_command)), '-m', 'freetoken.cli', 'serve', '--model-path', str(path),
-               '--gpu', '0', '--host', '127.0.0.1', '--port', str(args.port),
-               '--served-model-name', p['id'], *p['server_arguments']]
+    is_llama = p['engine'] == 'llama-cpp'
+    if is_llama:
+        binary, cuda = llama_paths()
+        if not args.print_command and not (binary / 'llama-server').is_file():
+            raise RuntimeError('Run ./recipes install --llama-cpp first')
+        env['LD_LIBRARY_PATH'] = os.pathsep.join(filter(None, [str(cuda), str(binary), env.get('LD_LIBRARY_PATH')]))
+        command = [str(binary / 'llama-server'), '-m', str(path), '-md', str(drafter_path(p)),
+                   '--host', '127.0.0.1', '--port', str(args.port), '--alias', p['id'], *p['server_arguments']]
+    else:
+        command = [str(python_bin(required=not args.print_command)), '-m', 'freetoken.cli', 'serve', '--model-path', str(path),
+                   '--gpu', '0', '--host', '127.0.0.1', '--port', str(args.port),
+                   '--served-model-name', p['id'], *p['server_arguments']]
     if p['engine'] == 'flint-overlay':
         source = RUNTIME / 'FreeToken-flint/python'
         if not (source / 'freetoken/models/flint/model.py').exists():
@@ -152,15 +224,18 @@ def serve(p, args):
     if not args.print_command:
         if not complete_model(p):
             raise RuntimeError(f'Faltan pesos en {path}; ejecuta download {p["id"]}')
+        if is_llama and (not drafter_path(p).is_file() or sha256(path) != p['model']['sha256']
+                         or sha256(drafter_path(p)) != p['drafter']['sha256']):
+            raise RuntimeError('Missing or unverified Nemotron weights; run download nemotron')
         env['CUDA_VISIBLE_DEVICES'] = select_gpu(args.gpu)
     else:
         env['CUDA_VISIBLE_DEVICES'] = args.gpu or '<UUID de la RTX 3060>'
-        selected = {k: env[k] for k in ['CUDA_VISIBLE_DEVICES', 'PYTHONPATH', 'FLASHINFER_USE_CUDA_NORM'] if k in env}
+        selected = {k: env[k] for k in ['CUDA_VISIBLE_DEVICES', 'PYTHONPATH', 'FLASHINFER_USE_CUDA_NORM', 'LD_LIBRARY_PATH'] if k in env}
         print(' '.join(k + '=' + shlex.quote(v) for k, v in selected.items()), shlex.join(command))
         print('Reconstrucción posterior:', json.dumps(p.get('cache_rebuild')))
         return
     # Check the API and the engine rendezvous before owning any child processes.
-    for port in [args.port, args.port + 1]:
+    for port in ([args.port] if is_llama else [args.port, args.port + 1]):
         with socket.socket() as sock:
             sock.bind(('127.0.0.1', port))
     print('+ ' + shlex.join(command), flush=True)
@@ -170,7 +245,8 @@ def serve(p, args):
         deadline = time.monotonic() + args.startup_timeout
         while time.monotonic() < deadline and process.poll() is None:
             try:
-                if request_json(base, '/v1/cache/status').get('state') == 'serving':
+                status = request_json(base, '/health' if is_llama else '/v1/cache/status')
+                if (status.get('status') == 'ok' if is_llama else status.get('state') == 'serving'):
                     break
             except (OSError, ValueError):
                 pass
@@ -205,6 +281,8 @@ def serve(p, args):
 
 
 def desktop(p, args):
+    if p['engine'] == 'llama-cpp':
+        raise RuntimeError('Nemotron uses llama.cpp; this recipe has no FreeToken Desktop profile.')
     path = Path(args.config).expanduser()
     original = path.read_bytes()
     data = json.loads(original)
@@ -238,6 +316,7 @@ def main():
     commands.add_parser('list')
     setup = commands.add_parser('install')
     setup.add_argument('--flint', action='store_true')
+    setup.add_argument('--llama-cpp', action='store_true', help='Install the pinned engine for Nemotron')
     for command in ['download', 'show', 'serve', 'desktop']:
         sub = commands.add_parser(command)
         sub.add_argument('model', choices=sorted(p.stem for p in (ROOT / 'profiles').glob('*.json')))
@@ -251,7 +330,12 @@ def main():
             sub.add_argument('--apply', action='store_true')
     args = parser.parse_args()
     if args.command == 'install':
-        install(args.flint)
+        if args.llama_cpp:
+            if args.flint:
+                raise ValueError('Install FreeToken --flint and --llama-cpp separately')
+            install_llama()
+        else:
+            install(args.flint)
     elif args.command == 'list':
         for path in sorted((ROOT / 'profiles').glob('*.json')):
             p = read_json(path)

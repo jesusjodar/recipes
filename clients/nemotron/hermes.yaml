@@ -1,0 +1,6 @@
+model:
+  provider: custom
+  default: nemotron
+  base_url: http://127.0.0.1:1919/v1
+  api_mode: chat_completions
+  context_length: 65536

@@ -1,0 +1,6 @@
+READY sweep-hybrid-fetch1-chunk2048-d2d0
+CACHE 3328, SWA 4096, max 3328
+{'label': 'sweep-hybrid-fetch1-chunk2048-d2d0-c3328-warmup', 'cache': 3328, 'prompt_tokens': 2048, 'cached_tokens': 0, 'completion_tokens': 128, 'events': 128, 'ttft_s': 0.9965980540000601, 'effective_prefill_tok_s': 2054.990968304536, 'decode_tok_s': 57.85937332979335, 'total_s': 3.192526221000662}
+{'label': 'sweep-hybrid-fetch1-chunk2048-d2d0-c3328-run0', 'cache': 3328, 'prompt_tokens': 8192, 'cached_tokens': 0, 'completion_tokens': 256, 'events': 256, 'ttft_s': 3.6542620950003766, 'effective_prefill_tok_s': 2241.7658577932834, 'decode_tok_s': 63.733678983879976, 'total_s': 7.655996606999906}
+{'label': 'sweep-hybrid-fetch1-chunk2048-d2d0-c3328-run1', 'cache': 3328, 'prompt_tokens': 8192, 'cached_tokens': 0, 'completion_tokens': 256, 'events': 256, 'ttft_s': 3.6312331530007214, 'effective_prefill_tok_s': 2255.982927791465, 'decode_tok_s': 67.79320478324222, 'total_s': 7.393373064000116}
+DONE sweep-hybrid-fetch1-chunk2048-d2d0

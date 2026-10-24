@@ -1,0 +1,12 @@
+model = "nemotron"
+model_provider = "recipes_local"
+model_context_window = 65536
+model_auto_compact_token_limit = 55296
+model_supports_reasoning_summaries = false
+
+[model_providers.recipes_local]
+name = "recipes / llama.cpp local"
+base_url = "http://127.0.0.1:1919/v1"
+wire_api = "responses"
+requires_openai_auth = false
+supports_websockets = false

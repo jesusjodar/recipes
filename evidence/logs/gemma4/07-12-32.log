@@ -1,0 +1,47 @@
+[2026-10-22|09:11:41] INFO     Parsed arguments:
+ServerArgs(model_path='<HOME>/.freetoken/models/Gemma-4-26B-A4B-NVFP4', tp_info=DistributedInfo(rank=0, size=1), dtype=torch.bfloat16, hf_overrides={}, max_running_req=1, attention_backend='auto', moe_strategy='hybrid', quant_backend=None, ple_backend='disk', swa_decoder_replay='bounded', expert_load='auto', moe_cache_size=1425, moe_cache_rate=None, moe_cache_auto=False, moe_cache_mem=None, moe_cache_scope='unified', moe_cache_split='equal', kv_reserve_tokens=8192, moe_cache_policy='lru', moe_prefill_overlap=True, moe_prefill_hit_d2d=False, moe_collect_stats=False, moe_cpu_threads=0, moe_cpu_layers=None, moe_hybrid_max_fetch=1, moe_locked_fetch=-1.0, moe_locked_max_fetch=8, cuda_graph_bs=None, cuda_graph_max_bs=None, page_size=1, memory_ratio=0.95, linear_state_cache_ratio=2.0, swa_full_tokens_ratio=0.2, swa_num_pages_override=None, distributed_timeout=60.0, use_dummy_weight=False, use_pynccl=True, max_seq_len_override=8192, num_page_override=None, num_token_override=4096, mm=MultimodalConfig(disabled_encoders=frozenset({'vision', 'audio'}), embed_cache_device='cpu', encoder_weights='host', image_min_tokens=None, image_max_tokens=None, processor_kwargs={}), max_extend_tokens=8192, cache_type='radix', offline_mode=False, decode_log_interval=40, special_token_ckpt=False, _unique_suffix='.pid=6733', server_host='127.0.0.1', server_port=1920, num_tokenizer=0, silent_output=False, shell_mode=False, served_model_name='Gemma-4-26B-A4B-NVFP4', tool_call_parser='gemma4', reasoning_parser='gemma4', sampling_defaults='model', max_output_tokens=None, enable_cache_report=False, anthropic_inline_system='auto', allowed_media_domains='', allowed_local_media_path='', cors_origins='tauri://localhost,http://tauri.localhost,http://localhost:1420', gpu=('<GPU-UUID>',), gpu_assigned=None)
+[2026-10-22|09:11:41|initializer] INFO     --gpu <GPU-UUID> -> <GPU-UUID>
+[2026-10-22|09:11:41|FrontendAPI] INFO     Default sampling config (source=model): temperature=1.0, top_k=64, top_p=0.95
+INFO:     Started server process [6733]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:1920 (Press CTRL+C to quit)
+<HOME>/.freetoken/venv/lib/python3.12/site-packages/freetoken/engine/engine.py:1370: FutureWarning: torch.cuda._set_allocator_settings is deprecated. Use torch._C._accelerator_setAllocatorSettings instead.
+  torch.cuda.memory._set_allocator_settings("expandable_segments:True")
+[2026-10-22|09:11:44|core|rank=0] INFO     Enabled expandable_segments (override via PYTORCH_ALLOC_CONF)
+[2026-10-22|09:11:44|core|rank=0] INFO     Auto-selected attention backend: triton
+[2026-10-22|09:11:44|core|rank=0] INFO     Resolved config: moe_strategy='hybrid', attention_backend='triton', cache_type='swa_radix', page_size=1
+[2026-10-22|09:11:45|core|rank=0] INFO     Free memory before loading model: 11.11 GiB
+Loading weights:   0%|          | 0/2 [00:00<?, ?it/s]Loading weights:  50%|█████     | 1/2 [00:01<00:01,  1.34s/it]Loading weights: 100%|██████████| 2/2 [00:04<00:00,  2.18s/it]Loading weights: 100%|██████████| 2/2 [00:04<00:00,  2.05s/it]
+[2026-10-22|09:11:50|core|rank=0] INFO     MoE experts: nvfp4 via triton
+[2026-10-22|09:11:50|core|rank=0] WARNING  expert banks: low free RAM -> serial build (avoids parallel-reader OOM; override with --expert-load parallel)
+[2026-10-22|09:11:50|core|rank=0] INFO     expert banks: slow path (serial build)
+Loading Gemma4 NVFP4 experts:   0%|          | 0/2 [00:00<?, ?it/s]Loading Gemma4 NVFP4 experts:  50%|█████     | 1/2 [00:03<00:03,  3.22s/it]Loading Gemma4 NVFP4 experts: 100%|██████████| 2/2 [00:08<00:00,  4.35s/it]Loading Gemma4 NVFP4 experts: 100%|██████████| 2/2 [00:08<00:00,  4.18s/it]
+[2026-10-22|09:11:58|core|rank=0] INFO     torch intra-op threads: 6 -> 1 (cores reserved for the pinned CPU MoE pool)
+[2026-10-22|09:11:58|core|rank=0] INFO     CPU MoE executor ready: threads=5 (pinned to cores 0..4) isa=avx2 fmt=nvfp4: 30 layers H=2816 I=704 experts=128 layers=30 top_k=8 act=gelu_tanh max_tokens=1 spin_wait=True handshake=kernel
+[2026-10-22|09:11:58|core|rank=0] INFO     Multimodal disabled: --text-model-only
+[2026-10-22|09:11:58|core|rank=0] INFO     Allocating 4096 tokens for KV cache, K + V = 0.65 GiB
+[2026-10-22|09:11:58|core|rank=0] INFO     Free memory after initialization: 0.70 GiB
+[2026-10-22|09:11:58|core|rank=0] INFO     Start capturing CUDA graphs with sizes: [1]
+[2026-10-22|09:11:58|core|rank=0] INFO     Free GPU memory before capturing CUDA graphs: 0.70 GiB
+Preparing for capturing CUDA graphs...:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 0.70 GiB:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 0.70 GiB: 100%|██████████| 1/1 [00:01<00:00,  1.44s/batch]Capturing graphs: bs = 1   | avail_mem = 0.70 GiB: 100%|██████████| 1/1 [00:01<00:00,  1.44s/batch]
+[2026-10-22|09:12:00|core|rank=0] INFO     Free GPU memory after capturing CUDA graphs: 0.68 GiB
+[2026-10-22|09:12:01|core|rank=0] INFO     Prefill warmup complete for lengths [80, 128] in 1.063 s
+[2026-10-22|09:12:03|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+[2026-10-22|09:12:03|FrontendAPI] INFO     API server is ready to serve on 127.0.0.1:1920
+[2026-10-22|09:12:11|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 10, #cached-token: 0, token usage: 0.00, #swa-token: 11/2194, swa usage: 0.01, #running-req: 1, #queue-req: 0, input throughput (token/s): 1.14
+[2026-10-22|09:12:12|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 51, token usage: 0.01, #swa-token: 51/2194, swa usage: 0.02, gen throughput (token/s): 4.08, #queue-req: 0
+[2026-10-22|09:12:13|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 91, token usage: 0.02, #swa-token: 91/2194, swa usage: 0.04, gen throughput (token/s): 49.93, #queue-req: 0
+[2026-10-22|09:12:14|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 131, token usage: 0.03, #swa-token: 131/2194, swa usage: 0.06, gen throughput (token/s): 50.73, #queue-req: 0
+[2026-10-22|09:12:15|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 171, token usage: 0.04, #swa-token: 171/2194, swa usage: 0.08, gen throughput (token/s): 50.64, #queue-req: 0
+[2026-10-22|09:12:15|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:54884 - "POST /v1/completions HTTP/1.1" 200 OK
+
+[2026-10-22|09:12:29|core|rank=0] INFO     Scheduler exiting gracefully...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6733]
+<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+

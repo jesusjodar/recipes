@@ -1,0 +1,329 @@
+{
+  "tag": "long-hybrid-fetch1-chunk4096-d2d1",
+  "requests": [
+    {
+      "label": "long-hybrid-fetch1-chunk4096-d2d1-c3456-warmup",
+      "cache": 3456,
+      "prompt_tokens": 2048,
+      "cached_tokens": 0,
+      "completion_tokens": 128,
+      "events": 128,
+      "ttft_s": 0.9849667260004935,
+      "effective_prefill_tok_s": 2079.258056072621,
+      "decode_tok_s": 59.94862564222256,
+      "total_s": 3.104369136999594,
+      "output_sha256": "b6cbec9b49c8d4529cf0264e279cddccf0f85c38be5991ca76f384a4fbea73a4",
+      "text": "<think>We need answer user. Need inspect repo excerpts? They ask: \"Request long-hybrid-fetch1-chunk4096-d2d1-c3456-warmup. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need respond as software engineering agent. Need likely design. We have only excerpts. Need maybe infer freetoken project. We should probably review repository excerpts? We only see files. Need maybe mention based on excerpts. Need provide concrete implementation with tests? The task asks explain how to"
+    },
+    {
+      "label": "long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold",
+      "cache": 3456,
+      "prompt_tokens": 65536,
+      "cached_tokens": 0,
+      "completion_tokens": 8192,
+      "events": 8192,
+      "ttft_s": 42.456968071999654,
+      "effective_prefill_tok_s": 1543.5864353022644,
+      "decode_tok_s": 49.96602663233037,
+      "total_s": 206.38953015699917,
+      "output_sha256": "7d0891d001785bf82327de1b724eafc181f766aa50c9aab1af3de08472adb4e3",
+      "text": "<think>We need answer user. Need parse task. They provided repo excerpts heavily duplicated and final task: \"Request long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need respond likely as coding agent. Need infer request id maybe long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold. Maybe hidden task from benchmark? We need explain design, implementation plan, Python code for disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Repository excerpts show code for freetoken, long hybrid fetch, chunk 4096, d2d1? c3456? 64k cold. Could be asking feature. We need likely propose implementation. Need be careful: no direct repo tests included. We need give detailed design and Python code.\n\nWe should probably address based on excerpts. The final task is clear. We need craft answer: how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Include design, implementation plan, Python code.\n\nWe need likely not just generic. Should tie to repo: freetoken, scheduler prefill, cache manager, hybrid GDN, SWA, prefix cache. The request ID \"long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold\" maybe indicates test scenario: long hybrid fetch, chunk 4096, d2d1? c3456? 64k cold. Could be from internal task naming. Maybe need implement disk-backed persistent prefix cache for long hybrid fetch, chunk size 4096, d2d1? \"d2d1-c3456-64k-cold\" maybe weird.\n\nWe need decide final response. Since user asks task, likely expects design and code. We should not just say impossible. We can propose architecture.\n\nLet's inspect excerpts mentally:\n\n- openai_api.py: OpenAI-compatible server. chat/completions, streaming, errors, efforts, tools.\n- flint config/attention/weight: model config with full/sliding attention, MoE, etc. Flint maybe custom.\n- scheduler/prefill.py: PrefillAdder, PrefillManager, ChunkedReq, token budget, prefix cache, hybrid GDN, SWA. Important logic:\n  - PrefillAdder token_budget default max_extend_tokens 8192? It chunks prompts if exceed token budget.\n  - PrefillManager.schedule_next_batch(prefill_budget) admits pending requests.\n  - PrefillAdder._try_allocate_one: table manager available_size, cache_manager.prefix_replay_tokens, match_req, handle cached_len, extend_len, estimated_size, lock, hybrid slots, SWA gate, allocate table, copy cached tokens, allocate linear slots/pingpong, return handle...\n  - _add_one_req: remain_len = pending_req.input_len - cached_len; chunk_size = min(token_budget, remain_len); SWA cap; align; keep images whole; token_budget -= chunk_size; reserved_size += kv reservation; copy slice; req = CLS(... input_ids=pending_req.input_ids[: cached_len + chunk_size], cached_len=cached_len, output_len=..., uid, cache_handle, sampling_params, prompt_len=pending_req.input_len); req.mm_items etc; linear slots inherited; swa_evicted_seqlen carry.\n  - try_add_one: if token_budget <=0 return; if chunked_req then _add_one_req continuation; else _try_allocate_one; if req None undo; return req.\n  - PrefillManager.add_one_req stores PendingReq; schedule_next_batch computes adder; loops pending list; is_continuation; try_add_one; if success set pending_req.chunked_req None, if ChunkedReq append chunked_list, reqs.append; if not continuation prompt_admissions etc; log_new_tokens += req.extend_len; if not continuation log_cached_tokens += handle.cached_len; else break; pending_list = chunked_list + pending_list[len(reqs):]; batch = Batch(reqs=reqs, phase=\"prefill\"); batch.log_new_tokens = log_new_tokens; batch.log_cached_tokens = log_cached_tokens; batch.prompt_admissions = prompt_admissions; return batch.\n\nTask: disk-backed persistent prefix cache with correct invalidation and concurrent request handling.\n\nWe need likely design:\n- Disk cache layout: maybe per-model/per-user prefix entries, hash of prompt prefix, token ranges, metadata.\n- Persistence: write-ahead logs, snapshots, checkpoints, atomic rename, fsync.\n- Invalidation: when model weights updated or cache rebuild, clear stale entries; versioning by model path/version, tokenizer, sampling? Prefix hash includes token ids/messages? For persistent disk cache, key should be content hash of token sequence and maybe model version, chat template kwargs, tokenizer. Cache entries immutable once written; on weight update bump model version. For eviction, maybe LRU/manifest. Correct invalidation: don't overwrite in-place; versioned keys; atomic writes; checksums; rebuild on version mismatch; invalidate on cache manager state changes.\n- Concurrent request handling: disk cache must be thread-safe / async lock. Multiple prefill requests may share prefix. Need lock around disk reads/writes and cache manager mutation. Avoid duplicate admission for same prefix; per-prefix locks or global admission lock. Since scheduler may be async, use asyncio.Lock per cache key or global lock. Disk I/O should be offloaded to thread executor; async lock. For concurrent appends to same prefix, need coalesce/serialize to avoid append conflicts. Could use per-prefix locks and generation/sequence numbers. Or global lock for correctness simpler; performance maybe okay? Task asks concurrent request handling, likely need robust design.\n\n- Long hybrid fetch1 chunk4096: chunk size 4096. Disk cache should support chunked prefill. Maybe persistent cache entries correspond to chunks. For long prompts, store intermediate prefix states? Disk-backed persistent prefix cache maybe only completed prompt prefixes? Need handle long prompts. The request id includes chunk4096 and 64k cold. Could mean long prompt > chunk size, cold cache, hybrid fetch. We should design chunk-wise persistent cache.\n\n- Correct invalidation:\n  - Cache key: hash of token sequence from start to cache boundary, plus model fingerprint, tokenizer version, chat template kwargs, maybe adapter weights.\n  - Store immutable entries: key, token_start, token_end, token_hash, device handle? Disk-backed means maybe metadata + tokens + state? For prefix cache, usually store KV cache states? Disk-backed persistent prefix cache might mean persist KV states to disk? Or just token prefix cache? In LLM serving, prefix cache typically stores KV cache states in GPU/CPU memory, optionally disk. Disk-backed persistent prefix cache could store token prefixes and maybe KV states. Given code has cache_manager, prefix cache. Disk-backed likely means persist cache entries to disk to survive restarts. Could be token-level prefix cache. Need infer.\n\nThe task: \"add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling.\" Likely expected design for project. We can propose both: disk-backed KV cache entries (binary state snapshots) or token-prefix entries. Since code's prefix cache is likely in-memory; add disk persistence.\n\nLet's search memory? freetoken maybe open-source? It might be a fictional repo. The excerpts mention Flint, SWA, GDN, NVFP4, FlashInfer. Could be from a project. The task might be generated from issue. Request name \"long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold\" maybe test case. We need answer not necessarily implement full code.\n\nWe can structure final:\n1. Requirements/goals.\n2. Design:\n   - Cache identity and versioning.\n   - Disk layout.\n   - Entry lifecycle: admission, chunk allocation, completion, eviction.\n   - Invalidations: model version, tokenizer, sampling? prompt? cache manager rebuild, failed.\n   - Concurrency: locking, async, per-key/per-prefix, duplicate suppression, append safety, cancellation.\n   - Integration with PrefillAdder/PrefillManager.\n3. Implementation plan phases.\n4. Python code:\n   - DiskCacheKey / Fingerprint dataclass.\n   - DiskPrefixCache class with async lock, get/put, atomic write, fsync, load.\n   - maybe DiskCacheEntry dataclass.\n   - integration helper in PrefillAdder.\n   - tests? User asks implementation plan and Python code. Include code snippets.\n\nNeed be detailed. We can write code that fits approximate interfaces. But final should not be too huge? Desired oververbosity 5. Yet task asks detailed design and code. We can be thorough.\n\nLet's think through technical design.\n\nCache key:\n- For token-based prefix cache: hash of token IDs from position 0 to boundary. But long prompts chunked: first chunk may be prefix of length chunk_size. A persistent cache could store entries for each prefix boundary. Key should include token sequence hash. Use SHA-256 over token bytes + length. Include model fingerprint: path, maybe weight version, config digest. Include tokenizer/eval tokenizer version. Include chat template kwargs? For chat completions, rendered messages -> tokens. But GenSpec has messages already rendered? chat_request_to_genspec passes render_messages to GenSpec.messages. For cache key, use spec messages? Simpler: token ids hash. But to be safe include model fingerprint and maybe sampling? Prefix cache usually independent of sampling, but stop tokens etc. Use token sequence only.\n\n- Disk entry:\n  ```\n  {\n    \"version\": 1,\n    \"key\": hex,\n    \"model\": fingerprint,\n    \"tokenizer\": version,\n    \"token_start\": int,\n    \"token_end\": int,\n    \"token_hash\": hex,\n    \"tokens_sha256\": ...,\n    \"created_at\": ...,\n    \"last_used\": ...,\n    \"size_bytes\": ...,\n    \"state\": ...? \n  }\n  ```\n  If storing KV state, entry binary includes state tensor metadata. But maybe just prefix tokens. For disk-backed persistent prefix cache, likely store token prefix and metadata, not full KV state (expensive). But \"disk-backed persistent prefix cache\" could mean KV state persisted to disk. Hmm.\n\nIn LLM serving, prefix cache can store KV cache (e.g., vLLM) in GPU or CPU; disk-backed might mean saving KV states to disk for restarts? The code has cache_manager with handles, radix cache, linear state pool. A disk-backed persistent prefix cache might be an extension of CacheManager. The task mentions \"long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold\" maybe about hybrid cache fetch and cold start. Could be asking to add disk-backed persistent prefix cache. We can design generic.\n\nMaybe we should not overfit. Provide design that can be adapted.\n\nInvalidation:\n- Cache entries immutable. Key includes model version. On model weight update, old entries not reused; optionally delete old model dirs.\n- Tokenizer changes: key includes tokenizer version/eval hash; don't reuse across versions.\n- Sampling params: not part of prefix key; but if stop/penalty affect generation, cached prefix can still be reused.\n- Cache manager rebuild: if in-memory radix cleared, disk entries can be reloaded. If cache is being rebuilt/failed, gate.\n- Eviction: LRU by last_used; manifest file. Atomic updates.\n- Corruption: checksum per entry and manifest; atomic writes; fsync directory.\n- Concurrent invalidation: generation of new model version should bump fingerprint; in-flight requests use old fingerprint? Or coordinate stop/start. For correct invalidation, versioned keys prevent stale hits; old entries can be lazily ignored/deleted.\n\nConcurrency:\n- PrefillManager may process multiple pending requests. Prefix cache reads/writes should be serialized per prefix key and maybe per model/version.\n- Use async lock map: `asyncio.Lock` per key, plus maybe a global lock for admission. Since `asyncio` single-thread event loop, an `asyncio.Lock` is enough for coroutine safety, but disk I/O via `asyncio.to_thread` won't block event loop. However multiple tasks may await same lock; okay.\n- For same prefix, first request may compute; second should wait or miss. Use per-key lock around get+admit? If we hold lock during long prefill, bad. Better: check cache under per-key lock, release, compute; on completion, re-check before admit? Or use in-flight coalescing. Simpler: per-key admission lock around cache get and reservation; compute outside; on completion insert. But if two requests same prefix, both may miss and compute duplicate. To avoid, use in-flight map: key -> set of waiters/futures; first computes, others await result. Or per-key lock and check inside; first holds lock only for cache get, then compute? Need design.\n\nGiven scheduler PrefillAdder handles one pass at a time; PrefillManager loops pending. Concurrent requests may be in pending list. For same prefix, we can coalesce via `inflight_prefixes` map in PrefillManager or CacheManager.\n\nImplementation plan:\n- Add `DiskPrefixCache` in `freetoken/scheduler/disk_cache.py` or `freetoken/cache/disk.py`.\n- It wraps or replaces `CacheManager.prefix_cache`? Maybe not.\n- Add `PrefixCacheKey` and fingerprint.\n- Add `DiskCacheBackend` with:\n  - `__init__(root: str, model_fingerprint: str, tokenizer_version: str)`\n  - `async def get(self, key, max_tokens?) -> CacheHandle | None`\n  - `async def put(self, key, tokens, metadata) -> None`\n  - `async def acquire(self, key) -> AsyncContextManager` maybe.\n- Atomic file format: one file per key hash: `<sha256>.json` + `<sha256>.json.tmp`; content JSON with tokens maybe binary? For token prefix, store token IDs as JSON array or binary. Use atomic replace and fsync file + dir.\n- Manifest: `manifest.json` with entries version, model, keys, LRU order, checksums; update atomically. Or just directory scan. Simpler: per-key files + LRU list in memory + manifest. For persistence, scan directory on startup.\n- Checksum: store `token_hash` (SHA-256 of token bytes) and file checksum. On read, verify.\n- Disk format: JSON with token list may be okay for prefix cache; but KV state binary maybe not. We can abstract.\n\nCache key creation:\n```\ndef prefix_cache_key(token_ids: list[int], model_fingerprint: str, tokenizer_version: str) -> str:\n    h = hashlib.sha256()\n    h.update(model_fingerprint.encode())\n    h.update(b\"\\0\")\n    h.update(tokenizer_version.encode())\n    h.update(b\"\\0\")\n    h.update(str(len(token_ids)).encode())\n    h.update(b\"\\0\")\n    for t in token_ids:\n        h.update(t.to_bytes(4, \"little\", signed=True))\n    return h.hexdigest()\n```\nBut for chunked entries, token_start/end. Key should represent prefix from 0 to end, not just range, because prefix validity depends on full prefix. For a chunk starting at cached_len, key should include tokens[:end]. But disk may store entry for full prefix at boundary. For long prompts, we may need state for prefix ending at chunk boundary. The key includes tokens[:end]. For continuation, we might need entry for prefix ending at current chunk. Could compute key from tokens[:end]. But if we only store completed prompt prefixes, continuation chunks might not have disk entries unless we store intermediate. The task mentions chunk4096; likely need persistent cache for chunks.\n\nMaybe design: disk cache stores immutable prefix entries at chunk boundaries. Key = hash of token prefix ending at `token_end`. Entry contains `token_start` (usually 0) and `token_end`. For continuation, key uses tokens[:cached_len+chunk]. But to find a cached prefix for a long prompt, we need key for the full prefix we want to extend. The cache manager already matches prefix via radix. For disk-backed persistent cache, we can compute key for candidate boundary and look up. If hit, use cached_len = token_end. For chunk 4096, when prefill budget allows, we can look up prefix of length e.g. 4096 from cache; if hit, start at that boundary; else compute chunk and store entry for boundary.\n\nBut in current code, prefix cache match happens in `_try_allocate_one` via `cache_manager.match_req`. To add disk-backed persistent cache, we could:\n- Before `_try_allocate_one`, if no in-memory hit, ask disk cache for prefix ending at `min(token_budget, remain_len)` or at configured chunk size.\n- If disk hit, convert to a cache handle? The current `CacheManager.match_req` returns a handle with `cached_len`, `cuda_handle`, `mamba_value`. Disk cache may not provide GPU handle. For persistent disk cache, maybe it stores token prefixes and the cache manager can rebuild from tokens? Or it stores state. If only tokens, we need to reconstruct KV state, which may not be possible cheaply. But for prefix cache, storing token prefix and using it for future requests can avoid recomputation only if KV state is available. On restart, to use disk cache, you need KV state or recompute from tokens. Disk-backed persistent prefix cache might store KV state snapshots, so it can provide a handle. But writing full KV state to disk per chunk is heavy but possible.\n\nGiven task likely expects conceptual design, we can present both levels:\n- At the token-prefix level, disk cache stores immutable prefix hashes and token ranges for invalidation/restart.\n- At the KV-state level, disk cache stores serialized state snapshots keyed by prefix hash, with atomic writes and fsync; on load, rebuild handles.\n- For pragmatic implementation, start with token-prefix metadata + optional state; use existing CacheManager for KV.\n\nMaybe final should include code for a `DiskPrefixCache` that is backend-agnostic and can be plugged into CacheManager. We can write:\n\n```\n@dataclass(frozen=True)\nclass PrefixCacheKey:\n    model_fingerprint: str\n    tokenizer_version: str\n    token_ids: tuple[int, ...]\n\n    def digest(self) -> str: ...\n```\n\nBut hashing tuple each time.\n\nDisk cache class:\n```\nclass DiskPrefixCache:\n    def __init__(self, root: str, model_fingerprint: str, tokenizer_version: str, page_size: int = 256):\n        self.root = Path(root)\n        self.model_fingerprint = model_fingerprint\n        self.tokenizer_version = tokenizer_version\n        self._locks: dict[str, asyncio.Lock] = {}\n        self._local = asyncio.Lock()? \n    async def _lock_for(self, key: str) -> asyncio.Lock:\n        async with self._global_lock? \n```\nSince asyncio.Lock created outside loop? In modern Python okay. But to be safe use `asyncio.Lock()` per key. Need global lock to protect dict? Could use single `asyncio.Lock` for simplicity; but concurrent request handling wants per-key. Use `defaultdict` guarded by global lock? Or just a single lock for disk cache; simpler and correct. But task asks concurrent; we can mention per-key locks with a small global registry lock. In asyncio, no threading, so `asyncio.Lock` per key is fine; dict access is sync and atomic enough in event loop.\n\nMethods:\n```\nasync def get_handle(self, token_ids: Sequence[int], model_fingerprint: str, tokenizer_version: str) -> CacheHandle | None:\n    key = ...\n    async with self._lock(key):\n        entry = await self._read_entry(key)\n        if entry is None or entry.invalid: return None\n        # verify checksum\n        return entry.handle or ...\n```\nBut returning a handle from disk? We can just return entry. For actual cache manager, maybe not.\n\n`put`:\n```\nasync def put(self, token_ids, metadata) -> str:\n    key = ...\n    entry = ...\n    async with self._lock(key):\n        await self._write_entry(key, entry)\n        await self._update_manifest(...)\n    return key\n```\n\nAtomic write:\n```\ntmp = path.with_suffix(\".json.tmp\")\ntmp.write_text(json.dumps(entry, ...))\nwith open(tmp, \"rb+\") as f: f.flush(); os.fsync(f.fileno())\nos.replace(tmp, path)\nfsync dir\n```\n\nRead:\n```\nif not path.exists(): return None\nentry = json.loads(path.read_text())\nif entry[\"version\"] != CACHE_VERSION or entry[\"model_fingerprint\"] != ...: return None/invalidate\nif entry[\"token_hash\"] != compute(...): return None\nif entry[\"checksum\"] != sha256(json): return None\nif entry[\"expired\"] or entry[\"invalid\"]: return None\nreturn entry\n```\n\nInvalidation:\n- `invalidate_model(model_fingerprint)` delete directory or mark entries invalid.\n- `invalidate_prefix(key)`.\n- On startup, scan entries, validate checksums, rebuild in-memory index.\n- On model version change, new fingerprint means old keys won't match; optionally prune old model dirs.\n\nConcurrency:\n- Per-key async lock.\n- Global lock for manifest update? Or per-model lock. Use `asyncio.Lock` per model fingerprint to avoid contention. But dict of locks. Simpler: `self._model_locks: dict[str, asyncio.Lock]` guarded by global lock? In asyncio, can just use dict and per-key locks; no mutation while holding? Might be okay but not strictly. Use a global `asyncio.Lock` for all disk cache operations to be simple; but for concurrency, per-key locks better. We can provide per-key lock helper with a single-flight future map.\n\nSingle-flight:\n```\nasync def get_or_compute(self, key, compute):\n    async with self._key_lock(key):\n        entry = await self._read(key)\n        if entry: return entry\n        result = await compute()\n        await self._write(key, result)\n        return result\n```\nBut compute may be long; holding lock blocks same key but not others if per-key. Good.\n\nFor prefix cache admission, we want to avoid duplicate compute for same key. Could implement in PrefillManager:\n```\nasync def get_prefix(self, token_ids, ...):\n    async with self.cache.get_lock(key):\n        entry = await self.cache.get(...)\n        if entry: return entry\n        return None\n```\nThen compute; before adding to cache, use put.\n\nBut if two requests same prefix, both may compute before put. To prevent, use in-flight future map per key:\n```\nasync def get_or_acquire(self, key, factory):\n    async with self._key_lock(key):\n        if key in self._inflight:\n            fut = self._inflight[key]\n            return await fut\n        fut = asyncio.ensure_future(factory())\n        self._inflight[key] = fut\n        try:\n            return await fut\n        finally:\n            del self._inflight[key]\n```\nFactory does disk get/compute/put. But disk get is quick; compute may be long. Holding per-key lock during compute is okay for same key but might block other prefixes? No, per-key lock only. But we need not hold during compute? For coalescing, must hold until future done. That's fine.\n\nHowever PrefillAdder `_try_allocate_one` may be called sequentially in PrefillManager, so maybe not necessary. But task explicitly concurrent request handling, so include.\n\nCorrect invalidation with concurrent requests:\n- If cache rebuild starts while requests in flight, fingerprint changes; in-flight requests should use old fingerprint. New requests use new. Or stop admission during rebuild. Design: generation/fingerprint token; disk cache entries keyed by fingerprint; in-flight requests captured old fingerprint at submit; rebuild increments fingerprint; no invalidation of in-flight keys.\n- Cancellation: on client disconnect, remove inflight future and release per-key lock; no partial writes. Since entries immutable, partial writes use tmp+rename, so safe.\n- Failure: if compute fails, remove inflight future; do not write failed entry.\n- Concurrent writes to same key: per-key lock ensures serialization; but writes are immutable and atomic, so okay.\n\nLong hybrid fetch:\n- For long prompts, use chunk size 4096. Disk cache entries should be at boundaries. In `PrefillAdder._add_one_req`, chunk_size = min(token_budget, remain_len). The token_budget default maybe 8192; but task says chunk4096. We may set `max_extend_tokens=4096` or use `prefill_chunk_size`. When chunking, before allocating, check disk cache for prefix ending at `cached_len + chunk_size`? Actually if remain_len > token_budget, chunk_size = token_budget. For first chunk, cached_len=0, end=chunk_size. We can check disk for prefix tokens[:end]. If hit, set cached_len=entry.token_end and recompute chunk. For continuation, cached_len may be previous boundary; end = cached_len+chunk_size; check disk for tokens[:end]? But tokens[:end] includes previous cached tokens; if entry for that prefix exists, we could have started there. However continuation already has state; checking again may hit. Fine.\n\n- Disk cache entry should store `token_start=0` and `token_end=end`, token hash. For hybrid GDN state, maybe entry includes state handle. For now, key by prefix.\n\n- When storing new chunk: compute key for tokens[:end] and write entry. But if we only have KV state for the chunk, can we write full prefix state? The cache manager has handle for full prefix? In chunked prefill, the Req has input_ids up to end and cache_handle maybe from previous chunk? Actually for continuation, `cache_handle` from prior chunk? It may be the handle for prefix ending at cached_len? Then after forward, it extends. To store disk entry for new boundary, we need serialize state. For token-prefix metadata, can just store tokens[:end] and not state. For KV state, need serialize.\n\nMaybe design disk cache entries as:\n- Metadata JSON: key, model, tokenizer, token_start, token_end, token_hash, created_at, last_used, size, checksum.\n- State file: binary snapshot for KV (optional). For token-only, no state.\n- On disk hit, return a `PrefixCacheEntry` with token_end and token data; the scheduler can then either use existing cache handle (if in-memory) or recompute/restore.\n\nBut task asks \"disk-backed persistent prefix cache\" maybe we can propose a `DiskPrefixCache` that stores token prefixes and optionally KV snapshots, and integrates with existing `CacheManager` via a `DiskCacheHandle`. Let's design code abstractly.\n\nPossible code:\n\n```\n# freetoken/scheduler/disk_prefix_cache.py\nfrom __future__ import annotations\nimport asyncio, hashlib, json, os, time\nfrom dataclasses import dataclass\nfrom pathlib import Path\nfrom typing import Any, Protocol\n\nCACHE_VERSION = 1\n\n@dataclass(frozen=True)\nclass PrefixKey:\n    model_fingerprint: str\n    tokenizer_version: str\n    token_end: int\n    token_hash: str\n\n    @property\n    def digest(self) -> str: ...\n```\n\nBut hash should include tokens. Better:\n```\ndef compute_token_hash(token_ids: Sequence[int]) -> str:\n    h = hashlib.sha256()\n    h.update(len(token_ids).to_bytes(4, \"little\"))\n    for t in token_ids:\n        h.update(int(t).to_bytes(4, \"little\", signed=True))\n    return h.hexdigest()\n```\n\nKey digest:\n```\ndef prefix_key(token_ids: Sequence[int], model_fingerprint: str, tokenizer_version: str) -> str:\n    h = hashlib.sha256()\n    h.update(b\"freetoken-prefix-v1\")\n    h.update(model_fingerprint.encode())\n    h.update(b\"\\0\")\n    h.update(tokenizer_version.encode())\n    h.update(b\"\\0\")\n    h.update(compute_token_hash(token_ids).encode())\n    return h.hexdigest()\n```\n\nEntry:\n```\n@dataclass\nclass DiskPrefixEntry:\n    key: str\n    token_end: int\n    token_hash: str\n    tokens: list[int]\n    model_fingerprint: str\n    tokenizer_version: str\n    created_at: float\n    last_used: float\n    size_bytes: int\n    checksum: str\n```\n\nDisk cache:\n```\nclass DiskPrefixCache:\n    def __init__(self, root: str, model_fingerprint: str, tokenizer_version: str):\n        self.root = Path(root)\n        self.model_fingerprint = model_fingerprint\n        self.tokenizer_version = tokenizer_version\n        self._key_locks: dict[str, asyncio.Lock] = {}\n        self._inflight: dict[str, asyncio.Future[Any]] = {}\n\n    def _lock(self, key: str) -> asyncio.Lock:\n        lock = self._key_locks.get(key)\n        if lock is None:\n            lock = asyncio.Lock()\n            self._key_locks[key] = lock\n        return lock\n\n    async def get(self, token_ids: Sequence[int]) -> DiskPrefixEntry | None:\n        key = prefix_key(token_ids, ...)\n        async with self._lock(key):\n            return await self._get_blocking? \n```\nSince async lock, but file I/O sync. Use `await asyncio.to_thread(self._read_entry, key, token_ids)`. But holding lock while thread runs okay.\n```\n    async def get(self, token_ids):\n        key = ...\n        async with self._lock(key):\n            return await asyncio.to_thread(self._read_entry, key, tuple(token_ids))\n```\n`asyncio.Lock` bound to loop; if created in async init okay.\n\n`_read_entry`:\n```\npath = self.root / f\"{key}.json\"\nif not path.exists(): return None\ntry: raw = json.loads(path.read_text())\nexcept: return None\nif raw.get(\"version\") != CACHE_VERSION: return None\nif raw.get(\"model_fingerprint\") != self.model_fingerprint: return None\nif raw.get(\"tokenizer_version\") != self.tokenizer_version: return None\nif raw.get(\"token_end\") != len(token_ids): return None\nif raw.get(\"token_hash\") != compute_token_hash(token_ids): return None\nif raw.get(\"checksum\") != _checksum(raw): return None\n# verify tokens match? hash enough\nreturn DiskPrefixEntry(...)\n```\nChecksum should exclude checksum itself. Use `hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(\",\", \":\")).encode()).hexdigest()`.\n\n`put`:\n```\nasync def put(self, token_ids, metadata=None) -> str:\n    key = prefix_key(...)\n    entry = DiskPrefixEntry(...)\n    async with self._lock(key):\n        await asyncio.to_thread(self._write_entry, key, entry)\n        await asyncio.to_thread(self._update_manifest, key, entry)\n    return key\n```\nWriting same key twice updates last_used? If immutable, don't update. For LRU, update manifest. Could be okay.\n\n`_write_entry`:\n```\npath = self.root / f\"{key}.json\"\ntmp = path.with_name(f\"{key}.json.tmp\")\npayload = entry.to_json()\ntmp.write_text(json.dumps(payload, ...))\nwith tmp.open(\"rb\") as f: os.fsync(f.fileno())\nos.replace(tmp, path)\nself._fsync_dir()\n```\n\n`_update_manifest`: read manifest, set entry, write atomically. Or skip manifest and scan. For simplicity, manifest:\n```\nmanifest = {\"version\": 1, \"entries\": {key: {...}}}\ntmp write fsync replace fsync dir\n```\n\n`invalidate`:\n```\nasync def invalidate(self, key: str) -> None:\n    async with self._lock(key):\n        path = ...\n        if path.exists(): path.unlink()\n        await asyncio.to_thread(self._fsync_dir)\n```\nAnd `invalidate_model(self, model_fingerprint)` remove all entries for that model? Since key includes model, scanning directory maybe. Could maintain `model_dirs`. Simpler: root / model_fingerprint / key.json; invalidate by model dir.\n\nLet's choose layout:\n```\n<root>/\n  <model_fingerprint>/\n    <key>.json\n    <key>.json.tmp\n    manifest.json\n```\nOr flat with key includes model. For invalidation by model, use model dir.\n\nDisk cache class:\n```\nclass DiskPrefixCache:\n    def __init__(self, root: str, model_fingerprint: str, tokenizer_version: str):\n        self.root = Path(root) / model_fingerprint\n        self.model_fingerprint = model_fingerprint\n        self.tokenizer_version = tokenizer_version\n        self.root.mkdir(parents=True, exist_ok=True)\n        self._key_locks: dict[str, asyncio.Lock] = {}\n        self._inflight: dict[str, asyncio.Future] = {}\n\n    def _lock(self, key: str) -> asyncio.Lock: ...\n    async def get(self, token_ids: Sequence[int]) -> DiskPrefixEntry | None: ...\n    async def put(self, token_ids, metadata=None) -> str: ...\n    async def invalidate(self, key: str) -> None: ...\n    async def invalidate_model(self) -> None: ...\n    async def get_or_acquire(self, token_ids, factory) -> Any: ...\n```\n\nBut `get_or_acquire` with factory:\n```\nasync def get_or_acquire(self, token_ids, factory):\n    key = prefix_key(...)\n    async with self._lock(key):\n        entry = await asyncio.to_thread(self._read_entry, key, tuple(token_ids))\n        if entry is not None:\n            return entry\n        fut = self._inflight.get(key)\n        if fut is None or fut.done():\n            fut = asyncio.ensure_future(factory(key))\n            self._inflight[key] = fut\n        try:\n            return await fut\n        finally:\n            if self._inflight.get(key) is fut and fut.done():\n                del self._inflight[key]\n```\nNeed careful: if future done, delete. Simpler:\n```\nasync def get_or_acquire(...):\n    async with self._lock(key):\n        entry = await self._read_entry(...)\n        if entry: return entry\n        fut = self._inflight.get(key)\n        if fut is None or fut.done():\n            fut = asyncio.ensure_future(factory(key))\n            self._inflight[key] = fut\n        try:\n            return await fut\n        finally:\n            if self._inflight.get(key) is fut:\n                del self._inflight[key]\n```\nBut `finally` runs immediately after await completes? Actually finally after try completes, yes. If fut done, delete. If not done? Awaiting a future that is done returns immediately; finally deletes. Good. But if entry exists, no inflight. If factory raises, future done with exception; awaiting re-raises; delete. Good.\n\nFactory should write entry on success and maybe update last_used. But if factory is long, holding key lock is okay.\n\nHowever `get` uses lock and read; `get_or_acquire` uses lock and read. Good.\n\nConcurrency with PrefillManager: instead of calling `get_or_acquire` for every chunk, we can use it in `PrefillAdder` when checking disk before computing. But the existing flow uses `cache_manager.match_req`. To integrate, we could add a `disk_prefix_cache` to `PrefillAdder`/`CacheManager` and in `_try_allocate_one` or before, do:\n```\nentry = await self.disk_prefix_cache.get_or_acquire(\n    tokens[:end],\n    factory=lambda key: self._compute_and_store(...)\n)\n```\nBut `_try_allocate_one` is sync? It's sync def, not async. PrefillAdder is dataclass with sync methods; PrefillManager.schedule_next_batch is sync. The event loop runs sync code, so can't await. We could make PrefillManager async or offload. Or add disk check in async submit path before scheduler. The task asks concurrent request handling; we can propose making `PrefillManager` async or adding an async cache layer.\n\nGiven repo code has sync scheduler, adding async disk cache may require converting relevant methods to async. But final answer can propose an async adapter.\n\nMaybe design:\n- Keep scheduler sync core; disk cache uses async locks. Since FastAPI async endpoints can't call sync blocking disk I/O; use `asyncio.to_thread`. But PrefillManager.sync methods can't await. We can add async methods `schedule_next_batch_async` or make PrefillManager async. Simpler in design: introduce async `PrefillScheduler` wrapper or make `PrefillManager.schedule_next_batch` async. But that's invasive.\n\nFor answer, we can focus on cache component and integration points.\n\nLet's consider tests. User asks implementation plan and Python code, not necessarily tests. But \"with tests\" in system? The user task: \"Request ... Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\" We should maybe include test plan. The system says \"Review repository excerpts and propose a concrete implementation with tests.\" So we should include tests. The final answer should probably include design, plan, code, tests.\n\nWe need maybe not actually run tests (no repo context). We can propose tests:\n- Unit tests for key computation and hash verification.\n- Atomic write/read tests (tmp path).\n- Invalidation tests: corrupt entry returns None; model fingerprint mismatch returns None; tokenizer mismatch returns None; invalid flag.\n- Concurrency tests: many tasks same key; only one factory executes; disk put/read works; no duplicate writes.\n- Integration with PrefillAdder? Hard due torch. Use fakes.\n\nLet's plan final response:\n\n- Opening: interpret request. Add persistent disk-backed prefix cache for long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold. The design should preserve chunked prefill, hybrid fetch, SWA, invalidation, concurrency.\n\n- Design goals:\n  1. Correctness: immutable entries, content hash, versioned model/tokenizer, atomic writes, checksums, fsync, crash safety.\n  2. Chunking: entries keyed by full token prefix ending at chunk boundary; support cold start and long prompts.\n  3. Invalidation: versioned keys; model fingerprint; tokenizer version; cache rebuild; eviction; no stale hits.\n  4. Concurrency: per-key async locks, single-flight, atomic writes, no partial entries, cancellation cleanup.\n  5. Performance: disk read/write via thread pool; per-key locks; LRU manifest; maybe batch.\n\n- Data model:\n  - Fingerprint: hash of model path/config/weight version? In code `state.config.model_path`. Need robust model version: maybe compute weight file hash? Could be expensive. At minimum use path + config digest + architecture + quantization. For invalidation, on rebuild bump. We can propose `ModelFingerprint` dataclass with `model_path`, `config_digest`, `weight_version`. In code, use `state.model_version` if available else hash.\n  - Tokenizer version: `state.frontend_tokenizer` build id or tokenizer hash.\n  - Token hash: SHA-256 over token IDs.\n  - Entry fields.\n\n- Disk layout:\n  ```\n  <root>/<model_fingerprint>/<key>.json\n  <root>/<model_fingerprint>/<key>.json.tmp\n  <root>/<model_fingerprint>/manifest.json\n  ```\n"
+    },
+    {
+      "label": "long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-warm",
+      "cache": 3456,
+      "prompt_tokens": 65536,
+      "cached_tokens": 65535,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 0.8844108459998097,
+      "effective_prefill_tok_s": 1.1306962194357975,
+      "decode_tok_s": 50.376462971943624,
+      "total_s": 5.946843125000669,
+      "output_sha256": "99da18b3630161c6622c715b028f087cb9a7cb21729a4abc8a095423441309ca",
+      "text": "<think>Let me understand the task. The user has pasted a lot of repository excerpts (apparently from a project called \"freetoken\", which appears to be a Rust/Torch-based LLM server, possibly a reimplementation of something like a GGUF/SGLang-like server) and asks:\n\n\"Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nSo I need to provide a detailed design, implementation plan, and Python code for adding a disk-backed persistent prefix cache with correct invalidation and concurrent request handling.\n\nLet me analyze the excerpts to inform the design:\n\n1. `python/freetoken/server/openai_api.py` - OpenAI-compatible server, SSE streaming, tool calls, reasoning effort, etc.\n\n2. `python/freetoken/models/flint/config.py`, `attention.py`, `weight.py` - Flint model implementation with MoE, SWA, full attention, etc.\n\n3. `python/freetoken/scheduler/prefill.py` - Prefill scheduling with chunked prefill (`ChunkedReq`, `PrefillAdder`, `PrefillManager`). Key details:\n   - Token budget-based chunked prefill (default max_extend_tokens 8192"
+    }
+  ],
+  "context": 73728,
+  "output_budget": 8192,
+  "args": {
+    "strategy": "hybrid",
+    "fetch": 1,
+    "chunk": 4096,
+    "d2d": true,
+    "phase": "long",
+    "cache": 3456,
+    "runs": 3,
+    "memory_ratio": 0.9,
+    "long_decode": 8192
+  },
+  "command": [
+    "<research-workspace>/work/flint-research/dev-venv/bin/python",
+    "-m",
+    "freetoken",
+    "--model",
+    "<research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf",
+    "--gpu",
+    "0",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "22400",
+    "--served-model-name",
+    "flint-profile",
+    "--moe-strategy",
+    "hybrid",
+    "--moe-hybrid-max-fetch",
+    "1",
+    "--moe-cache-size",
+    "1024",
+    "--num-tokens",
+    "73728",
+    "--kv-reserve-tokens",
+    "73728",
+    "--max-seq-len-override",
+    "73728",
+    "--max-output-tokens",
+    "8192",
+    "--max-prefill-length",
+    "4096",
+    "--max-running-requests",
+    "1",
+    "--cuda-graph-max-bs",
+    "1",
+    "--enable-cache-report",
+    "--enable-special-token-ckpt",
+    "--memory-ratio",
+    "0.9",
+    "--moe-prefill-hit-d2d"
+  ],
+  "initial_status": {
+    "state": "serving",
+    "last_rebuild": null,
+    "geometry": {
+      "num_pages": 73728,
+      "page_size": 1,
+      "moe_cache_size": 1024,
+      "num_mamba_slots": 0,
+      "num_experts": 256,
+      "num_moe_layers": 47,
+      "moe_cache_policy": "lru",
+      "unit_bytes": {
+        "kv_per_token": 28672,
+        "moe_per_expert": 1769488,
+        "mamba_per_slot": 0,
+        "swa_per_token": 71680
+      },
+      "swa_full_tokens_ratio": 0.2,
+      "swa_page_size": 1,
+      "num_swa_pages": 14745,
+      "cache_budget_bytes": 8967343308,
+      "reasoning": {
+        "gears": [
+          "on"
+        ],
+        "default": "on",
+        "kwargs": {
+          "on": {}
+        }
+      },
+      "limits": {
+        "kv_tokens": {
+          "min": 1,
+          "max": 312756
+        },
+        "moe_experts": {
+          "min": 256,
+          "max": 5067
+        },
+        "mamba_slots": {
+          "min": 0,
+          "max": 0
+        },
+        "swa_tokens": {
+          "min": 1829,
+          "max": 125102
+        }
+      }
+    }
+  },
+  "max_cache_candidate": 3456,
+  "swa_pages": 5120,
+  "rebuilds": [
+    {
+      "request_id": "1274ce56-e4f4-4bdd-b231-6e8949b2a79f",
+      "status": "ok",
+      "moe_cache_size": 3456,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 5120,
+      "error": null
+    }
+  ],
+  "tool_validation": {
+    "id": "chatcmpl-3",
+    "object": "chat.completion",
+    "created": 1792662841,
+    "model": "flint-profile",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "reasoning_content": "The user wants me to call the lookup_codeword tool with key \"flint\" and then report its result.\n\nLet me do that.",
+          "tool_calls": [
+            {
+              "id": "call_lookup-codeword_0_9d968637",
+              "index": 0,
+              "type": "function",
+              "function": {
+                "name": "lookup_codeword",
+                "arguments": "{\"key\": \"flint\"}"
+              }
+            }
+          ]
+        },
+        "finish_reason": "tool_calls"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 65686,
+      "completion_tokens": 43,
+      "total_tokens": 65729
+    }
+  },
+  "tool_followup": {
+    "id": "chatcmpl-4",
+    "object": "chat.completion",
+    "created": 1792662843,
+    "model": "flint-profile",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "The codeword for key **flint** is:\n\n**ORCHID-42**",
+          "reasoning_content": "The user asked me to use lookup_codeword with key \"flint\" and then report its result.\n\nThe tool returned: ORCHID-42\n\nI should report this result clearly."
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 65737,
+      "completion_tokens": 58,
+      "total_tokens": 65795,
+      "prompt_tokens_details": {
+        "cached_tokens": 65729
+      }
+    }
+  },
+  "final_status": {
+    "state": "serving",
+    "last_rebuild": {
+      "request_id": "1274ce56-e4f4-4bdd-b231-6e8949b2a79f",
+      "status": "ok",
+      "moe_cache_size": 3456,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 5120,
+      "error": null
+    },
+    "geometry": {
+      "num_pages": 73728,
+      "page_size": 1,
+      "moe_cache_size": 3456,
+      "num_mamba_slots": 0,
+      "num_experts": 256,
+      "num_moe_layers": 47,
+      "moe_cache_policy": "lru",
+      "unit_bytes": {
+        "kv_per_token": 28672,
+        "moe_per_expert": 1769488,
+        "mamba_per_slot": 0,
+        "swa_per_token": 71680
+      },
+      "swa_full_tokens_ratio": 0.06944444444444445,
+      "swa_page_size": 1,
+      "num_swa_pages": 5120,
+      "cache_budget_bytes": 8967343308,
+      "reasoning": {
+        "gears": [
+          "on"
+        ],
+        "default": "on",
+        "kwargs": {
+          "on": {}
+        }
+      },
+      "limits": {
+        "kv_tokens": {
+          "min": 1,
+          "max": 312756
+        },
+        "moe_experts": {
+          "min": 256,
+          "max": 5067
+        },
+        "mamba_slots": {
+          "min": 0,
+          "max": 0
+        },
+        "swa_tokens": {
+          "min": 1829,
+          "max": 125102
+        }
+      }
+    }
+  },
+  "stats": {
+    "instance_id": "d2eb0496-af44-444e-8d9e-57c17c5b000c",
+    "model": {
+      "id": "flint-profile",
+      "ctx": 73728,
+      "attn": "hybrid_swa",
+      "moe": true,
+      "input_modalities": [
+        "text"
+      ],
+      "sampling": {
+        "temperature": 1.0,
+        "top_k": 20,
+        "top_p": 0.949999988079071
+      }
+    },
+    "uptime_s": 264,
+    "kv": {
+      "used_pages": 0,
+      "total_pages": 73728,
+      "page_size": 1
+    },
+    "mamba": null,
+    "swa": {
+      "used_pages": 0,
+      "total_pages": 5120,
+      "page_size": 1
+    },
+    "vram_bytes": 10643046400,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3060",
+        "uuid": "<GPU-UUID>",
+        "total_bytes": 12534939648
+      }
+    ],
+    "throughput": {
+      "decode_tps": 35.3,
+      "prefill_tps": 36095.2
+    },
+    "requests": {
+      "active": 0,
+      "completed": 5,
+      "p95_ms": 44339,
+      "ttft_mean_ms": 0,
+      "prompt_tokens_total": 264543,
+      "completion_tokens_total": 8677
+    }
+  }
+}

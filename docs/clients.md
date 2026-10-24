@@ -56,3 +56,9 @@ curl --fail-with-body http://127.0.0.1:1919/v1/chat/completions \
 ```
 
 Son comandos para que el usuario los ejecute, no resultados de pruebas nuevas. Para agentes, prueba también una herramienta real y su respuesta, repetición de historial y cancelación. La prueba de herramienta larga conservada en `evidence/flint.json` corresponde a Flint y al snapshot histórico; no certifica los demás modelos/clientes.
+
+## Nemotron con llama.cpp b11828
+
+Los ejemplos de `clients/nemotron/` usan el endpoint portable `http://127.0.0.1:1919`, contexto total 65536, entrada presupuestada 57344 y salida 8192. El servicio previo de Desktop/AI escucha en 8000; para usarlo directamente cambia las URLs y el modelo a su alias `nemotron-e4b`.
+
+La versión fijada de [llama.cpp](https://github.com/ggml-org/llama.cpp/blob/b11828/tools/server/README.md) implementa `/v1/chat/completions`, `/v1/responses` y `/v1/messages` (herramientas con `--jinja`). El modelo original y el drafter BF16 están en GPU; no se usa FreeToken ni proyector visual en esta receta. Los wrappers Codex/Claude apuntan a esos adaptadores del engine. Las comprobaciones breves de endpoints no equivalen a validación completa del comportamiento de un agente.

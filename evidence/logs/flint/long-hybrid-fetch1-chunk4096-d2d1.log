@@ -1,0 +1,307 @@
+[2026-10-22|11:49:02] INFO     Parsed arguments:
+ServerArgs(model_path='<research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf', tp_info=DistributedInfo(rank=0, size=1), dtype=torch.bfloat16, hf_overrides={}, max_running_req=1, attention_backend='auto', moe_strategy='hybrid', quant_backend=None, ple_backend='disk', swa_decoder_replay='bounded', expert_load='auto', moe_cache_size=1024, moe_cache_rate=None, moe_cache_auto=False, moe_cache_mem=None, moe_cache_scope='unified', moe_cache_split='equal', kv_reserve_tokens=73728, moe_cache_policy='lru', moe_prefill_overlap=True, moe_prefill_hit_d2d=True, moe_collect_stats=False, moe_cpu_threads=0, moe_cpu_layers=None, moe_hybrid_max_fetch=1, moe_locked_fetch=-1.0, moe_locked_max_fetch=8, cuda_graph_bs=None, cuda_graph_max_bs=1, page_size=1, memory_ratio=0.9, linear_state_cache_ratio=2.0, swa_full_tokens_ratio=0.2, swa_num_pages_override=None, distributed_timeout=60.0, use_dummy_weight=False, use_pynccl=True, max_seq_len_override=73728, num_page_override=None, num_token_override=73728, mm=MultimodalConfig(disabled_encoders=frozenset(), embed_cache_device='cpu', encoder_weights='host', image_min_tokens=None, image_max_tokens=None, processor_kwargs={}), max_extend_tokens=4096, cache_type='radix', offline_mode=False, decode_log_interval=40, special_token_ckpt=True, _unique_suffix='.pid=31107', server_host='127.0.0.1', server_port=22400, num_tokenizer=0, silent_output=False, shell_mode=False, served_model_name='flint-profile', tool_call_parser='flint', reasoning_parser='flint', sampling_defaults='model', max_output_tokens=8192, enable_cache_report=True, anthropic_inline_system='auto', allowed_media_domains='', allowed_local_media_path='', cors_origins='tauri://localhost,http://tauri.localhost,http://localhost:1420', gpu=('0',), gpu_assigned=None)
+[2026-10-22|11:49:02|initializer] INFO     --gpu 0 -> <GPU-UUID>
+[2026-10-22|11:49:02|FrontendAPI] INFO     Default sampling config (source=model): temperature=1.0, top_k=20, top_p=0.949999988079071
+INFO:     Started server process [31107]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:22400 (Press CTRL+C to quit)
+<research-workspace>/work/flint-research/FreeToken/python/freetoken/engine/engine.py:1370: FutureWarning: torch.cuda._set_allocator_settings is deprecated. Use torch._C._accelerator_setAllocatorSettings instead.
+  torch.cuda.memory._set_allocator_settings("expandable_segments:True")
+[2026-10-22|11:49:05|core|rank=0] INFO     Enabled expandable_segments (override via PYTORCH_ALLOC_CONF)
+[2026-10-22|11:49:06] INFO     reasoning-effort profile: supported=['high', 'low', 'max', 'medium', 'minimal', 'none', 'xhigh'] default=None
+[2026-10-22|11:49:10|core|rank=0] INFO     Auto-selected attention backend: triton
+[2026-10-22|11:49:10|core|rank=0] INFO     Resolved config: moe_strategy='hybrid', attention_backend='triton', cache_type='swa_radix', page_size=1
+[2026-10-22|11:49:11|core|rank=0] INFO     Free memory before loading model: 11.07 GiB
+<research-workspace>/work/flint-research/FreeToken/python/freetoken/models/gguf/tensors.py:25: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:213.)
+  return torch.from_numpy(info.data()).view(rows, info.nbytes // rows)
+[2026-10-22|11:49:12|core|rank=0] INFO     MoE experts: gguf via ggml
+[2026-10-22|11:49:12|core|rank=0] WARNING  no usable model.safetensors.index.json for <research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf (Repo id must be in the form 'repo_name' or 'namespace/repo_name': '<research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf'. Use `repo_type` argument if needed.); falling back to *.safetensors
+[2026-10-22|11:49:12|core|rank=0] INFO     expert banks: slow path (serial build)
+[2026-10-22|11:49:34|core|rank=0] INFO     GGUF expert banks: 47 layers, 19.8 GiB in host RAM
+[2026-10-22|11:49:34|core|rank=0] INFO     torch intra-op threads: 6 -> 1 (cores reserved for the pinned CPU MoE pool)
+[2026-10-22|11:49:34|core|rank=0] INFO     CPU MoE executor ready: threads=5 (pinned to cores 0..4) isa=haswell(ggml-cpu) fmt=gguf_scaled(gate_up=NVFP4, down=NVFP4): 47 layers H=2048 I=512 experts=256 layers=47 top_k=6 act=silu max_tokens=1 spin_wait=True handshake=kernel
+[2026-10-22|11:49:34|core|rank=0] INFO     Allocating 73728 tokens for KV cache, K + V = 3.08 GiB
+[2026-10-22|11:49:35|core|rank=0] INFO     Free memory after initialization: 4.76 GiB
+[2026-10-22|11:49:35|core|rank=0] INFO     Start capturing CUDA graphs with sizes: [1]
+[2026-10-22|11:49:35|core|rank=0] INFO     Free GPU memory before capturing CUDA graphs: 4.76 GiB
+Preparing for capturing CUDA graphs...:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 4.76 GiB:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 4.76 GiB: 100%|██████████| 1/1 [00:00<00:00,  1.95batch/s]Capturing graphs: bs = 1   | avail_mem = 4.76 GiB: 100%|██████████| 1/1 [00:00<00:00,  1.95batch/s]
+[2026-10-22|11:49:36|core|rank=0] INFO     Free GPU memory after capturing CUDA graphs: 4.73 GiB
+[2026-10-22|11:49:37|core|rank=0] INFO     Prefill warmup complete for lengths [80, 128] in 1.754 s
+[2026-10-22|11:49:39|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+[2026-10-22|11:49:39|FrontendAPI] INFO     API server is ready to serve on 127.0.0.1:22400
+[2026-10-22|11:49:41|core|rank=0] INFO     Start capturing CUDA graphs with sizes: [1]
+[2026-10-22|11:49:41|core|rank=0] INFO     Free GPU memory before capturing CUDA graphs: 1.37 GiB
+Preparing for capturing CUDA graphs...:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 1.37 GiB:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 1.37 GiB: 100%|██████████| 1/1 [00:00<00:00, 10.71batch/s]
+[2026-10-22|11:49:41|core|rank=0] INFO     Free GPU memory after capturing CUDA graphs: 1.33 GiB
+[2026-10-22|11:49:41|core|rank=0] INFO     Cache rebuilt: KV 73728 pages (73728 tokens, 1.97 GiB), swa 5120 pages (5120 tokens, 0.34 GiB), MoE cache 3456/12032 (5.70 GiB)
+[2026-10-22|11:49:41|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:45398 - "POST /v1/cache/rebuild HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45404 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:49:42|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 2048, #cached-token: 0, token usage: 0.03, #swa-token: 529/5120, swa usage: 0.10, #running-req: 1, #queue-req: 0, input throughput (token/s): 711.09
+[2026-10-22|11:49:43|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2089, token usage: 0.03, #swa-token: 569/5120, swa usage: 0.11, gen throughput (token/s): 10.80, #queue-req: 0
+[2026-10-22|11:49:43|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2129, token usage: 0.03, #swa-token: 609/5120, swa usage: 0.12, gen throughput (token/s): 62.03, #queue-req: 0
+[2026-10-22|11:49:44|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 2169, token usage: 0.03, #swa-token: 649/5120, swa usage: 0.13, gen throughput (token/s): 72.25, #queue-req: 0
+[2026-10-22|11:49:44|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:39702 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:49:48|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.11, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 712.88
+[2026-10-22|11:49:49|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.17, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 2430.98
+[2026-10-22|11:49:51|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.22, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 2213.85
+[2026-10-22|11:49:53|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.28, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 2021.26
+[2026-10-22|11:49:55|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.33, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1877.24
+[2026-10-22|11:49:58|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.39, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1729.28
+[2026-10-22|11:50:00|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.44, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1624.57
+[2026-10-22|11:50:03|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.50, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1516.27
+[2026-10-22|11:50:06|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.56, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1426.73
+[2026-10-22|11:50:09|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.61, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1345.21
+[2026-10-22|11:50:12|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.67, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1277.23
+[2026-10-22|11:50:16|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.72, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1204.91
+[2026-10-22|11:50:19|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.78, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1148.40
+[2026-10-22|11:50:23|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.83, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1097.38
+[2026-10-22|11:50:27|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.89, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 1, #queue-req: 0, input throughput (token/s): 1047.19
+[2026-10-22|11:50:27|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.89, #swa-token: 529/5120, swa usage: 0.10, #running-req: 1, #queue-req: 0, input throughput (token/s): 16731.09
+[2026-10-22|11:50:28|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65570, token usage: 0.89, #swa-token: 562/5120, swa usage: 0.11, gen throughput (token/s): 0.91, #queue-req: 0
+[2026-10-22|11:50:29|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65610, token usage: 0.89, #swa-token: 602/5120, swa usage: 0.12, gen throughput (token/s): 48.31, #queue-req: 0
+[2026-10-22|11:50:29|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65650, token usage: 0.89, #swa-token: 642/5120, swa usage: 0.13, gen throughput (token/s): 47.63, #queue-req: 0
+[2026-10-22|11:50:30|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65690, token usage: 0.89, #swa-token: 682/5120, swa usage: 0.13, gen throughput (token/s): 50.01, #queue-req: 0
+[2026-10-22|11:50:31|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65730, token usage: 0.89, #swa-token: 722/5120, swa usage: 0.14, gen throughput (token/s): 48.98, #queue-req: 0
+[2026-10-22|11:50:32|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65770, token usage: 0.89, #swa-token: 762/5120, swa usage: 0.15, gen throughput (token/s): 51.32, #queue-req: 0
+[2026-10-22|11:50:33|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65810, token usage: 0.89, #swa-token: 802/5120, swa usage: 0.16, gen throughput (token/s): 51.08, #queue-req: 0
+[2026-10-22|11:50:33|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65850, token usage: 0.89, #swa-token: 842/5120, swa usage: 0.16, gen throughput (token/s): 49.83, #queue-req: 0
+[2026-10-22|11:50:34|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65890, token usage: 0.89, #swa-token: 882/5120, swa usage: 0.17, gen throughput (token/s): 50.86, #queue-req: 0
+[2026-10-22|11:50:35|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65930, token usage: 0.89, #swa-token: 922/5120, swa usage: 0.18, gen throughput (token/s): 49.70, #queue-req: 0
+[2026-10-22|11:50:36|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65970, token usage: 0.89, #swa-token: 962/5120, swa usage: 0.19, gen throughput (token/s): 50.19, #queue-req: 0
+[2026-10-22|11:50:36|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66010, token usage: 0.90, #swa-token: 1002/5120, swa usage: 0.20, gen throughput (token/s): 52.26, #queue-req: 0
+[2026-10-22|11:50:37|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66050, token usage: 0.90, #swa-token: 1042/5120, swa usage: 0.20, gen throughput (token/s): 52.10, #queue-req: 0
+[2026-10-22|11:50:38|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66090, token usage: 0.90, #swa-token: 1082/5120, swa usage: 0.21, gen throughput (token/s): 51.75, #queue-req: 0
+[2026-10-22|11:50:39|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66130, token usage: 0.90, #swa-token: 1122/5120, swa usage: 0.22, gen throughput (token/s): 52.81, #queue-req: 0
+[2026-10-22|11:50:40|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66170, token usage: 0.90, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 51.45, #queue-req: 0
+[2026-10-22|11:50:40|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66210, token usage: 0.90, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 53.02, #queue-req: 0
+[2026-10-22|11:50:41|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66250, token usage: 0.90, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 52.89, #queue-req: 0
+[2026-10-22|11:50:42|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66290, token usage: 0.90, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 51.95, #queue-req: 0
+[2026-10-22|11:50:43|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66330, token usage: 0.90, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 52.25, #queue-req: 0
+[2026-10-22|11:50:43|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66370, token usage: 0.90, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 53.16, #queue-req: 0
+[2026-10-22|11:50:44|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66410, token usage: 0.90, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 51.70, #queue-req: 0
+[2026-10-22|11:50:45|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66450, token usage: 0.90, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 49.81, #queue-req: 0
+[2026-10-22|11:50:46|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66490, token usage: 0.90, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 52.09, #queue-req: 0
+[2026-10-22|11:50:46|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66530, token usage: 0.90, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 52.52, #queue-req: 0
+[2026-10-22|11:50:47|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66570, token usage: 0.90, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 53.46, #queue-req: 0
+[2026-10-22|11:50:48|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66610, token usage: 0.90, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 53.49, #queue-req: 0
+[2026-10-22|11:50:49|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66650, token usage: 0.90, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 53.78, #queue-req: 0
+[2026-10-22|11:50:49|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66690, token usage: 0.90, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 53.25, #queue-req: 0
+[2026-10-22|11:50:50|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66730, token usage: 0.91, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 51.61, #queue-req: 0
+[2026-10-22|11:50:51|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66770, token usage: 0.91, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 51.17, #queue-req: 0
+[2026-10-22|11:50:52|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66810, token usage: 0.91, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 51.98, #queue-req: 0
+[2026-10-22|11:50:53|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66850, token usage: 0.91, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 51.51, #queue-req: 0
+[2026-10-22|11:50:53|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66890, token usage: 0.91, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 53.41, #queue-req: 0
+[2026-10-22|11:50:54|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66930, token usage: 0.91, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 53.38, #queue-req: 0
+[2026-10-22|11:50:55|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 66970, token usage: 0.91, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 52.92, #queue-req: 0
+[2026-10-22|11:50:56|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67010, token usage: 0.91, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 50.30, #queue-req: 0
+[2026-10-22|11:50:56|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67050, token usage: 0.91, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 51.01, #queue-req: 0
+[2026-10-22|11:50:57|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67090, token usage: 0.91, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 50.98, #queue-req: 0
+[2026-10-22|11:50:58|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67130, token usage: 0.91, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 48.69, #queue-req: 0
+[2026-10-22|11:50:59|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67170, token usage: 0.91, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 49.90, #queue-req: 0
+[2026-10-22|11:51:00|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67210, token usage: 0.91, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 53.46, #queue-req: 0
+[2026-10-22|11:51:00|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67250, token usage: 0.91, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 52.01, #queue-req: 0
+[2026-10-22|11:51:01|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67290, token usage: 0.91, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 52.34, #queue-req: 0
+[2026-10-22|11:51:02|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67330, token usage: 0.91, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 49.84, #queue-req: 0
+[2026-10-22|11:51:03|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67370, token usage: 0.91, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 48.64, #queue-req: 0
+[2026-10-22|11:51:03|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67410, token usage: 0.91, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 51.93, #queue-req: 0
+[2026-10-22|11:51:04|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67450, token usage: 0.91, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 47.91, #queue-req: 0
+[2026-10-22|11:51:05|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67490, token usage: 0.92, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 52.25, #queue-req: 0
+[2026-10-22|11:51:06|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67530, token usage: 0.92, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 49.69, #queue-req: 0
+[2026-10-22|11:51:07|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67570, token usage: 0.92, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 51.24, #queue-req: 0
+[2026-10-22|11:51:07|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67610, token usage: 0.92, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 51.55, #queue-req: 0
+[2026-10-22|11:51:08|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67650, token usage: 0.92, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 50.68, #queue-req: 0
+[2026-10-22|11:51:09|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67690, token usage: 0.92, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 51.61, #queue-req: 0
+[2026-10-22|11:51:10|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67730, token usage: 0.92, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 50.58, #queue-req: 0
+[2026-10-22|11:51:11|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67770, token usage: 0.92, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 48.67, #queue-req: 0
+[2026-10-22|11:51:11|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67810, token usage: 0.92, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 50.22, #queue-req: 0
+[2026-10-22|11:51:12|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67850, token usage: 0.92, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 51.79, #queue-req: 0
+[2026-10-22|11:51:13|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67890, token usage: 0.92, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 51.94, #queue-req: 0
+[2026-10-22|11:51:14|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67930, token usage: 0.92, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 52.37, #queue-req: 0
+[2026-10-22|11:51:15|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 67970, token usage: 0.92, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 51.52, #queue-req: 0
+[2026-10-22|11:51:15|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68010, token usage: 0.92, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 51.25, #queue-req: 0
+[2026-10-22|11:51:16|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68050, token usage: 0.92, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 50.40, #queue-req: 0
+[2026-10-22|11:51:17|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68090, token usage: 0.92, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 50.60, #queue-req: 0
+[2026-10-22|11:51:18|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68130, token usage: 0.92, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 52.69, #queue-req: 0
+[2026-10-22|11:51:18|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68170, token usage: 0.92, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 51.79, #queue-req: 0
+[2026-10-22|11:51:19|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68210, token usage: 0.93, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 51.50, #queue-req: 0
+[2026-10-22|11:51:20|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68250, token usage: 0.93, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 50.36, #queue-req: 0
+[2026-10-22|11:51:21|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68290, token usage: 0.93, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 50.82, #queue-req: 0
+[2026-10-22|11:51:22|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68330, token usage: 0.93, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 51.78, #queue-req: 0
+[2026-10-22|11:51:22|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68370, token usage: 0.93, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 51.76, #queue-req: 0
+[2026-10-22|11:51:23|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68410, token usage: 0.93, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 51.02, #queue-req: 0
+[2026-10-22|11:51:24|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68450, token usage: 0.93, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 50.83, #queue-req: 0
+[2026-10-22|11:51:25|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68490, token usage: 0.93, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 52.02, #queue-req: 0
+[2026-10-22|11:51:25|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68530, token usage: 0.93, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 51.33, #queue-req: 0
+[2026-10-22|11:51:26|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68570, token usage: 0.93, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 49.86, #queue-req: 0
+[2026-10-22|11:51:27|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68610, token usage: 0.93, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 50.21, #queue-req: 0
+[2026-10-22|11:51:28|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68650, token usage: 0.93, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 51.07, #queue-req: 0
+[2026-10-22|11:51:29|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68690, token usage: 0.93, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 47.98, #queue-req: 0
+[2026-10-22|11:51:29|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68730, token usage: 0.93, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 52.70, #queue-req: 0
+[2026-10-22|11:51:30|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68770, token usage: 0.93, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 53.74, #queue-req: 0
+[2026-10-22|11:51:31|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68810, token usage: 0.93, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 51.29, #queue-req: 0
+[2026-10-22|11:51:32|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68850, token usage: 0.93, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 50.18, #queue-req: 0
+[2026-10-22|11:51:33|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68890, token usage: 0.93, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 50.97, #queue-req: 0
+[2026-10-22|11:51:33|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68930, token usage: 0.93, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 51.02, #queue-req: 0
+[2026-10-22|11:51:34|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 68970, token usage: 0.94, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 50.22, #queue-req: 0
+[2026-10-22|11:51:35|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69010, token usage: 0.94, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 50.01, #queue-req: 0
+[2026-10-22|11:51:36|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69050, token usage: 0.94, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 50.12, #queue-req: 0
+[2026-10-22|11:51:37|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69090, token usage: 0.94, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 48.49, #queue-req: 0
+[2026-10-22|11:51:37|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69130, token usage: 0.94, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 49.15, #queue-req: 0
+[2026-10-22|11:51:38|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69170, token usage: 0.94, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 50.99, #queue-req: 0
+[2026-10-22|11:51:39|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69210, token usage: 0.94, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 46.29, #queue-req: 0
+[2026-10-22|11:51:40|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69250, token usage: 0.94, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 44.64, #queue-req: 0
+[2026-10-22|11:51:41|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69290, token usage: 0.94, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 34.14, #queue-req: 0
+[2026-10-22|11:51:42|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69330, token usage: 0.94, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 46.96, #queue-req: 0
+[2026-10-22|11:51:43|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69370, token usage: 0.94, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 49.00, #queue-req: 0
+[2026-10-22|11:51:44|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69410, token usage: 0.94, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 49.66, #queue-req: 0
+[2026-10-22|11:51:44|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69450, token usage: 0.94, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 48.85, #queue-req: 0
+[2026-10-22|11:51:45|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69490, token usage: 0.94, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 47.92, #queue-req: 0
+[2026-10-22|11:51:46|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69530, token usage: 0.94, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 51.33, #queue-req: 0
+[2026-10-22|11:51:47|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69570, token usage: 0.94, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 50.37, #queue-req: 0
+[2026-10-22|11:51:48|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69610, token usage: 0.94, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 47.52, #queue-req: 0
+[2026-10-22|11:51:48|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69650, token usage: 0.94, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 49.19, #queue-req: 0
+[2026-10-22|11:51:49|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69690, token usage: 0.95, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 47.61, #queue-req: 0
+[2026-10-22|11:51:50|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69730, token usage: 0.95, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 49.67, #queue-req: 0
+[2026-10-22|11:51:51|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69770, token usage: 0.95, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 49.22, #queue-req: 0
+[2026-10-22|11:51:52|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69810, token usage: 0.95, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 49.58, #queue-req: 0
+[2026-10-22|11:51:52|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69850, token usage: 0.95, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 50.37, #queue-req: 0
+[2026-10-22|11:51:53|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69890, token usage: 0.95, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 50.71, #queue-req: 0
+[2026-10-22|11:51:54|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69930, token usage: 0.95, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 50.88, #queue-req: 0
+[2026-10-22|11:51:55|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 69970, token usage: 0.95, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 50.70, #queue-req: 0
+[2026-10-22|11:51:56|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70010, token usage: 0.95, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 49.82, #queue-req: 0
+[2026-10-22|11:51:56|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70050, token usage: 0.95, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 50.41, #queue-req: 0
+[2026-10-22|11:51:57|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70090, token usage: 0.95, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 48.71, #queue-req: 0
+[2026-10-22|11:51:58|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70130, token usage: 0.95, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 49.03, #queue-req: 0
+[2026-10-22|11:51:59|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70170, token usage: 0.95, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 48.49, #queue-req: 0
+[2026-10-22|11:52:00|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70210, token usage: 0.95, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 49.29, #queue-req: 0
+[2026-10-22|11:52:01|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70250, token usage: 0.95, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 48.87, #queue-req: 0
+[2026-10-22|11:52:01|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70290, token usage: 0.95, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 50.37, #queue-req: 0
+[2026-10-22|11:52:02|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70330, token usage: 0.95, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 48.41, #queue-req: 0
+[2026-10-22|11:52:03|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70370, token usage: 0.95, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 49.12, #queue-req: 0
+[2026-10-22|11:52:04|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70410, token usage: 0.95, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 49.50, #queue-req: 0
+[2026-10-22|11:52:05|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70450, token usage: 0.96, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 50.39, #queue-req: 0
+[2026-10-22|11:52:05|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70490, token usage: 0.96, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 51.90, #queue-req: 0
+[2026-10-22|11:52:06|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70530, token usage: 0.96, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 51.24, #queue-req: 0
+[2026-10-22|11:52:07|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70570, token usage: 0.96, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 51.17, #queue-req: 0
+[2026-10-22|11:52:08|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70610, token usage: 0.96, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 49.11, #queue-req: 0
+[2026-10-22|11:52:08|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70650, token usage: 0.96, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 49.91, #queue-req: 0
+[2026-10-22|11:52:09|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70690, token usage: 0.96, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 50.40, #queue-req: 0
+[2026-10-22|11:52:10|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70730, token usage: 0.96, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 51.19, #queue-req: 0
+[2026-10-22|11:52:11|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70770, token usage: 0.96, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 50.75, #queue-req: 0
+[2026-10-22|11:52:12|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70810, token usage: 0.96, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 49.95, #queue-req: 0
+[2026-10-22|11:52:12|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70850, token usage: 0.96, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 50.90, #queue-req: 0
+[2026-10-22|11:52:13|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70890, token usage: 0.96, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 50.28, #queue-req: 0
+[2026-10-22|11:52:14|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70930, token usage: 0.96, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 51.09, #queue-req: 0
+[2026-10-22|11:52:15|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 70970, token usage: 0.96, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 50.08, #queue-req: 0
+[2026-10-22|11:52:16|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71010, token usage: 0.96, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 48.54, #queue-req: 0
+[2026-10-22|11:52:16|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71050, token usage: 0.96, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 47.91, #queue-req: 0
+[2026-10-22|11:52:17|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71090, token usage: 0.96, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 50.18, #queue-req: 0
+[2026-10-22|11:52:18|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71130, token usage: 0.96, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 48.82, #queue-req: 0
+[2026-10-22|11:52:19|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71170, token usage: 0.97, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 49.72, #queue-req: 0
+[2026-10-22|11:52:20|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71210, token usage: 0.97, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 48.89, #queue-req: 0
+[2026-10-22|11:52:21|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71250, token usage: 0.97, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 48.27, #queue-req: 0
+[2026-10-22|11:52:21|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71290, token usage: 0.97, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 49.35, #queue-req: 0
+[2026-10-22|11:52:22|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71330, token usage: 0.97, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 50.06, #queue-req: 0
+[2026-10-22|11:52:23|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71370, token usage: 0.97, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 50.41, #queue-req: 0
+[2026-10-22|11:52:24|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71410, token usage: 0.97, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 49.36, #queue-req: 0
+[2026-10-22|11:52:25|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71450, token usage: 0.97, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 49.96, #queue-req: 0
+[2026-10-22|11:52:25|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71490, token usage: 0.97, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 49.94, #queue-req: 0
+[2026-10-22|11:52:26|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71530, token usage: 0.97, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 50.18, #queue-req: 0
+[2026-10-22|11:52:27|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71570, token usage: 0.97, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 49.81, #queue-req: 0
+[2026-10-22|11:52:28|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71610, token usage: 0.97, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 48.82, #queue-req: 0
+[2026-10-22|11:52:29|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71650, token usage: 0.97, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 46.29, #queue-req: 0
+[2026-10-22|11:52:29|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71690, token usage: 0.97, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 49.39, #queue-req: 0
+[2026-10-22|11:52:30|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71730, token usage: 0.97, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 48.82, #queue-req: 0
+[2026-10-22|11:52:31|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71770, token usage: 0.97, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 49.54, #queue-req: 0
+[2026-10-22|11:52:32|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71810, token usage: 0.97, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 49.92, #queue-req: 0
+[2026-10-22|11:52:33|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71850, token usage: 0.97, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 51.36, #queue-req: 0
+[2026-10-22|11:52:33|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71890, token usage: 0.98, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 48.50, #queue-req: 0
+[2026-10-22|11:52:34|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71930, token usage: 0.98, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 48.86, #queue-req: 0
+[2026-10-22|11:52:35|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 71970, token usage: 0.98, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 49.44, #queue-req: 0
+[2026-10-22|11:52:36|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72010, token usage: 0.98, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 47.63, #queue-req: 0
+[2026-10-22|11:52:37|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72050, token usage: 0.98, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 49.01, #queue-req: 0
+[2026-10-22|11:52:38|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72090, token usage: 0.98, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 48.37, #queue-req: 0
+[2026-10-22|11:52:38|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72130, token usage: 0.98, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 49.17, #queue-req: 0
+[2026-10-22|11:52:39|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72170, token usage: 0.98, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 49.39, #queue-req: 0
+[2026-10-22|11:52:40|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72210, token usage: 0.98, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 48.18, #queue-req: 0
+[2026-10-22|11:52:41|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72250, token usage: 0.98, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 49.64, #queue-req: 0
+[2026-10-22|11:52:42|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72290, token usage: 0.98, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 48.22, #queue-req: 0
+[2026-10-22|11:52:42|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72330, token usage: 0.98, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 49.20, #queue-req: 0
+[2026-10-22|11:52:43|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72370, token usage: 0.98, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 49.73, #queue-req: 0
+[2026-10-22|11:52:44|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72410, token usage: 0.98, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 48.96, #queue-req: 0
+[2026-10-22|11:52:45|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72450, token usage: 0.98, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 51.19, #queue-req: 0
+[2026-10-22|11:52:46|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72490, token usage: 0.98, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 49.38, #queue-req: 0
+[2026-10-22|11:52:47|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72530, token usage: 0.98, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 49.36, #queue-req: 0
+[2026-10-22|11:52:47|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72570, token usage: 0.98, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 50.18, #queue-req: 0
+[2026-10-22|11:52:48|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72610, token usage: 0.98, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 48.30, #queue-req: 0
+[2026-10-22|11:52:49|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72650, token usage: 0.99, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 48.87, #queue-req: 0
+[2026-10-22|11:52:50|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72690, token usage: 0.99, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 49.95, #queue-req: 0
+[2026-10-22|11:52:51|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72730, token usage: 0.99, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 49.19, #queue-req: 0
+[2026-10-22|11:52:51|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72770, token usage: 0.99, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 51.13, #queue-req: 0
+[2026-10-22|11:52:52|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72810, token usage: 0.99, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 49.41, #queue-req: 0
+[2026-10-22|11:52:53|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72850, token usage: 0.99, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 49.88, #queue-req: 0
+[2026-10-22|11:52:54|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72890, token usage: 0.99, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 50.03, #queue-req: 0
+[2026-10-22|11:52:55|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72930, token usage: 0.99, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 46.18, #queue-req: 0
+[2026-10-22|11:52:55|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 72970, token usage: 0.99, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 47.82, #queue-req: 0
+[2026-10-22|11:52:56|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73010, token usage: 0.99, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 43.87, #queue-req: 0
+[2026-10-22|11:52:57|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73050, token usage: 0.99, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 50.24, #queue-req: 0
+[2026-10-22|11:52:58|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73090, token usage: 0.99, #swa-token: 1062/5120, swa usage: 0.21, gen throughput (token/s): 49.69, #queue-req: 0
+[2026-10-22|11:52:59|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73130, token usage: 0.99, #swa-token: 1102/5120, swa usage: 0.22, gen throughput (token/s): 46.10, #queue-req: 0
+[2026-10-22|11:53:00|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73170, token usage: 0.99, #swa-token: 1142/5120, swa usage: 0.22, gen throughput (token/s): 48.72, #queue-req: 0
+[2026-10-22|11:53:01|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73210, token usage: 0.99, #swa-token: 1054/5120, swa usage: 0.21, gen throughput (token/s): 46.97, #queue-req: 0
+[2026-10-22|11:53:01|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73250, token usage: 0.99, #swa-token: 1094/5120, swa usage: 0.21, gen throughput (token/s): 48.22, #queue-req: 0
+[2026-10-22|11:53:02|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73290, token usage: 0.99, #swa-token: 1134/5120, swa usage: 0.22, gen throughput (token/s): 50.52, #queue-req: 0
+[2026-10-22|11:53:03|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73330, token usage: 0.99, #swa-token: 1046/5120, swa usage: 0.20, gen throughput (token/s): 49.49, #queue-req: 0
+[2026-10-22|11:53:04|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73370, token usage: 1.00, #swa-token: 1086/5120, swa usage: 0.21, gen throughput (token/s): 50.90, #queue-req: 0
+[2026-10-22|11:53:05|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73410, token usage: 1.00, #swa-token: 1126/5120, swa usage: 0.22, gen throughput (token/s): 47.71, #queue-req: 0
+[2026-10-22|11:53:05|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73450, token usage: 1.00, #swa-token: 1166/5120, swa usage: 0.23, gen throughput (token/s): 49.44, #queue-req: 0
+[2026-10-22|11:53:06|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73490, token usage: 1.00, #swa-token: 1078/5120, swa usage: 0.21, gen throughput (token/s): 50.50, #queue-req: 0
+[2026-10-22|11:53:07|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73530, token usage: 1.00, #swa-token: 1118/5120, swa usage: 0.22, gen throughput (token/s): 52.04, #queue-req: 0
+[2026-10-22|11:53:08|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73570, token usage: 1.00, #swa-token: 1158/5120, swa usage: 0.23, gen throughput (token/s): 51.03, #queue-req: 0
+[2026-10-22|11:53:09|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73610, token usage: 1.00, #swa-token: 1070/5120, swa usage: 0.21, gen throughput (token/s): 49.47, #queue-req: 0
+[2026-10-22|11:53:09|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73650, token usage: 1.00, #swa-token: 1110/5120, swa usage: 0.22, gen throughput (token/s): 50.00, #queue-req: 0
+[2026-10-22|11:53:10|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 73690, token usage: 1.00, #swa-token: 1150/5120, swa usage: 0.22, gen throughput (token/s): 49.82, #queue-req: 0
+[2026-10-22|11:53:11|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:48276 - "POST /v1/completions HTTP/1.1" 200 OK
+[2026-10-22|11:53:12|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 1, #cached-token: 65535, token usage: 0.89, #swa-token: 529/5120, swa usage: 0.10, #running-req: 1, #queue-req: 0, input throughput (token/s): 0.01
+[2026-10-22|11:53:12|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65539, token usage: 0.89, #swa-token: 531/5120, swa usage: 0.10, gen throughput (token/s): 23.71, #queue-req: 0
+[2026-10-22|11:53:13|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65579, token usage: 0.89, #swa-token: 571/5120, swa usage: 0.11, gen throughput (token/s): 47.17, #queue-req: 0
+[2026-10-22|11:53:13|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65619, token usage: 0.89, #swa-token: 611/5120, swa usage: 0.12, gen throughput (token/s): 49.61, #queue-req: 0
+[2026-10-22|11:53:14|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65659, token usage: 0.89, #swa-token: 651/5120, swa usage: 0.13, gen throughput (token/s): 51.37, #queue-req: 0
+[2026-10-22|11:53:15|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65699, token usage: 0.89, #swa-token: 691/5120, swa usage: 0.13, gen throughput (token/s): 49.90, #queue-req: 0
+[2026-10-22|11:53:16|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65739, token usage: 0.89, #swa-token: 731/5120, swa usage: 0.14, gen throughput (token/s): 51.90, #queue-req: 0
+[2026-10-22|11:53:17|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65779, token usage: 0.89, #swa-token: 771/5120, swa usage: 0.15, gen throughput (token/s): 51.45, #queue-req: 0
+[2026-10-22|11:53:17|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+[2026-10-22|11:53:20|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.11, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 505.90
+[2026-10-22|11:53:22|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.17, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 2395.60
+[2026-10-22|11:53:23|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.22, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 2189.18
+[2026-10-22|11:53:26|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.28, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1996.82
+[2026-10-22|11:53:28|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.33, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1855.74
+[2026-10-22|11:53:30|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.39, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1711.27
+[2026-10-22|11:53:33|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.44, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1598.15
+[2026-10-22|11:53:35|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.50, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1505.48
+[2026-10-22|11:53:38|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.56, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1409.89
+[2026-10-22|11:53:41|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.61, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1328.31
+[2026-10-22|11:53:45|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.67, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1257.04
+[2026-10-22|11:53:48|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.72, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1178.90
+[2026-10-22|11:53:52|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.78, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1139.77
+[2026-10-22|11:53:56|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.83, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1088.81
+[2026-10-22|11:53:59|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.89, #swa-token: 4610/5120, swa usage: 0.90, #running-req: 0, #queue-req: 1, input throughput (token/s): 1041.30
+[2026-10-22|11:54:00|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.89, #swa-token: 664/5120, swa usage: 0.13, #running-req: 1, #queue-req: 0, input throughput (token/s): 4567.30
+[2026-10-22|11:54:00|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 150, #cached-token: 0, token usage: 0.89, #swa-token: 529/5120, swa usage: 0.10, #running-req: 1, #queue-req: 0, input throughput (token/s): 6497.03
+[2026-10-22|11:54:01|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65714, token usage: 0.89, #swa-token: 556/5120, swa usage: 0.11, gen throughput (token/s): 0.90, #queue-req: 0
+[2026-10-22|11:54:01|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:34276 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[2026-10-22|11:54:02|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 8, #cached-token: 65729, token usage: 0.89, #swa-token: 529/5120, swa usage: 0.10, #running-req: 1, #queue-req: 0, input throughput (token/s): 4.69
+[2026-10-22|11:54:03|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 65762, token usage: 0.89, #swa-token: 553/5120, swa usage: 0.11, gen throughput (token/s): 24.75, #queue-req: 0
+[2026-10-22|11:54:03|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:59996 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31107]
+<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "gemma4",
   "name": "Gemma 4 26B A4B",
-  "status": "Medido a 4096 + 200; contexto reservado 66560",
+  "status": "Measured 2026-10-24: three ~4K input + 200 output requests; complete logs",
   "hardware": "ryzen-5600x-rtx3060",
   "engine": "desktop-wheel",
   "model": {
@@ -57,7 +57,7 @@
     "--memory-ratio",
     "0.95",
     "--max-prefill-length",
-    "8192",
+    "1024",
     "--mm-disable",
     "vision",
     "audio"
@@ -75,5 +75,6 @@
     "top_k": 64
   },
   "environment": {},
-  "evidence": "evidence/gemma4.json"
+  "evidence": "evidence/gemma4.json",
+  "prefill_note": "2026-10-24: 8192 ceiling OOMed on a 4109-token request with 66560 context capacity and 448 experts. Lowered to 1024; see preserved failure log and new benchmark."
 }

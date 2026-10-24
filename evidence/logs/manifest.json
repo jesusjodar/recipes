@@ -1,0 +1,517 @@
+{
+  "recovered_on": "2026-10-24",
+  "sanitization": [
+    "home/workspace paths",
+    "GPU UUIDs",
+    "ANSI color escapes"
+  ],
+  "scope": "LLM benchmark and validation evidence; paths/UUIDs sanitized. Historical terminal captures and new executions are labeled separately. No chat transcript or private network metadata.",
+  "entries": [
+    {
+      "path": "evidence/logs/benchmark-runner.snapshot.py",
+      "source": "Sanitized ad hoc benchmark runner snapshot",
+      "kind": "source-snapshot",
+      "source_sha256": "2f70e7ec90431374356f1e679727d7d36e0d7f4c020329acf6d0de87d0c260be",
+      "sha256": "2f70e7ec90431374356f1e679727d7d36e0d7f4c020329acf6d0de87d0c260be"
+    },
+    {
+      "path": "evidence/logs/flint/flint-profile-bench-driver-hybrid0.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench-driver-hybrid0.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "20b0a5825cdf7506fd183329676e88c5249ee26b17ca5bac9e2bb1bb8ae64c10",
+      "sha256": "20b0a5825cdf7506fd183329676e88c5249ee26b17ca5bac9e2bb1bb8ae64c10"
+    },
+    {
+      "path": "evidence/logs/flint/flint-profile-bench-driver-hybrid1-chunk8192.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench-driver-hybrid1-chunk8192.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "d211d2b074659658a3d0ff37944ea9298929cb1cb8ece4502cf22b3843fec928",
+      "sha256": "d211d2b074659658a3d0ff37944ea9298929cb1cb8ece4502cf22b3843fec928"
+    },
+    {
+      "path": "evidence/logs/flint/flint-profile-bench-driver-hybrid1-optimized.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench-driver-hybrid1-optimized.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "9b968228e7a4208cd0d23ebe5ca1cbc1de5e0b6b063abd2780ff9d477c1e51eb",
+      "sha256": "9b968228e7a4208cd0d23ebe5ca1cbc1de5e0b6b063abd2780ff9d477c1e51eb"
+    },
+    {
+      "path": "evidence/logs/flint/flint-profile-bench-driver-hybrid1.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench-driver-hybrid1.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "3824eb357c3a04a541a33adff8dda4804f1e0c201f07b79bb3f9c6aefda32a2b",
+      "sha256": "3824eb357c3a04a541a33adff8dda4804f1e0c201f07b79bb3f9c6aefda32a2b"
+    },
+    {
+      "path": "evidence/logs/flint/flint-profile-bench-driver-hybrid2.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench-driver-hybrid2.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "3ee489d3cb3a310866107c2421e95460e6ab1e047747a2858616633f769f7828",
+      "sha256": "3ee489d3cb3a310866107c2421e95460e6ab1e047747a2858616633f769f7828"
+    },
+    {
+      "path": "evidence/logs/flint/flint-profile-bench-driver-hybrid3.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench-driver-hybrid3.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "d020c1bdeb3c73991b64f98bd1f29405e146788140cb61f79ffaa40d3d17f15e",
+      "sha256": "d020c1bdeb3c73991b64f98bd1f29405e146788140cb61f79ffaa40d3d17f15e"
+    },
+    {
+      "path": "evidence/logs/flint/flint-profile-bench-driver-long.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench-driver-long.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "582ddc43895656aa8a961dc3a8b69b99e50782759bed27e71c62f3a079cfda83",
+      "sha256": "582ddc43895656aa8a961dc3a8b69b99e50782759bed27e71c62f3a079cfda83"
+    },
+    {
+      "path": "evidence/logs/flint/flint-profile-bench-driver-offload.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench-driver-offload.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "f7ff137688cc2a34c4881f4ed39e9c3f7400e3384d88d8c318e5592aeb8c9046",
+      "sha256": "f7ff137688cc2a34c4881f4ed39e9c3f7400e3384d88d8c318e5592aeb8c9046"
+    },
+    {
+      "path": "evidence/logs/flint/long-hybrid-fetch1-chunk4096-d2d1-gpu.csv",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/long-hybrid-fetch1-chunk4096-d2d1-gpu.csv",
+      "kind": "original-file-sanitized",
+      "source_sha256": "e60af530a1f7a3fd02b25c23ae0a3637e9089af8398484f8de1f025b51ede927",
+      "sha256": "e60af530a1f7a3fd02b25c23ae0a3637e9089af8398484f8de1f025b51ede927"
+    },
+    {
+      "path": "evidence/logs/flint/long-hybrid-fetch1-chunk4096-d2d1.json",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/long-hybrid-fetch1-chunk4096-d2d1.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "af39b16e22188cda36ad9872a421ccd4ec5efdb4577ed17976ea9a7c3a696f76",
+      "sha256": "de867421829292284dde92bd0abe0536d579adb9d4e4ef735eeb1e3cdb17dcd6"
+    },
+    {
+      "path": "evidence/logs/flint/long-hybrid-fetch1-chunk4096-d2d1.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/long-hybrid-fetch1-chunk4096-d2d1.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "2581901ee8881cc100c612ee514550292e5e49a31b20f68fe4bc5a6135a9fcc9",
+      "sha256": "aed593f144ce05874bbfc2211338dc034d9cd072128c9b2aa1246d3cb44d5ed1"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch0-chunk2048-d2d0.json",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch0-chunk2048-d2d0.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "4bc77aa92247ca4698eaef8c03c231e943110658802596e9f48cbf4e95beb2c3",
+      "sha256": "ccb294bb38cf7a5ad129855a5e88dd106f642451b96546ca420ef98bc5147d12"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch0-chunk2048-d2d0.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch0-chunk2048-d2d0.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "3f05a282abbccb4444b2a71a8bef1b447ba9da8b37e41eea994f0252bc66f0a7",
+      "sha256": "61be727c29706c2aa80c516532e84a5076c82668e6cdd7b40b05e0a47c1418ae"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch1-chunk2048-d2d0.json",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch1-chunk2048-d2d0.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "bae82f0e24e0d4e7be388d3a20b801d677afbb3c116db47e9afdc85272d609d2",
+      "sha256": "bfd8ccd227091fd76043319c35927a6495471393589eb6294dc35bce5b233221"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch1-chunk2048-d2d0.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch1-chunk2048-d2d0.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "525fd82c9e6c3b93dad9b4026168d4e3abef5bab88e5e4abb53c62678bee433e",
+      "sha256": "797aae90afa9d5ff56eb5350db0a83403bfd9daa817ebf0f81c240cf2d21f239"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch1-chunk4096-d2d1.json",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch1-chunk4096-d2d1.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "9b54a3e0d1608a63e434f834141bbf68dca8ff93f83964dc30a389f3f535a0a4",
+      "sha256": "e7ae61b5b5cb58d40f4ea39ff7861e51f7648ca70e38ea8a6a84ef93fd174d09"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch1-chunk4096-d2d1.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch1-chunk4096-d2d1.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "c095b63b9e25126aa571247dd26ed2489ae217883a7e2ef10d4bff183839c04a",
+      "sha256": "5c40b32b61ec19a36ee7761046b49cc387b4fa1bb4a6ac4c007eddf0d4ddb223"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch1-chunk8192-d2d1.json",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch1-chunk8192-d2d1.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "d2cded278c4aab10735c12fb23ca4a770d7ba7e18f8600b6e151c3784de4f70c",
+      "sha256": "95a1bc1cfaba728e29e73a9c51931cc4ba1ffe671b4a37dd9cbb75fcb5a02c4e"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch1-chunk8192-d2d1.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch1-chunk8192-d2d1.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "fd0a37a917f24f75ffaca97639f5c8336de43c2421d2f35f8d60b8cf087ddd50",
+      "sha256": "e9c9a639e09bee586689e9a10cd9c00d937a3566165711da1d800d0dc93835b5"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch2-chunk2048-d2d0.json",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch2-chunk2048-d2d0.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "0972ad8b5f2e0c4a00c534e048789d74ed8fd294572921ad0713b32c84ccaaa1",
+      "sha256": "6e54e766facdc7cdc694be842d55ed9af15841a56d116568ba6ef0235ef9fe30"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch2-chunk2048-d2d0.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch2-chunk2048-d2d0.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "81e8aab98675fe039405d1a7b599d0bf63bba2a52fc54a4de2137e7c4065aacf",
+      "sha256": "f8298315f42c00c4bfd8ff3c9cef41a9da7c075eafedf78f258b64777208ba7a"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch3-chunk2048-d2d0.json",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch3-chunk2048-d2d0.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "c4a2e0afa0e5cbcb6e34dd55201b195cd6ab41eb9b8679b380afbf0d4cadf548",
+      "sha256": "29c0f3a100f4b32f720aa16063a3cccf80a47815f769d5741c32d41ecc9c9dd1"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-hybrid-fetch3-chunk2048-d2d0.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-hybrid-fetch3-chunk2048-d2d0.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "6aadfbbe83582765f505a53aa0ecfa211a4fc60ae5cc6c192b1c294285cb8b34",
+      "sha256": "9ecae7b45032569662ad969e5ad028f639769c30565da72ee8b5f3f56eccfa39"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-offload-fetch1-chunk2048-d2d0.json",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-offload-fetch1-chunk2048-d2d0.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "1681b2fe1cecffd0fad4a2a4fde9f58ca1350eb8b4b15b9d3ad26ee8cb998d91",
+      "sha256": "31789c4f59f505864fdbe2986fae98720663c3583848226a192d33ddd0f0258a"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-offload-fetch1-chunk2048-d2d0.json.prompt-builder-attempt1",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-offload-fetch1-chunk2048-d2d0.json.prompt-builder-attempt1",
+      "kind": "original-file-sanitized",
+      "source_sha256": "aa59ba378b3cb453c55e88275b74eabbabd79ada30dd8a9aca29d4b008503932",
+      "sha256": "ed83f63c1fcd1a12bb457260a814bac9db60c075f6abe4d439181895be99e19e"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-offload-fetch1-chunk2048-d2d0.log",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-offload-fetch1-chunk2048-d2d0.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "ddd7da245e9f88a4eb9d92b8c02b2ca76dafa9e9f36837c8f1e0102ddd4e20b4",
+      "sha256": "a71196a803ca8541da656736bbc3cc8d582491a5d75c8c3fe87638545ee62e4a"
+    },
+    {
+      "path": "evidence/logs/flint/sweep-offload-fetch1-chunk2048-d2d0.log.prompt-builder-attempt1",
+      "source": "<research-workspace>/work/flint-research/flint-profile-bench/sweep-offload-fetch1-chunk2048-d2d0.log.prompt-builder-attempt1",
+      "kind": "original-file-sanitized",
+      "source_sha256": "95a5f707a3bd967b2dd27c6fe02074ce144a5efe621cebe4786af5b207f63b1e",
+      "sha256": "dbabb50aaaff8bae27d2d28daf15123165502cf225e324549fb7d9ec9d530b3b"
+    },
+    {
+      "path": "evidence/logs/flint-validation/aime-modelopt.log",
+      "source": "<research-workspace>/outputs/flint-review/evidence/aime-modelopt.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "d1d9f376236c4a2ce4465f548b6b1d335a36cc0ff2c1e33d8d30d8733f2bf795",
+      "sha256": "7c4fb33fca7a9136bcdbe04ea5de0cc8d16be6783bea63109f286f813b244ab8"
+    },
+    {
+      "path": "evidence/logs/flint-validation/aime25-source.json",
+      "source": "<research-workspace>/outputs/flint-review/evidence/aime25-source.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "9ff2d102d55c75bee49f4e812ee72cfa22e0664a41ae7efaba3a615f8188630e",
+      "sha256": "9ff2d102d55c75bee49f4e812ee72cfa22e0664a41ae7efaba3a615f8188630e"
+    },
+    {
+      "path": "evidence/logs/flint-validation/cache-gguf-artifacts-v2.log",
+      "source": "<research-workspace>/outputs/flint-review/evidence/cache-gguf-artifacts-v2.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "1cb9e97fc7ac3208f145bdecc5a9df12030ed1118e4b80a7b8dcd2134f6ee29a",
+      "sha256": "6898154a911d8f9360a9a56c5a59088c3d1da38780fc8f5aa1a6f0e56ce041ce"
+    },
+    {
+      "path": "evidence/logs/flint-validation/cache-gguf-v2.log",
+      "source": "<research-workspace>/outputs/flint-review/evidence/cache-gguf-v2.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "23bdd41edaf0232dc712aa498c7742b65a073f557689c4b886794854d9c668cc",
+      "sha256": "23bdd41edaf0232dc712aa498c7742b65a073f557689c4b886794854d9c668cc"
+    },
+    {
+      "path": "evidence/logs/flint-validation/cache-gguf.log",
+      "source": "<research-workspace>/outputs/flint-review/evidence/cache-gguf.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "e0245be27955ddea12fa16bb0c2eda883f878f5f592f2dd78afe5dc034bf7dee",
+      "sha256": "52c1cb380d4a3887eb2f5a9ecbe7dbf1faa9ea535686f4d13afc5af9c204ed23"
+    },
+    {
+      "path": "evidence/logs/flint-validation/cache-modelopt-artifacts-v2.log",
+      "source": "<research-workspace>/outputs/flint-review/evidence/cache-modelopt-artifacts-v2.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "c74629dec3f40b17a41205100f6af9e45565be15cc2179a3677163b0a04ff24c",
+      "sha256": "bd8e0b59cb780f877f6a9cc84e439710d074e22cb6acd2ac251169e31cb8c015"
+    },
+    {
+      "path": "evidence/logs/flint-validation/cache-modelopt-v2.log",
+      "source": "<research-workspace>/outputs/flint-review/evidence/cache-modelopt-v2.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "6564e950f306e7a4a279586e60cd3bacccb6843cb555d6dcb92778e67b2115ae",
+      "sha256": "6564e950f306e7a4a279586e60cd3bacccb6843cb555d6dcb92778e67b2115ae"
+    },
+    {
+      "path": "evidence/logs/flint-validation/cache-modelopt.log",
+      "source": "<research-workspace>/outputs/flint-review/evidence/cache-modelopt.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "2881bcab1213f5cbb5e2c6365670bdc2d719cc6c02e5be3f03b0b7134bf94d6c",
+      "sha256": "6139f8603b3829f049f6f292a46ba5913cbf07b2741f84d3d383528035ba2c8c"
+    },
+    {
+      "path": "evidence/logs/flint-validation/environment.json",
+      "source": "<research-workspace>/outputs/flint-review/evidence/environment.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "a58622ca2cc2be6d65b5c1254f4ccf5500b9693ecb65edbfd97428fbaa0c339d",
+      "sha256": "48a41730bbfe1e9ce922436171c774f63aa86d5ab46c8c71af70cfb59ca7f217"
+    },
+    {
+      "path": "evidence/logs/flint-validation/final-targeted-tests.log",
+      "source": "<research-workspace>/outputs/flint-review/evidence/final-targeted-tests.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "bb316391bebe5197f8273bc65f107d1f785f794f4b0b31c967610439d040afdc",
+      "sha256": "8f39e60968b3cb268dc84a59a7cae980b7e496d6aa44a853e8eecd6f2f130bd0"
+    },
+    {
+      "path": "evidence/logs/flint-validation/fused-router-tests.log",
+      "source": "<research-workspace>/outputs/flint-review/evidence/fused-router-tests.log",
+      "kind": "original-file-sanitized",
+      "source_sha256": "5f572cb5427b965884f5399079fde2d79c895daa8104e2d40ab118f6d8d66cdc",
+      "sha256": "5f572cb5427b965884f5399079fde2d79c895daa8104e2d40ab118f6d8d66cdc"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-07-42.log",
+      "source": "local terminal history, 2026-10-22T07:07:42.621Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "a76ea9bbdaf99fca6e8d59b03553d80caf16f0fede1668ac3506df85465803a7"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-08-34.log",
+      "source": "local terminal history, 2026-10-22T07:08:34.515Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "723310e607ff059ec96be71fd844a5c5ffe45f904d7f6d176a2b9df7ed53d4c5"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-09-46.log",
+      "source": "local terminal history, 2026-10-22T07:09:46.260Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "b45f7d2b75c620c9bb8ca7196b8e9243cf58137308ab6c6cad946257d7594180"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-11-25.log",
+      "source": "local terminal history, 2026-10-22T07:11:25.460Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "bc93ad9e1e7b93e01c0fff2dc1d69130a391f315da72db7facbe28076dc6089a"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-12-32.log",
+      "source": "local terminal history, 2026-10-22T07:12:32.919Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "c6839b0807f7dd124b5c11d771591505a8a6d80ba20f7f318f40011e662ed89f"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-15-35.log",
+      "source": "local terminal history, 2026-10-22T07:15:35.890Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "96ee7c5eed5e91e79c8275960df0d80835bfb2a871e13b0790e086f091a4fda2"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-18-09.log",
+      "source": "local terminal history, 2026-10-22T07:18:09.390Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "61ffc67783876b1aed6a479361be83541032a20802d832eedd6b3fa5216f893f"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-21-05.log",
+      "source": "local terminal history, 2026-10-22T07:21:05.313Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "e9eb205652a202b684ac641104823df3b5c64e6485aec161b48a08641c1d14d2"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-21-21.log",
+      "source": "local terminal history, 2026-10-22T07:21:21.367Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "5d5ae44c2e70798c881eaba2607bd1d3e97dc9274c086a358e8bfadedd41665f"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-22-03.log",
+      "source": "local terminal history, 2026-10-22T07:22:03.110Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "e0a83216dd9effb6abdf9a145bf08d31197c8fe8c81779e56672c02f3b31d5da"
+    },
+    {
+      "path": "evidence/logs/gemma4/07-22-16.log",
+      "source": "local terminal history, 2026-10-22T07:22:16.858Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "a0d63ce1699a8db306c8f7c0de333fbaf9d23374df83a9c737580e0356194807"
+    },
+    {
+      "path": "evidence/logs/gemma4/failed-prefill8192-requests.json",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "ef9a6083124463e7c5445da687819ac2b80d0e48f012cfb0a172e7bf29d609b0",
+      "sha256": "ef9a6083124463e7c5445da687819ac2b80d0e48f012cfb0a172e7bf29d609b0"
+    },
+    {
+      "path": "evidence/logs/gemma4/failed-prefill8192-server.log",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "0ccafe4ec6bf293dad3334944ec1bc5aaf394bf5c2473e638f531db1237c9178",
+      "sha256": "48542411f61d7062901c31bcedd190c7634ed9877dc0d6b09e5d833d8144e7aa"
+    },
+    {
+      "path": "evidence/logs/gemma4/requests.json",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "4a4cefc7cab6a83453177524ab9fb94a1ceeb2fcc7cb12961b4c88eaa8a7c214",
+      "sha256": "4a4cefc7cab6a83453177524ab9fb94a1ceeb2fcc7cb12961b4c88eaa8a7c214"
+    },
+    {
+      "path": "evidence/logs/gemma4/server.log",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "2939edc951dcc9bf15018e6975b92e01b92dad3270d9b863760b5b87c7f82ed8",
+      "sha256": "43421e9594a6eee7decacb95ca6ecbf22bf0824d273810c9a5511f8c7e15ea0d"
+    },
+    {
+      "path": "evidence/logs/gpt-oss/07-23-20.log",
+      "source": "local terminal history, 2026-10-22T07:23:20.199Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "462988936616ca35b42883c30c3587d30b61d585562eec897dad2a995fcdb40b"
+    },
+    {
+      "path": "evidence/logs/gpt-oss/07-23-42.log",
+      "source": "local terminal history, 2026-10-22T07:23:42.322Z",
+      "kind": "recovered-terminal-output; original temporary log unavailable",
+      "sha256": "e2ea8766eca77e4e265a9febdac2a1f0da819c303c22e4907426e0aa00fe02f9"
+    },
+    {
+      "path": "evidence/logs/gpt-oss/requests.json",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "ed74e5674985cc4301bda93ee1b46068debfd26e550ae3ac2f12aa5655a9fa8a",
+      "sha256": "ed74e5674985cc4301bda93ee1b46068debfd26e550ae3ac2f12aa5655a9fa8a"
+    },
+    {
+      "path": "evidence/logs/gpt-oss/server.log",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "8e1a4ecc5eb9c55d05ac25e5fb8a24b6a349476c81b3f5ad3557706f2ed0c227",
+      "sha256": "bf2c8221bb0a574e0d218eb53937c8dd0f24ccbf1a4844bf73e1dfb3d662c432"
+    },
+    {
+      "path": "evidence/logs/nemotron/COMPARISON.md",
+      "source": "<HOME>/Desktop/AI/benchmarks/COMPARISON.md",
+      "kind": "original-file-sanitized",
+      "source_sha256": "e1b32c88f89ab2604ff8e2f6198e9fefd21e2cc01764c1e28bc4889e28ffcaa2",
+      "sha256": "e1b32c88f89ab2604ff8e2f6198e9fefd21e2cc01764c1e28bc4889e28ffcaa2"
+    },
+    {
+      "path": "evidence/logs/nemotron/RESULTS.json",
+      "source": "<HOME>/Desktop/AI/benchmarks/RESULTS.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "4c486c4ee14b066d45369d8e3e54dd6a4c9272dabf07b667be14bb625018cfb5",
+      "sha256": "4c486c4ee14b066d45369d8e3e54dd6a4c9272dabf07b667be14bb625018cfb5"
+    },
+    {
+      "path": "evidence/logs/nemotron/SPEED-64K.md",
+      "source": "<HOME>/Desktop/AI/benchmarks/SPEED-64K.md",
+      "kind": "original-file-sanitized",
+      "source_sha256": "ba30d3d17b730bf748cc664e4da1b395483483178a864ea23285e6cd7df0b7d7",
+      "sha256": "ba30d3d17b730bf748cc664e4da1b395483483178a864ea23285e6cd7df0b7d7"
+    },
+    {
+      "path": "evidence/logs/nemotron/agentic-code-64k-complete.json",
+      "source": "<HOME>/Desktop/AI/benchmarks/agentic-code-64k-complete.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "42856b7e67c19d9539b91b0f394a6f259ebcc8120a1c608a892aad62b963dfc5",
+      "sha256": "42856b7e67c19d9539b91b0f394a6f259ebcc8120a1c608a892aad62b963dfc5"
+    },
+    {
+      "path": "evidence/logs/nemotron/agentic-code-64k.json",
+      "source": "<HOME>/Desktop/AI/benchmarks/agentic-code-64k.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "5fa7a30f83bf762db9ace0432967fb19e008ca9bccc48ff525c5c6c1b35b67c8",
+      "sha256": "5fa7a30f83bf762db9ace0432967fb19e008ca9bccc48ff525c5c6c1b35b67c8"
+    },
+    {
+      "path": "evidence/logs/nemotron/agentic_code_64k.py",
+      "source": "<HOME>/Desktop/AI/benchmarks/agentic_code_64k.py",
+      "kind": "original-file-sanitized",
+      "source_sha256": "59fd7f4057984e838a7be3640c27e950343ef063a0eca01532b9cf325b66850a",
+      "sha256": "59fd7f4057984e838a7be3640c27e950343ef063a0eca01532b9cf325b66850a"
+    },
+    {
+      "path": "evidence/logs/nemotron/agentic_compare.py",
+      "source": "<HOME>/Desktop/AI/benchmarks/agentic_compare.py",
+      "kind": "original-file-sanitized",
+      "source_sha256": "93f394f5c9289213780d85180dca1915dc11bac9476b2dfde5d5008d6e87ac7f",
+      "sha256": "93f394f5c9289213780d85180dca1915dc11bac9476b2dfde5d5008d6e87ac7f"
+    },
+    {
+      "path": "evidence/logs/nemotron/nvidia-bf16-16k-n7.json",
+      "source": "<HOME>/Desktop/AI/benchmarks/nvidia-bf16-16k-n7.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "675cd4e3dd6ec2ed6d693cb5230cc30c837d4a9202ecf5634fe622d01b5058bf",
+      "sha256": "675cd4e3dd6ec2ed6d693cb5230cc30c837d4a9202ecf5634fe622d01b5058bf"
+    },
+    {
+      "path": "evidence/logs/nemotron/nvidia-bf16-8k-n4.json",
+      "source": "<HOME>/Desktop/AI/benchmarks/nvidia-bf16-8k-n4.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "1f8e70848ffeedd18fff6e90f17e15055e4900a821a65f22c5569c2c890f73a9",
+      "sha256": "1f8e70848ffeedd18fff6e90f17e15055e4900a821a65f22c5569c2c890f73a9"
+    },
+    {
+      "path": "evidence/logs/nemotron/nvidia-bf16.json",
+      "source": "<HOME>/Desktop/AI/benchmarks/nvidia-bf16.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "d4a7a370a4a816d011e8fa5314ae66dc240053afe9876500978b734563d10f24",
+      "sha256": "d4a7a370a4a816d011e8fa5314ae66dc240053afe9876500978b734563d10f24"
+    },
+    {
+      "path": "evidence/logs/nemotron/portable-api-checks.json",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "ce4c10315b54b7e2c043b72c5661c0d6db313988de40be6af2759ce314ef10bd",
+      "sha256": "ce4c10315b54b7e2c043b72c5661c0d6db313988de40be6af2759ce314ef10bd"
+    },
+    {
+      "path": "evidence/logs/nemotron/portable-launch-server.log",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "54137b383747120cdd474c9221c4d03442184a25a8ee35f8c18b05bacfcf2e99",
+      "sha256": "4e7132d8bc50f82b8562169352e032b70ecd5b1e4ffbbde48bf63749d6d8a3ad"
+    },
+    {
+      "path": "evidence/logs/nemotron/unsloth.json",
+      "source": "<HOME>/Desktop/AI/benchmarks/unsloth.json",
+      "kind": "original-file-sanitized",
+      "source_sha256": "64c851f940cd03737a578255b1478f2732591eac8e4a65bcd3d5e639d0cf8a2d",
+      "sha256": "64c851f940cd03737a578255b1478f2732591eac8e4a65bcd3d5e639d0cf8a2d"
+    },
+    {
+      "path": "evidence/logs/qwen3.6/requests.json",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "760c93033eee85783cf770d4524adc32fecea360b11ce8c1338c4f76f06bb736",
+      "sha256": "760c93033eee85783cf770d4524adc32fecea360b11ce8c1338c4f76f06bb736"
+    },
+    {
+      "path": "evidence/logs/qwen3.6/server.log",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "ebe5b407a95fae7269a6b39e58ffd77adf6e1d5a786ac905550d8fc7b0db3b65",
+      "sha256": "c2eaccb6538a85e6f046f8136ebb95f5ef2f810ed8430d4fd01e00afbd175a58"
+    },
+    {
+      "path": "evidence/logs/qwen3.6/startup-rejected-swa-field.log",
+      "source": "New local execution 2026-10-24",
+      "kind": "new-execution-log",
+      "source_sha256": "1fc231842430e0ef510537bd3bcd1d0d474fa69f5eb35e11ede9f92925c9aea8",
+      "sha256": "ce3e8965e50edca0620e01c9787514abb5f424010445749cdeec81016c2caa84"
+    }
+  ],
+  "file_count": 74
+}

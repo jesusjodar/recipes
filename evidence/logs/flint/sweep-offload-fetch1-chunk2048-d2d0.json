@@ -1,0 +1,411 @@
+{
+  "tag": "sweep-offload-fetch1-chunk2048-d2d0",
+  "requests": [
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c1024-warmup",
+      "cache": 1024,
+      "prompt_tokens": 2048,
+      "cached_tokens": 0,
+      "completion_tokens": 128,
+      "events": 128,
+      "ttft_s": 0.9729826540005888,
+      "effective_prefill_tok_s": 2104.8679455684937,
+      "decode_tok_s": 43.278126072308886,
+      "total_s": 3.9083858060002967,
+      "output_sha256": "5c9f2a6260c15a2694a6ae5b2f72621f70156b727cd12307514ccf52ce0f65fc",
+      "text": "<think>We need answer user. Need inspect repo excerpts? They ask task: explain how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give detailed design, implementation plan and Python code.\n\nWe need likely produce engineering answer. We have repository excerpts only openai_api.py. Need maybe infer existing prefix cache? We should review repo? We can't actually browse? We have excerpts. We can use context? Need maybe mention not enough info. But likely expected design.\n\nWe need craft detailed design, implementation plan, Python code. Must be careful: disk-backed persistent prefix cache, correct invalidation and concurrent request handling."
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c1024-run0",
+      "cache": 1024,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.649635354999191,
+      "effective_prefill_tok_s": 2244.6078041135747,
+      "decode_tok_s": 41.97365216474077,
+      "total_s": 9.72534425699996,
+      "output_sha256": "0d23bc23968eeb985dfe1c207014a9957d6ed58f29d51c6a13b4ba155f42107e",
+      "text": "<think>Let me understand the task. The user gives a request sweep-offload-fetch1-chunk2048-d2d0-c1024-run0 and repository excerpts from a Python project called \"freetoken\".\n\nThe task: \"explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nSo I need to review the repository excerpts and propose a concrete implementation for adding a disk-backed persistent prefix cache.\n\nLet me look at the excerpts for relevant pieces:\n\n1. `python/freetoken/server/openai_api.py` \u2014 OpenAI-compatible server. Mentions:\n   - `_maintenance_gate`, state with `maintenance_state` (\"serving\", \"loading\", \"failed\", \"cache rebuild\").\n   - `state.stream_with_cancellation(chunks, request, uid)` \u2014 cancellation handling for streams.\n   - `state.send_one(TokenizeMsg(...))`, `state.wait_for_ack(uid)` \u2014 async ack-based streaming for completions. This suggests an async request queue/ack mechanism.\n   - Cache-related: `state.config.enable_cache_report`, `cached_tokens` in usage, `_reported_cached`.\n   - `handle_chat_completion` calls `prerender_error(spec, state)`, `submit_generation"
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c1024-run1",
+      "cache": 1024,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.633061696000368,
+      "effective_prefill_tok_s": 2254.84747727201,
+      "decode_tok_s": 43.59738363997653,
+      "total_s": 9.482526820000203,
+      "output_sha256": "6da184d619fece27b425242212747890e196c034239cd5dbb6c5d5bd80ba3419",
+      "text": "<think>We need answer user. Need parse. They provided repo excerpts and task: \"Request sweep-offload-fetch1-chunk2048-d2d0-c1024-run1. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need likely respond with design. We need inspect excerpts? We have only excerpts. Need craft detailed design, implementation plan, Python code. Must be careful software engineering agent. We should probably not just answer abstract; need relate to repo. We need infer codebase has in-memory prefix cache, scheduler prefill, cache manager. Task mentions disk-backed persistent prefix cache, invalidation, concurrent request handling. Maybe from request name sweep-offload-fetch1-chunk2048-d2d0-c1024-run1? Could be benchmark? Need maybe identify patterns? We only have excerpts. We can propose design.\n\nNeed likely final answer with:\n- Goals\n- Current architecture observations from excerpts: CacheManager, PrefillAdder, PendingReq, mm chunking, prefix_replay_tokens, host cache, KV reservation, is_hybrid, linear_state_pool.\n- Disk-backed persistent prefix cache requirements: persistence, correctness invalidation,"
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c1024-run2",
+      "cache": 1024,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.6301205620002293,
+      "effective_prefill_tok_s": 2256.674361108859,
+      "decode_tok_s": 43.20865615336265,
+      "total_s": 9.532205728000918,
+      "output_sha256": "b1e0921de8bd4925bf2a02914f78e053f89a64ad148714f0753e2a6f8fca2c52",
+      "text": "<think>We need answer user. Need parse task. They provided repository excerpts and request sweep-offload-fetch1-chunk2048-d2d0-c1024-run2. Then Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give detailed design, implementation plan and Python code.\n\nWe need likely respond as software engineering agent. Need maybe infer context. We should not just answer generic? Need review repo excerpts and propose concrete implementation with tests. The final task asks explain how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give detailed design, implementation plan and Python code.\n\nWe need craft answer. Must be careful. We have repo excerpts: OpenAI API, flint config/attention, scheduler prefill. Likely relevant to prefix cache: CacheManager, kv cache, scheduler. But excerpts truncated. We need maybe propose design based on patterns.\n\nWe need likely include: disk-backed persistent prefix cache, invalidation, concurrent request handling. Detailed design, implementation plan, Python code.\n\nWe should probably not just code from scratch; should integrate with existing architecture. Need mention existing cache manager likely in-memory paged KV, prefix cache, host cache, replay, etc. Excerpt mentions CacheManager, BaseCacheHandle,"
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c2048-warmup",
+      "cache": 2048,
+      "prompt_tokens": 2048,
+      "cached_tokens": 0,
+      "completion_tokens": 128,
+      "events": 128,
+      "ttft_s": 0.8790554059996794,
+      "effective_prefill_tok_s": 2329.7735114557127,
+      "decode_tok_s": 50.19258912252982,
+      "total_s": 3.4098199830004887,
+      "output_sha256": "9ae0aef2d7b768b32b9f9dbb9c0d84386f489ace9ee773c1aa8b7d370ac1b487",
+      "text": "<think>We need answer user. Need parse. They provided repo excerpt and task: \"Request sweep-offload-fetch1-chunk2048-d2d0-c2048-warmup. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need respond likely as coding agent. Need inspect? We don't have repo beyond excerpt. Need maybe infer project freetoken. Need propose concrete implementation with tests. The final should probably include design, implementation plan, Python code, tests. Need be careful not overdo. We"
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c2048-run0",
+      "cache": 2048,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.6079878359996655,
+      "effective_prefill_tok_s": 2270.51763264336,
+      "decode_tok_s": 51.06524634099422,
+      "total_s": 8.60211935299958,
+      "output_sha256": "79bfe98084122c6b959b00d6e4aeada8161c7e2cf2cd6528aaf79b398759b81d",
+      "text": "<think>We need answer user. Need parse. They provided repository excerpts and task: \"explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need respond likely as software engineering agent. Need be careful. We have repo excerpts. Need propose concrete implementation with tests? Initial system says Review repository excerpts and propose concrete implementation with tests. User task asks explain how add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give detailed design, implementation plan and Python code.\n\nWe need craft answer. We should not actually modify repo? We can propose design, plan, code. Need maybe leverage excerpts. We need understand codebase context enough. We need maybe mention cache manager, prefix replay, KV cache. The excerpts show freetoken scheduler prefill, CacheManager, prefix_replay_tokens, host cache, match_req, cuda_handle, etc. Need design disk-backed persistent prefix cache with invalidation and concurrent request handling.\n\nWe need likely produce detailed design: goals, concepts, data model, persistence format, invalidation, concurrency, admission control, locking, async/sync, crash recovery, consistency, testing.\n\nWe need maybe include Python code sketches for cache backend, manager integration."
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c2048-run1",
+      "cache": 2048,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.6336349310004152,
+      "effective_prefill_tok_s": 2254.491757030906,
+      "decode_tok_s": 47.49104009222016,
+      "total_s": 9.003541202000633,
+      "output_sha256": "c830ea668f4eb9ce6591f9f4ef3de8d61006957de68934a0ea209a4384998f3b",
+      "text": "<think>Let me analyze this task. The user gives a \"Request sweep-offload-fetch1-chunk2048-d2d0-c2048-run1\" which seems to be some kind of task identifier, and repository excerpts from several files.\n\nThe actual task: \"Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nSo I need to propose a concrete implementation for adding a disk-backed persistent prefix cache with correct invalidation and concurrent request handling, with detailed design, implementation plan, and Python code.\n\nLet me look at the repository excerpts to understand context:\n\n1. `python/freetoken/server/openai_api.py` - OpenAI-compatible server with chat completions, streaming, tool calls, reasoning efforts, maintenance gate, etc.\n\n2. `python/freetoken/models/flint/config.py` - Model config parsing for Flint model.\n\n3. `python/freetoken/models/flint/attention.py` - Attention implementation.\n\n4. `python/freetoken/scheduler/prefill.py` - Prefill adder with KV cache management, chunked requests.\n\nThe task is about adding a disk-backed persistent prefix cache with correct invalidation and concurrent request handling.\n\nKey considerations from the excerpts"
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c2048-run2",
+      "cache": 2048,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.637820895999539,
+      "effective_prefill_tok_s": 2251.8975601598827,
+      "decode_tok_s": 49.49138099797782,
+      "total_s": 8.790825087000485,
+      "output_sha256": "bf474a6a1e029ca7a7e616c6293f94e626e0eca12e65f82d67f74ebbddd842e0",
+      "text": "<think>We need answer user. Need parse. They provided repo excerpts and task: \"Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need respond likely as software engineering agent. Need review excerpts and propose concrete implementation with tests? Last line in initial user: \"Request sweep-offload-fetch1-chunk2048-d2d0-c2048-run2. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need answer task. We should not just ask clarifying. Need likely design for adding disk-backed persistent prefix cache, correct invalidation and concurrent request handling. We need use repository context. We have excerpts about freetoken server, models, scheduler prefill. Need infer architecture. Need maybe propose implementation with tests.\n\nWe need craft detailed design, implementation plan, Python code. We should probably mention assumptions because repo excerpts insufficient. But can tailor to freetoken. Need maybe inspect? We only have excerpts, no full repo. We can't run commands? We can if environment maybe but likely not needed. We need answer based on"
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c3328-warmup",
+      "cache": 3328,
+      "prompt_tokens": 2048,
+      "cached_tokens": 0,
+      "completion_tokens": 128,
+      "events": 128,
+      "ttft_s": 0.8820460210008605,
+      "effective_prefill_tok_s": 2321.8743140818524,
+      "decode_tok_s": 55.076741589902475,
+      "total_s": 3.1883918149997044,
+      "output_sha256": "557ba04f74aaf4f7a66412f00fcbad499c6e8c4d2769d47416f30ec2d85d6888",
+      "text": "<think>We need answer user. Need parse. We have repository excerpts and task: \"Request sweep-offload-fetch1-chunk2048-d2d0-c3328-warmup. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need likely provide design. We need be careful. We don't have full repo. We should review excerpts maybe infer context. Need maybe mention request name? \"Request sweep-offload-fetch1-chunk2048-d2d0-c3328-warmup.\" Maybe irrelevant?"
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c3328-run0",
+      "cache": 3328,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.603626659998554,
+      "effective_prefill_tok_s": 2273.2654553075395,
+      "decode_tok_s": 53.73733582215675,
+      "total_s": 8.349400813998727,
+      "output_sha256": "750134da5cf55a29afa87fea4289ca2b29c9288fccabc53894b57e68c20a3baa",
+      "text": "<think>Let me understand the task. The user has provided a repository excerpt and a task:\n\n\"Request sweep-offload-fetch1-chunk2048-d2d0-c3328-run0. Repository excerpts: ...\"\n\nThen the task: \"Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nSo the task is to explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\n\nLet me look at the repository excerpts to understand the context:\n\n1. `python/freetoken/server/openai_api.py` - OpenAI API server code, chat completions, streaming, SSE, tool calls, etc.\n\n2. `python/freetoken/models/flint/config.py` - Flint model config parsing.\n\n3. `python/freetoken/models/flint/attention.py` - Flint attention implementation.\n\n4. `python/freetoken/scheduler/prefill.py` - Prefill scheduler with chunked requests, KV cache, cache manager, etc.\n\nThe task is about adding a disk-backed persistent prefix cache with correct invalidation and concurrent request handling.\n\nGiven the repository context, the prefix cache is likely the"
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c3328-run1",
+      "cache": 3328,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.6252878309987864,
+      "effective_prefill_tok_s": 2259.6826464239834,
+      "decode_tok_s": 56.12120856500461,
+      "total_s": 8.169540794999193,
+      "output_sha256": "6ce0a7cfb91212f3b191461220f5d39bf30090edf420624e1b049cbd3a146948",
+      "text": "<think>We need answer user. Need parse. They provided repository excerpts and task: \"Request sweep-offload-fetch1-chunk2048-d2d0-c3328-run1. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need respond likely as software engineering agent. Need craft detailed design, implementation plan, Python code. Must maybe incorporate request name? \"sweep-offload-fetch1-chunk2048-d2d0-c3328-run1\" maybe irrelevant or trace. We need answer task. We need inspect excerpts? We don't have full repo. We should be careful not overclaim. Need propose concrete implementation with tests maybe. User asks explain how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give detailed design, implementation plan and Python code.\n\nWe need likely design for prefix cache in existing freetoken server. We should align with excerpts: scheduler prefill, cache manager, kvcache, tokenizer, server. Need maybe disk-backed persistent prefix cache. Correct invalidation and concurrent request handling.\n\nWe need produce design, implementation plan, Python code. Could propose architecture: disk cache as durable store"
+    },
+    {
+      "label": "sweep-offload-fetch1-chunk2048-d2d0-c3328-run2",
+      "cache": 3328,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 3.629287714999009,
+      "effective_prefill_tok_s": 2257.192221532714,
+      "decode_tok_s": 54.2145184558471,
+      "total_s": 8.333302918999834,
+      "output_sha256": "c534cb26570e05808ceef1a9d9485ca0bcf20ce6bdd9d9f8e87cf5a902a813f9",
+      "text": "<think>Let me start by understanding the repository structure and the task.\n\nThe task: \"Request sweep-offload-fetch1-chunk2048-d2d0-c3328-run2. Repository excerpts: ...\"\n\nThe task at the end is: \"Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nSo the actual task is to explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling, with detailed design, implementation plan, and Python code.\n\nThe repository excerpts are about:\n1. `python/freetoken/server/openai_api.py` - OpenAI API server with streaming, tool calls, reasoning effort, etc.\n2. `python/freetoken/models/flint/config.py` - config parsing for Flint model\n3. `python/freetoken/models/flint/attention.py` - attention implementation\n4. `python/freetoken/scheduler/prefill.py` - prefill scheduler with chunked requests, cache manager, etc.\n\nThe task seems to be a feature request: add a disk-backed persistent prefix cache.\n\nLet me explore the repository to understand the existing prefix cache implementation.\n\nLet me look at the repo structure first.\n\nI should"
+    }
+  ],
+  "context": 73728,
+  "output_budget": 8192,
+  "args": {
+    "strategy": "offload",
+    "fetch": 1,
+    "chunk": 2048,
+    "d2d": false,
+    "phase": "sweep",
+    "cache": 0
+  },
+  "command": [
+    "<research-workspace>/work/flint-research/dev-venv/bin/python",
+    "-m",
+    "freetoken",
+    "--model",
+    "<research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf",
+    "--gpu",
+    "0",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "22400",
+    "--served-model-name",
+    "flint-profile",
+    "--moe-strategy",
+    "offload",
+    "--moe-hybrid-max-fetch",
+    "1",
+    "--moe-cache-size",
+    "1024",
+    "--num-tokens",
+    "73728",
+    "--kv-reserve-tokens",
+    "73728",
+    "--max-seq-len-override",
+    "73728",
+    "--max-output-tokens",
+    "8192",
+    "--max-prefill-length",
+    "2048",
+    "--max-running-requests",
+    "1",
+    "--cuda-graph-max-bs",
+    "1",
+    "--enable-cache-report",
+    "--enable-special-token-ckpt",
+    "--memory-ratio",
+    ".88"
+  ],
+  "initial_status": {
+    "state": "serving",
+    "last_rebuild": null,
+    "geometry": {
+      "num_pages": 73728,
+      "page_size": 1,
+      "moe_cache_size": 1024,
+      "num_mamba_slots": 0,
+      "num_experts": 256,
+      "num_moe_layers": 47,
+      "moe_cache_policy": "lru",
+      "unit_bytes": {
+        "kv_per_token": 28672,
+        "moe_per_expert": 1769488,
+        "mamba_per_slot": 0,
+        "swa_per_token": 71680
+      },
+      "swa_full_tokens_ratio": 0.2,
+      "swa_page_size": 1,
+      "num_swa_pages": 14745,
+      "cache_budget_bytes": 8720267345,
+      "reasoning": {
+        "gears": [
+          "on"
+        ],
+        "default": "on",
+        "kwargs": {
+          "on": {}
+        }
+      },
+      "limits": {
+        "kv_tokens": {
+          "min": 1,
+          "max": 304138
+        },
+        "moe_experts": {
+          "min": 256,
+          "max": 4928
+        },
+        "mamba_slots": {
+          "min": 0,
+          "max": 0
+        },
+        "swa_tokens": {
+          "min": 1829,
+          "max": 121655
+        }
+      }
+    }
+  },
+  "max_cache_candidate": 3328,
+  "swa_pages": 4096,
+  "rebuilds": [
+    {
+      "request_id": "bbb37014-dff1-4842-b910-10ec73a3a2de",
+      "status": "ok",
+      "moe_cache_size": 1024,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 4096,
+      "error": null
+    },
+    {
+      "request_id": "0cf9fda4-b2c2-44e3-b7b1-03302b1af984",
+      "status": "ok",
+      "moe_cache_size": 2048,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 4096,
+      "error": null
+    },
+    {
+      "request_id": "557d849b-3214-4c4d-af85-a711c24b32a1",
+      "status": "ok",
+      "moe_cache_size": 3328,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 4096,
+      "error": null
+    }
+  ],
+  "final_status": {
+    "state": "serving",
+    "last_rebuild": {
+      "request_id": "557d849b-3214-4c4d-af85-a711c24b32a1",
+      "status": "ok",
+      "moe_cache_size": 3328,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 4096,
+      "error": null
+    },
+    "geometry": {
+      "num_pages": 73728,
+      "page_size": 1,
+      "moe_cache_size": 3328,
+      "num_mamba_slots": 0,
+      "num_experts": 256,
+      "num_moe_layers": 47,
+      "moe_cache_policy": "lru",
+      "unit_bytes": {
+        "kv_per_token": 28672,
+        "moe_per_expert": 1769488,
+        "mamba_per_slot": 0,
+        "swa_per_token": 71680
+      },
+      "swa_full_tokens_ratio": 0.05555555555555555,
+      "swa_page_size": 1,
+      "num_swa_pages": 4096,
+      "cache_budget_bytes": 8720267345,
+      "reasoning": {
+        "gears": [
+          "on"
+        ],
+        "default": "on",
+        "kwargs": {
+          "on": {}
+        }
+      },
+      "limits": {
+        "kv_tokens": {
+          "min": 1,
+          "max": 304138
+        },
+        "moe_experts": {
+          "min": 256,
+          "max": 4928
+        },
+        "mamba_slots": {
+          "min": 0,
+          "max": 0
+        },
+        "swa_tokens": {
+          "min": 1829,
+          "max": 121655
+        }
+      }
+    }
+  },
+  "stats": {
+    "instance_id": "0224f7d8-662a-4543-8ae2-27387b33a6ec",
+    "model": {
+      "id": "flint-profile",
+      "ctx": 73728,
+      "attn": "hybrid_swa",
+      "moe": true,
+      "input_modalities": [
+        "text"
+      ],
+      "sampling": {
+        "temperature": 1.0,
+        "top_k": 20,
+        "top_p": 0.949999988079071
+      }
+    },
+    "uptime_s": 94,
+    "kv": {
+      "used_pages": 0,
+      "total_pages": 73728,
+      "page_size": 1
+    },
+    "mamba": null,
+    "swa": {
+      "used_pages": 0,
+      "total_pages": 4096,
+      "page_size": 1
+    },
+    "vram_bytes": 10219421696,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3060",
+        "uuid": "<GPU-UUID>",
+        "total_bytes": 12534939648
+      }
+    ],
+    "throughput": {
+      "decode_tps": 54.3,
+      "prefill_tps": 0.0
+    },
+    "requests": {
+      "active": 0,
+      "completed": 12,
+      "p95_ms": 3,
+      "ttft_mean_ms": 0,
+      "prompt_tokens_total": 79872,
+      "completion_tokens_total": 2688
+    }
+  }
+}

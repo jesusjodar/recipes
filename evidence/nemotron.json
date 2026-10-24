@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-23",
+  "engine": "llama.cpp b11828 CUDA 13.4",
+  "reserved_context_tokens": 65536,
+  "prompt_tokens": [
+    411,
+    277,
+    337
+  ],
+  "completion_tokens": [
+    1242,
+    1721,
+    1762
+  ],
+  "uncached_prompt_tokens": [
+    373,
+    239,
+    299
+  ],
+  "cached_prefix_tokens": [
+    38,
+    38,
+    38
+  ],
+  "prefill_engine_mean_tok_s": 1964.0999252765857,
+  "decode_engine_mean_tok_s": 108.03977285503852,
+  "api_end_to_end_mean_tok_s": 106.8624126686936,
+  "finish_reason": [
+    "stop",
+    "stop",
+    "stop"
+  ],
+  "draft_acceptance_ratio": 0.32429758607043924,
+  "samples": 3,
+  "method": "Arithmetic mean of llama.cpp per-request timings; prefill counts only uncached prompt_n, excludes 38 cached tokens per request. Short synthetic coding tasks, not full 64K active context; not a code-quality evaluation.",
+  "drafter": {
+    "enabled": true,
+    "type": "draft-dflash",
+    "repository": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash",
+    "download_revision": "0949a2eb7152ec6fda1a91ff9302aecbcd464fbf",
+    "filename": "Nemotron-3.5-Bolt-E4B-DFlash-BF16.gguf",
+    "legacy_local_filename": "dflash-nvidia-BF16.gguf",
+    "file_bytes": 736812096,
+    "sha256": "8103aa42fd31fb661c3fbe8701d04d698ea2c5d09351dc3e8c9da639958de989",
+    "quantization": "BF16 GGUF",
+    "max_draft_tokens": 7
+  },
+  "target_sha256": "6176bd788769bd58042c165d3dc8e8c86a8ca5c90d5de188a364b31dc9560810",
+  "historical_output_limit": 2400,
+  "recipe_output_default": 8192,
+  "full_context_and_output_generation_validated": false,
+  "comparison_8k": {
+    "bf16_drafter_mean_api_tok_s": 117.62635376154395,
+    "bf16_drafter_mean_decode_engine_tok_s": 121.63487259592281,
+    "q8_drafter_mean_api_tok_s": 85.33981529111149,
+    "q8_drafter_mean_decode_engine_tok_s": 87.51878948918035,
+    "samples_each": 4,
+    "output_tokens_each": 256
+  },
+  "raw_logs": "evidence/logs/nemotron",
+  "source": "Recovered original benchmark JSON and scripts from Desktop/AI; local target, both drafters and engine archives SHA-256 match upstream blobs/assets.",
+  "historical_output_limit_source": "Captured agentic_code_64k.py asks 2400; all three complete generations ended with stop",
+  "portable_launcher_validation": {
+    "date": "2026-10-24",
+    "installation": "Executed from verified cached official engine archives; fresh network download not exercised",
+    "api_checks": "evidence/logs/nemotron/portable-api-checks.json",
+    "server_log": "evidence/logs/nemotron/portable-launch-server.log",
+    "http_status": {
+      "chat_completions": 200,
+      "responses": 200,
+      "messages": 200
+    },
+    "scope": "Short requests only; not a new throughput or near-full-context benchmark"
+  }
+}

@@ -11,4 +11,5 @@ models/
 *.bin
 *.whl
 *.log
+!evidence/logs/**/*.log
 *.recipes-backup-*

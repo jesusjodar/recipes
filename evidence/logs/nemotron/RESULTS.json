@@ -1,0 +1,15 @@
+{
+  "engine": "llama.cpp b11828 CUDA 13.4",
+  "gpu": "NVIDIA GeForce RTX 3060 12 GB",
+  "target": "NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf",
+  "comparison": {
+    "nvidia_official_gguf_bf16": {"mean_api_tok_s": 117.63, "mean_decode_tok_s": 121.63, "proposal_acceptance_ratio": 0.379},
+    "unsloth_dflash_q8_0": {"mean_api_tok_s": 85.34, "mean_decode_tok_s": 87.52, "proposal_acceptance_ratio": 0.326}
+  },
+  "tuning": [
+    {"context": 8192, "n_max": 7, "mean_api_tok_s": 117.63},
+    {"context": 16384, "n_max": 7, "mean_api_tok_s": 114.41},
+    {"context": 8192, "n_max": 4, "mean_api_tok_s": 111.93}
+  ],
+  "note": "NVIDIA draft was tested as the official BF16 GGUF, not as native NVFP4. Four synthetic agentic prompts; 256 output tokens each; results vary."
+}

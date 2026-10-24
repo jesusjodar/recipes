@@ -1,0 +1,91 @@
+{
+  "url": "http://127.0.0.1:8011/v1/chat/completions",
+  "runs": [
+    {
+      "elapsed_s": 3.812062190000006,
+      "completion_tokens": 256,
+      "prompt_tokens": 81,
+      "tok_s": 67.15525278458261,
+      "text": "### 🔎 Investigation Plan\n\n**Hypotheses (in order of likelihood):**\n1. **Non-Idempotent Endpoint:** The API endpoint does not use a unique transaction/request ID to ensure that retrying the same operation only executes once (e.g., creating a new record on every call).\n2.",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 53,
+        "prompt_ms": 70.384,
+        "prompt_per_token_ms": 1.328,
+        "prompt_per_second": 753.0120481927711,
+        "predicted_n": 256,
+        "predicted_ms": 3738.107,
+        "predicted_per_token_ms": 14.659243137254903,
+        "predicted_per_second": 68.21634586703911,
+        "draft_n": 574,
+        "draft_n_accepted": 172
+      },
+      "task": "bug-triage"
+    },
+    {
+      "elapsed_s": 1.9237525120000782,
+      "completion_tokens": 256,
+      "prompt_tokens": 76,
+      "tok_s": 133.07325053670397,
+      "text": "## ⚙️ Software Engineering Plan: CSV Export Implementation\n\nThis plan follows a disciplined software development lifecycle (SDLC) approach, prioritizing understanding the existing codebase, robust implementation, thorough testing, and quality assurance.\n\n### 🔍 Phase 1: Repository Inspection & Requirements Gathering\n\n**Goal:** Understand the data structure, existing API",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 48,
+        "prompt_ms": 69.601,
+        "prompt_per_token_ms": 1.4500208333333333,
+        "prompt_per_second": 689.6452637174754,
+        "predicted_n": 256,
+        "predicted_ms": 1845.813,
+        "predicted_per_token_ms": 7.238482352941177,
+        "predicted_per_second": 138.1505060371771,
+        "draft_n": 435,
+        "draft_n_accepted": 192
+      },
+      "task": "tool-workflow"
+    },
+    {
+      "elapsed_s": 3.3566133930000888,
+      "completion_tokens": 256,
+      "prompt_tokens": 82,
+      "tok_s": 76.26734748001205,
+      "text": "### ⚙️ Local Agent Incident Response Plan\n\nThe goal is to isolate the failure to the new code/deployment artifact specific to the affected endpoint, without making assumptions or deploying unverified fixes.\n\n#### 🛡️ Rollback Criteria (Safety First)\n* **Trigger:** If the diagnostic investigation (steps 1-3) cannot quickly",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 54,
+        "prompt_ms": 71.0,
+        "prompt_per_token_ms": 1.3148148148148149,
+        "prompt_per_second": 760.5633802816902,
+        "predicted_n": 256,
+        "predicted_ms": 3276.703,
+        "predicted_per_token_ms": 12.84981568627451,
+        "predicted_per_second": 77.8221279133324,
+        "draft_n": 519,
+        "draft_n_accepted": 179
+      },
+      "task": "incident-response"
+    },
+    {
+      "elapsed_s": 3.9467551670001058,
+      "completion_tokens": 256,
+      "prompt_tokens": 73,
+      "tok_s": 64.86341036314735,
+      "text": "### ⚙️ Reasoning\nThe proposal is fundamentally flawed because a URL often does not uniquely define the state or the content of an API response. Relying solely on the URL ignores critical aspects of the request (headers, method, body) that can alter the outcome. This leads directly to correctness failures (serving stale/wrong data) and potential security risks (insecure data leakage or incorrect authorization). The solution requires a composite cache key that fully represents the request, not just the endpoint address.\n\n---\n\n### 🔴 Concrete Risks\n\n#### 1. Correctness Risks (Functional Failure)\n",
+      "timings": {
+        "cache_n": 28,
+        "prompt_n": 45,
+        "prompt_ms": 68.114,
+        "prompt_per_token_ms": 1.5136444444444446,
+        "prompt_per_second": 660.6571336289162,
+        "predicted_n": 256,
+        "predicted_ms": 3870.311,
+        "predicted_per_token_ms": 15.177690196078432,
+        "predicted_per_second": 65.88617813917278,
+        "draft_n": 636,
+        "draft_n_accepted": 163
+      },
+      "task": "code-review"
+    }
+  ],
+  "mean_tok_s": 85.33981529111149,
+  "mean_elapsed_s": 3.2597958155000697
+}

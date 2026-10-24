@@ -21,3 +21,9 @@ Admite `--config /ruta/desktop.json`. Mezcla únicamente ese modelo en `cachePro
 **No confundir con las mediciones CLI:** Gemma/GPT se midieron con el pool SWA inicial por defecto del engine (13312), no después de reconstruir sus ventanas Desktop de 1024/512. Sus recetas CLI conservan esa condición. Qwen se captura de Desktop y no tiene una medición de generación conservada.
 
 Flint depende del [PR #797](https://github.com/FlashML-org/FreeToken/pull/797), aún abierto al capturar este repositorio. Añadir un JSON a Desktop no instala su arquitectura ni su ficha de Downloads. Usa la receta CLI con `install --flint`; el parche local previo de Desktop no se distribuye aquí. El límite de salida de estas recetas (8192) se aplica en CLI/clientes; el JSON Desktop no configura ese límite.
+
+## Correcciones del catálogo, 24-10-2026
+
+- Qwen: el valor Desktop `swaTokens=2048` permanece en el inventario, pero es un campo sin uso para este modelo GDN. No se envía `num_swa_pages` al rebuild CLI: el engine rechaza el campo porque no hay pool SWA.
+- Gemma: la receta CLI ahora usa prefill de 1024 tras un OOM con el techo anterior de 8192. Esta opción no se escribe mediante el comando `desktop`, que solo mezcla cachés/modo texto. Las cifras nuevas pertenecen a la CLI indicada en el perfil.
+- Nemotron: la receta medida es de llama.cpp, no hay un perfil FreeToken Desktop equivalente. `desktop nemotron` devuelve un mensaje explicativo y no escribe el archivo.

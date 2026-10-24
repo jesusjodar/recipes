@@ -21,5 +21,24 @@
     "performance_snapshot_tree": "edfba5e13d4ff2fae6f50208d4d58c1433b20cf8",
     "performance_rerun_on_install_commit": false
   },
-  "note": "Versiones de dependencias clave fijadas en constraints.txt. Los transitivos pueden cambiar; install guarda uv pip freeze. Overlay Python reutiliza ABI nativa; no es una compilación limpia."
+  "note": "Versiones de dependencias clave fijadas en constraints.txt. Los transitivos pueden cambiar; install guarda uv pip freeze. Overlay Python reutiliza ABI nativa; no es una compilación limpia.",
+  "llama_cpp": {
+    "version": "b11828",
+    "platform": "Linux x86_64, CUDA 13.4",
+    "server_directory": "llama-b11828",
+    "cuda_directory": "cudart-llama-b11828-bin-ubuntu-cuda-13.4-x64",
+    "release_url": "https://github.com/ggml-org/llama.cpp/releases/tag/b11828",
+    "archives": [
+      {
+        "filename": "llama-b11828-bin-ubuntu-cuda-13.4-x64.tar.gz",
+        "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11828/llama-b11828-bin-ubuntu-cuda-13.4-x64.tar.gz",
+        "sha256": "47edf65b362160efc095a251cd1459451c3be46e9f75d02e50bef87432abe8dc"
+      },
+      {
+        "filename": "cudart-llama-b11828-bin-ubuntu-cuda-13.4-x64.tar.gz",
+        "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11828/cudart-llama-b11828-bin-ubuntu-cuda-13.4-x64.tar.gz",
+        "sha256": "c4960f01d02fc60da1b91ce227a512ec3fa5e738aa587a53c5ea4b20c8468669"
+      }
+    ]
+  }
 }

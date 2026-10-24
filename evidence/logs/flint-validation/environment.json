@@ -1,0 +1,18 @@
+{
+  "python": "3.12.14",
+  "platform": "Linux-7.2.8-9-omarchy-x86_64-with-glibc2.44",
+  "packages": {
+    "freetoken": "0.2.0+gfe5a5ec9c",
+    "freetoken-kernel-cache": "0.2.0+cu130.gfe5a5ec9c",
+    "torch": "2.14.1+cu130",
+    "triton": "3.8.0",
+    "flashinfer-python": "0.6.18.post1",
+    "transformers": "5.18.0",
+    "tokenizers": "0.23.3",
+    "safetensors": "0.8.0",
+    "pytest": "9.1.1",
+    "apache-tvm-ffi": "0.1.13.post3"
+  },
+  "base_commit": "507a8bfa81d5c305e047661576165a74068e5ab0",
+  "gpu": "uuid, name, driver_version, memory.total [MiB]\n<GPU-UUID>, NVIDIA GeForce RTX 2070, 615.78.08, 8192 MiB\n<GPU-UUID>, NVIDIA GeForce RTX 3060, 615.78.08, 12288 MiB\n"
+}

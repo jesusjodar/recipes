@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "gpt-oss",
   "name": "GPT-OSS 20B",
-  "status": "Medido a 4096 + 200; contexto reservado 66560",
+  "status": "Measured 2026-10-24: three ~4K input + 200 output requests; complete logs",
   "hardware": "ryzen-5600x-rtx3060",
   "engine": "desktop-wheel",
   "model": {

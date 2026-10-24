@@ -1,0 +1,132 @@
+{
+  "date": "2026-10-24",
+  "scope": "Portable recipe launcher smoke checks; not agent sessions, a speed benchmark, or full context validation.",
+  "checks": [
+    {
+      "path": "/v1/chat/completions",
+      "request": {
+        "model": "nemotron",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Reply with OK."
+          }
+        ],
+        "max_tokens": 64
+      },
+      "http_status": 200,
+      "response": {
+        "choices": [
+          {
+            "finish_reason": "stop",
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "OK."
+            }
+          }
+        ],
+        "created": 1792831857,
+        "model": "nemotron",
+        "system_fingerprint": "b11828-d814cbb88",
+        "object": "chat.completion",
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 20,
+          "total_tokens": 23,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          }
+        },
+        "id": "chatcmpl-NUnpjIJZYszZIQqvZB1GaT2jSKRwXUy4",
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 20,
+          "prompt_ms": 216.152,
+          "prompt_per_token_ms": 10.807599999999999,
+          "prompt_per_second": 92.52748066175656,
+          "predicted_n": 3,
+          "predicted_ms": 113.323,
+          "predicted_per_token_ms": 56.6615,
+          "predicted_per_second": 17.648667966785208,
+          "draft_n": 7,
+          "draft_n_accepted": 1
+        }
+      }
+    },
+    {
+      "path": "/v1/responses",
+      "request": {
+        "model": "nemotron",
+        "input": "Reply with OK.",
+        "max_output_tokens": 64
+      },
+      "http_status": 200,
+      "response": {
+        "completed_at": 1792831858,
+        "created_at": 1792831858,
+        "id": "resp_k6v2DYP0AoSpfbNExgtkwLPWMiNAgaNV",
+        "model": "nemotron",
+        "object": "response",
+        "output": [
+          {
+            "content": [
+              {
+                "type": "output_text",
+                "annotations": [],
+                "logprobs": [],
+                "text": "OK"
+              }
+            ],
+            "id": "msg_EpoJlaNnkcaadmDbNDI0i2K4WUEa3Eo5",
+            "role": "assistant",
+            "status": "completed",
+            "type": "message"
+          }
+        ],
+        "status": "completed",
+        "usage": {
+          "input_tokens": 20,
+          "output_tokens": 2,
+          "total_tokens": 22,
+          "input_tokens_details": {
+            "cached_tokens": 15
+          }
+        }
+      }
+    },
+    {
+      "path": "/v1/messages",
+      "request": {
+        "model": "nemotron",
+        "messages": [
+          {
+            "role": "user",
+            "content": "Reply with OK."
+          }
+        ],
+        "max_tokens": 64
+      },
+      "http_status": 200,
+      "response": {
+        "id": "chatcmpl-rSmauFubu7ec8If5sb2DHGUXGFmBaK4p",
+        "type": "message",
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "OK."
+          }
+        ],
+        "model": "nemotron",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "usage": {
+          "cache_read_input_tokens": 15,
+          "input_tokens": 5,
+          "output_tokens": 3
+        }
+      }
+    }
+  ]
+}

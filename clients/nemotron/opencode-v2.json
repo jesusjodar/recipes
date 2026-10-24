@@ -1,0 +1,40 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "recipes/nemotron",
+  "providers": {
+    "recipes": {
+      "name": "recipes / llama.cpp local",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://127.0.0.1:1919/v1",
+        "encoding": "none"
+      },
+      "models": {
+        "nemotron": {
+          "modelID": "nemotron",
+          "name": "NVIDIA Nemotron 3.5 Bolt E4B",
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "compatibility": {
+            "reasoningField": "reasoning_content"
+          },
+          "limit": {
+            "context": 65536,
+            "input": 57344,
+            "output": 8192
+          },
+          "body": {
+            "max_tokens": 8192
+          }
+        }
+      }
+    }
+  }
+}

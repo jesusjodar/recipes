@@ -1,0 +1,52 @@
+F
+=================================== FAILURES ===================================
+__________ test_cache_rebuild_resizes_a_live_engine_and_keeps_serving __________
+
+tmp_path = PosixPath('<research-workspace>/work/flint-review/cache-modelopt-artifacts/test_cache_rebuild_resizes_a_l0')
+
+    @pytest.mark.skipif(not torch.cuda.is_available(), reason="cache rebuild e2e needs CUDA")
+    def test_cache_rebuild_resizes_a_live_engine_and_keeps_serving(tmp_path):
+        model_dir = _model_dir()
+        if model_dir is None:
+            pytest.skip("set FREETOKEN_REBUILD_TEST_MODEL to a small local model directory")
+        if not model_dir.is_dir() and not model_dir.is_file():
+            pytest.skip(f"model is not downloaded: {model_dir}")
+    
+        min_free = float(os.environ.get("FREETOKEN_REBUILD_MIN_FREE_GIB", "20"))
+        free_gib = _free_gpu_gib()
+        if free_gib < min_free:
+            pytest.skip(f"needs ~{min_free:.0f} GiB free; only {free_gib:.2f} GiB")
+    
+        port = _free_port()
+        base = f"http://127.0.0.1:{port}"
+        log = (tmp_path / "serve.log").open("w")
+        proc = subprocess.Popen(
+            [
+                sys.executable, "-m", "freetoken",
+                "--model-path", str(model_dir),
+                "--served-model-name", "rebuild-test",
+                "--host", "127.0.0.1",
+                "--port", str(port),
+                "--num-pages", str(BOOT_PAGES),
+                "--enable-cache-report",
+                *shlex.split(os.environ.get("FREETOKEN_REBUILD_EXTRA_ARGS", "")),
+            ],
+            stdout=log,
+            stderr=subprocess.STDOUT,
+            env={**os.environ, "PYTHONPATH": "python"},
+        )
+        try:
+            boot_timeout = float(os.environ.get("FREETOKEN_REBUILD_BOOT_TIMEOUT", "300"))
+            _wait_until_serving(base, proc, time.monotonic() + boot_timeout)
+    
+            geometry = _get(base, "/v1/cache/status")["geometry"]
+            assert geometry["num_pages"] == BOOT_PAGES
+>           assert _generate(base)  # a baseline generation, before anything is torn down
+            ^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: assert ''
+E            +  where '' = _generate('http://127.0.0.1:42815')
+
+tests/e2e/test_cache_rebuild.py:150: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_cache_rebuild.py::test_cache_rebuild_resizes_a_live_engine_and_keeps_serving
+1 failed in 44.64s

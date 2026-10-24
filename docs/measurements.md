@@ -1,6 +1,10 @@
 # Cómo interpretar las mediciones
 
-## Procedencia
+## Series históricas de la primera publicación
+
+Esta sección conserva el alcance original. Para las series nuevas y la configuración actual consulta «Actualización del 24 de octubre», más abajo.
+
+### Procedencia
 
 Los cuatro checkpoints principales están descargados en la biblioteca local de FreeToken. Los perfiles Desktop se capturaron el 24-10-2026. Las cifras de generación proceden de ejecuciones del 22-10-2026; al crear este repositorio no se repitieron ni se ejecutaron benchmarks nuevos.
 
@@ -43,3 +47,18 @@ El árbol del snapshot medido era `edfba5e13d4ff2fae6f50208d4d58c1433b20cf8`. El
 `runtime.json` fija los wheels originales y sus hashes oficiales; `constraints.txt` fija dependencias clave y `install` guarda el freeze resultante en `.runtime/installed-packages.txt`. No hay lock completo transitivo, y no se validó una instalación limpia del nuevo bootstrap. Flint reutiliza extensiones del wheel mediante symlinks para su overlay Python. En caso de incompatibilidad ABI, construye una versión coherente del engine y publica mediciones nuevas: no las sustituyas por las antiguas.
 
 En la RTX 3060, NVFP4 no implica instrucciones FP4 nativas de Blackwell. El backend puede usar rutas compatibles con activaciones de mayor precisión. No extrapoles las cifras de una RTX PRO 6000/5090 ni de una pareja de GPUs a esta receta.
+
+## Actualización del 24 de octubre: logs completos y Nemotron
+
+La descripción anterior recoge la primera publicación. Ahora Qwen, Gemma y GPT-OSS tienen **series nuevas de tres peticiones HTTP**, después de una petición de calentamiento. Se conserva stdout/stderr completo y cada evento SSE. El contenido sintético se trunca a 4096 tokens antes de aplicar la plantilla: el uso real es 4106 / 4109 / 4163 tokens respectivamente, con 200 de salida. El log del engine registra cero tokens cacheados en cada muestra medida. `ignore_eos=true` se usa solo en este benchmark, con temperatura 0.
+
+Prefill efectivo = `usage.prompt_tokens / TTFT`, midiendo hasta el primer evento con `content` **o** `reasoning_content`. Decode HTTP = `(completion_tokens - 1) / (t_último - t_primero)` de esos eventos. Son tasas operativas con overhead de servidor y posibles efectos de agrupación/tokens especiales; no tiempos puros de kernels. Flint histórico usó primer evento de texto, por lo que sigue siendo una serie distinta. Los promedios y todas las muestras están en cada JSON.
+
+- Qwen: rebuild correcto con 3328 expertos, 66560 páginas y cuatro slots GDN. Se omitió `num_swa_pages`, porque no tiene pool SWA y el API rechazó ese campo. Se preserva el rechazo inicial.
+- Gemma: el primer intento con techo prefill 8192 terminó en CUDA OOM. Se bajó a 1024 sin cambiar contexto, expertos ni SWA. La nueva serie completa usa esa configuración; no es una repetición exacta del comando histórico. Se conserva el traceback.
+- GPT-OSS: serie nueva con los argumentos publicados, sin reconstrucción adicional.
+- Nemotron: llama.cpp b11828 CUDA 13.4, target UD-Q8_K_XL, DFlash oficial BF16, 65536 de capacidad, tres tareas de código con 277–411 tokens de entrada. El prefill es la media de `timings.prompt_per_second` para tokens **no cacheados**; cada petición recuperó 38 tokens. Decode es la media de `timings.predicted_per_second`. La tasa API es `completion_tokens / elapsed_s`, incluye prefill y no es decode puro. Ninguna de estas tareas llena 64K de historial. Los parches generados no fueron validados como correctos.
+
+Los pesos de Nemotron, drafter BF16 y drafter alternativo Q8_0 se han hasheado completos y coinciden con los blobs Hub fijados. Los dos archivos de engine coinciden con los hashes oficiales del release. El instalador llama.cpp se ejecutó aquí reutilizando esos archivos y verificándolos; el nuevo lanzador se comprobó con peticiones cortas a Chat Completions, Responses y Messages. No se validaron sesiones completas de cada agente ni una descarga nueva desde cero. Nemotron no usa FreeToken en la receta medida.
+
+La geometría reservada sigue sin demostrar throughput con todo el contexto activo. El default de salida 8192 sigue siendo una política de uso del catálogo; las nuevas peticiones FreeToken solo generan 200 tokens. El servicio Nemotron que estaba activo se restauró después de cada medición.

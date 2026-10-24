@@ -13,5 +13,5 @@
     "meaning": "auto",
     "observed_flint": 5
   },
-  "scope": "Single GPU with hybrid CPU expert offload; no drafter/speculative decoding"
+  "scope": "Single RTX 3060. FreeToken recipes use hybrid CPU expert offload without a drafter; Nemotron uses full GPU llama.cpp with a BF16 DFlash drafter."
 }

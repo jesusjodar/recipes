@@ -1,0 +1,2 @@
+# Evidence preserves source whitespace, including terminal captures and tracebacks.
+evidence/logs/** -whitespace

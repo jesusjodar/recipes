@@ -1,0 +1,67 @@
+[2026-10-22|09:22:49] INFO     Parsed arguments:
+ServerArgs(model_path='<HOME>/.freetoken/models/gpt-oss-20b', tp_info=DistributedInfo(rank=0, size=1), dtype=torch.bfloat16, hf_overrides={}, max_running_req=1, attention_backend='auto', moe_strategy='hybrid', quant_backend=None, ple_backend='disk', swa_decoder_replay='bounded', expert_load='auto', moe_cache_size=256, moe_cache_rate=None, moe_cache_auto=False, moe_cache_mem=None, moe_cache_scope='unified', moe_cache_split='equal', kv_reserve_tokens=8192, moe_cache_policy='lru', moe_prefill_overlap=True, moe_prefill_hit_d2d=False, moe_collect_stats=False, moe_cpu_threads=0, moe_cpu_layers=None, moe_hybrid_max_fetch=1, moe_locked_fetch=-1.0, moe_locked_max_fetch=8, cuda_graph_bs=None, cuda_graph_max_bs=None, page_size=1, memory_ratio=0.95, linear_state_cache_ratio=2.0, swa_full_tokens_ratio=0.2, swa_num_pages_override=None, distributed_timeout=60.0, use_dummy_weight=False, use_pynccl=True, max_seq_len_override=66560, num_page_override=None, num_token_override=66560, mm=MultimodalConfig(disabled_encoders=frozenset({'audio', 'vision'}), embed_cache_device='cpu', encoder_weights='host', image_min_tokens=None, image_max_tokens=None, processor_kwargs={}), max_extend_tokens=8192, cache_type='radix', offline_mode=False, decode_log_interval=40, special_token_ckpt=False, _unique_suffix='.pid=8335', server_host='127.0.0.1', server_port=1921, num_tokenizer=0, silent_output=False, shell_mode=False, served_model_name='gpt-oss-20b-profilecheck', tool_call_parser='gpt_oss', reasoning_parser='gpt_oss', sampling_defaults='model', max_output_tokens=None, enable_cache_report=False, anthropic_inline_system='auto', allowed_media_domains='', allowed_local_media_path='', cors_origins='tauri://localhost,http://tauri.localhost,http://localhost:1420', gpu=('<GPU-UUID>',), gpu_assigned=None)
+[2026-10-22|09:22:49|initializer] INFO     --gpu <GPU-UUID> -> <GPU-UUID>
+[2026-10-22|09:22:49|FrontendAPI] INFO     Default sampling config (source=framework): temperature=0.0, top_k=-1, top_p=1.0
+INFO:     Started server process [8335]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:1921 (Press CTRL+C to quit)
+<HOME>/.freetoken/venv/lib/python3.12/site-packages/freetoken/engine/engine.py:1370: FutureWarning: torch.cuda._set_allocator_settings is deprecated. Use torch._C._accelerator_setAllocatorSettings instead.
+  torch.cuda.memory._set_allocator_settings("expandable_segments:True")
+[2026-10-22|09:22:52|core|rank=0] INFO     Enabled expandable_segments (override via PYTORCH_ALLOC_CONF)
+[2026-10-22|09:22:52|core|rank=0] INFO     Auto-selected attention backend: triton
+[2026-10-22|09:22:52|core|rank=0] INFO     Resolved config: moe_strategy='hybrid', attention_backend='triton', cache_type='swa_radix', page_size=1
+[2026-10-22|09:22:52|core|rank=0] INFO     Free memory before loading model: 11.11 GiB
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:53|core|rank=0] INFO     kernel triton_gptoss selected; skipped triton: standard MXFP4 kernel reads the concatenated gate|up row order
+[2026-10-22|09:22:56|core|rank=0] INFO     MoE experts: mxfp4 via triton_gptoss
+[2026-10-22|09:22:56|core|rank=0] INFO     expert banks: slow path (serial build)
+[2026-10-22|09:22:59|core|rank=0] INFO     torch intra-op threads: 6 -> 1 (cores reserved for the pinned CPU MoE pool)
+[2026-10-22|09:22:59|core|rank=0] INFO     CPU MoE executor ready: threads=5 (pinned to cores 0..4) isa=avx2 fmt=mxfp4_triton: 24 layers H=2880 I=2880 experts=32 layers=24 top_k=4 act=gpt_oss_swiglu max_tokens=1 spin_wait=True handshake=kernel
+[2026-10-22|09:22:59|core|rank=0] INFO     Allocating 66560 tokens for KV cache, K + V = 1.84 GiB
+[2026-10-22|09:22:59|core|rank=0] INFO     Free memory after initialization: 2.62 GiB
+[2026-10-22|09:22:59|core|rank=0] INFO     Start capturing CUDA graphs with sizes: [1]
+[2026-10-22|09:22:59|core|rank=0] INFO     Free GPU memory before capturing CUDA graphs: 2.62 GiB
+Preparing for capturing CUDA graphs...:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 2.62 GiB:   0%|          | 0/1 [00:00<?, ?batch/s]Capturing graphs: bs = 1   | avail_mem = 2.62 GiB: 100%|██████████| 1/1 [00:01<00:00,  1.37s/batch]Capturing graphs: bs = 1   | avail_mem = 2.62 GiB: 100%|██████████| 1/1 [00:01<00:00,  1.37s/batch]
+[2026-10-22|09:23:01|core|rank=0] INFO     Free GPU memory after capturing CUDA graphs: 2.58 GiB
+[2026-10-22|09:23:02|core|rank=0] INFO     Prefill warmup complete for lengths [80, 128] in 0.868 s
+[2026-10-22|09:23:03|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+[2026-10-22|09:23:03|FrontendAPI] INFO     API server is ready to serve on 127.0.0.1:1921
+[2026-10-22|09:23:16|core|rank=0] INFO     Prefill batch, #new-seq: 1, #new-token: 4096, #cached-token: 0, token usage: 0.06, #swa-token: 144/13312, swa usage: 0.01, #running-req: 1, #queue-req: 0, input throughput (token/s): 307.26
+[2026-10-22|09:23:17|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 4137, token usage: 0.06, #swa-token: 184/13312, swa usage: 0.01, gen throughput (token/s): 2.83, #queue-req: 0
+[2026-10-22|09:23:17|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 4177, token usage: 0.06, #swa-token: 224/13312, swa usage: 0.02, gen throughput (token/s): 66.00, #queue-req: 0
+[2026-10-22|09:23:18|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 4217, token usage: 0.06, #swa-token: 264/13312, swa usage: 0.02, gen throughput (token/s): 64.87, #queue-req: 0
+[2026-10-22|09:23:19|core|rank=0] INFO     Decode batch, #running-req: 1, #token: 4257, token usage: 0.06, #swa-token: 304/13312, swa usage: 0.02, gen throughput (token/s): 64.59, #queue-req: 0
+[2026-10-22|09:23:19|core|rank=0] INFO     Scheduler is idle, waiting for new reqs...
+INFO:     127.0.0.1:32816 - "POST /v1/completions HTTP/1.1" 200 OK
+
+[2026-10-22|09:23:39|core|rank=0] INFO     Scheduler exiting gracefully...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [8335]
+<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+

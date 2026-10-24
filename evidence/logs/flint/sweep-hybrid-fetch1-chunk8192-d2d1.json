@@ -1,0 +1,285 @@
+{
+  "tag": "sweep-hybrid-fetch1-chunk8192-d2d1",
+  "requests": [
+    {
+      "label": "sweep-hybrid-fetch1-chunk8192-d2d1-c3328-warmup",
+      "cache": 3328,
+      "prompt_tokens": 2048,
+      "cached_tokens": 0,
+      "completion_tokens": 128,
+      "events": 128,
+      "ttft_s": 0.9808505220007646,
+      "effective_prefill_tok_s": 2087.983799837753,
+      "decode_tok_s": 61.09510289531548,
+      "total_s": 3.060552266000741,
+      "output_sha256": "7faca3b4b65d3aa14b36a5701e7b1ea1c10820b740176cb19582602c26689300",
+      "text": "<think>We need answer user. Need inspect repo excerpts? They ask task: explain how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give detailed design, implementation plan and Python code.\n\nWe need likely produce engineering answer. We have repository excerpts only, but can infer context: freetoken server, prefix cache probably in-memory? Need maybe inspect repository? We are coding agent, should review repo excerpts and propose concrete implementation with tests. User request sweep-hybrid-fetch1-chunk8192-d2d1-c3328-warmup. Repository excerpts. Task asks explain how to add disk-backed persistent prefix cache"
+    },
+    {
+      "label": "sweep-hybrid-fetch1-chunk8192-d2d1-c3328-run0",
+      "cache": 3328,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 2.710748310000781,
+      "effective_prefill_tok_s": 3022.043754404347,
+      "decode_tok_s": 65.50093424460393,
+      "total_s": 6.604511948999061,
+      "output_sha256": "1bf26a580c26ff0710ff1fc6d2c03a2f2f266a2bfc1fe6949621586fb8688943",
+      "text": "<think>Let me analyze this repository carefully.\n\nThe task: \"explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nThe repository excerpts show:\n1. `python/freetoken/server/openai_api.py` - OpenAI-compatible API server with streaming chat completions, tool calls, reasoning, etc.\n2. `python/freetoken/models/flint/config.py` - Flint model config parsing.\n3. `python/freetoken/models/flint/attention.py` - Flint attention implementation.\n4. `python/freetoken/scheduler/prefill.py` - Scheduler prefill with chunked requests, KV cache.\n\nThe task asks for a design/implementation plan for adding a disk-backed persistent prefix cache with correct invalidation and concurrent request handling, with detailed design, implementation plan, and Python code.\n\nThis is a somewhat open-ended task. The user wants me to explain how to add a disk-backed persistent prefix cache. I should:\n\n1. Understand the existing prefix cache architecture in the codebase (though I only see excerpts, I can infer).\n2. Design a disk-backed persistent prefix cache:\n   - Storage format on disk (e.g., SQLite or custom binary files, hash-based keys).\n"
+    },
+    {
+      "label": "sweep-hybrid-fetch1-chunk8192-d2d1-c3328-run1",
+      "cache": 3328,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 2.678022165000584,
+      "effective_prefill_tok_s": 3058.9739349667457,
+      "decode_tok_s": 52.21406946076329,
+      "total_s": 7.562478257999828,
+      "output_sha256": "e56c3df51c88fd911d20ad9958cd6c29b4be9714476cfba262f85fd310efd892",
+      "text": "<think>We need answer user. Need parse. They provided repository excerpts and task: \"explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need likely respond with detailed design. We must be careful: We are coding agent, review repo excerpts and propose concrete implementation with tests. But final task asks explain how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Need craft answer. We need perhaps use excerpts context: freetoken server, scheduler prefill, cache manager. Need not actually modify code maybe propose. They want detailed design, implementation plan and Python code.\n\nWe need decide scope. We should probably explain architecture based on excerpts: in-memory paged KV cache, prefix cache, hybrid GDN, ChunkedReq, PrefillAdder, CacheManager.match_req, prefix_replay_tokens, linear_state_pool. Need add disk-backed persistent prefix cache. Correct invalidation and concurrent request handling. Detailed design, implementation plan, Python code.\n\nWe need likely propose design:\n- Separate persistent prefix cache (disk) from runtime paged in-memory cache.\n- Key: hash of prompt token ids / maybe conversation context. Value: serialized KV state? Disk-backed persistent"
+    },
+    {
+      "label": "sweep-hybrid-fetch1-chunk8192-d2d1-c3328-run2",
+      "cache": 3328,
+      "prompt_tokens": 8192,
+      "cached_tokens": 0,
+      "completion_tokens": 256,
+      "events": 256,
+      "ttft_s": 2.6756855150015326,
+      "effective_prefill_tok_s": 3061.6453069953955,
+      "decode_tok_s": 55.80043457129747,
+      "total_s": 7.246235474000059,
+      "output_sha256": "4d82c3e3885a64f99ddd79659defa36abebdc8e9ab5ac970ec0c427a9e9c623d",
+      "text": "<think>We need answer to user. Need parse. They provided repo excerpts and task: \"Request sweep-hybrid-fetch1-chunk8192-d2d1-c3328-run2. Repository excerpts: ... Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\"\n\nWe need likely respond with detailed design, implementation plan, Python code. We need use excerpts? Need inspect maybe repository context. We cannot browse? We can reason. The request name sweep-hybrid-fetch1-chunk8192-d2d1-c3328-run2 maybe benchmark. They want how to add disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Need likely propose design. We should probably not just answer generic; tie to code excerpts. Need maybe mention hybrid cache in scheduler/cache. Need craft concrete implementation with tests maybe.\n\nWe need be careful: user asks \"Task: explain how to add a disk-backed persistent prefix cache with correct invalidation and concurrent request handling. Give a detailed design, implementation plan and Python code.\" We should provide detailed design, implementation plan, Python code. We can structure.\n\nNeed maybe infer repository architecture from excerpts:\n- freetoken server OpenAI API.\n"
+    }
+  ],
+  "context": 73728,
+  "output_budget": 8192,
+  "args": {
+    "strategy": "hybrid",
+    "fetch": 1,
+    "chunk": 8192,
+    "d2d": true,
+    "phase": "sweep",
+    "cache": 0,
+    "runs": 3,
+    "memory_ratio": 0.9,
+    "long_decode": 8192
+  },
+  "command": [
+    "<research-workspace>/work/flint-research/dev-venv/bin/python",
+    "-m",
+    "freetoken",
+    "--model",
+    "<research-workspace>/work/flint-research/models/flint-gguf/flint-nvfp4.gguf",
+    "--gpu",
+    "0",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "22400",
+    "--served-model-name",
+    "flint-profile",
+    "--moe-strategy",
+    "hybrid",
+    "--moe-hybrid-max-fetch",
+    "1",
+    "--moe-cache-size",
+    "1024",
+    "--num-tokens",
+    "73728",
+    "--kv-reserve-tokens",
+    "73728",
+    "--max-seq-len-override",
+    "73728",
+    "--max-output-tokens",
+    "8192",
+    "--max-prefill-length",
+    "8192",
+    "--max-running-requests",
+    "1",
+    "--cuda-graph-max-bs",
+    "1",
+    "--enable-cache-report",
+    "--enable-special-token-ckpt",
+    "--memory-ratio",
+    "0.9",
+    "--moe-prefill-hit-d2d"
+  ],
+  "initial_status": {
+    "state": "serving",
+    "last_rebuild": null,
+    "geometry": {
+      "num_pages": 73728,
+      "page_size": 1,
+      "moe_cache_size": 1024,
+      "num_mamba_slots": 0,
+      "num_experts": 256,
+      "num_moe_layers": 47,
+      "moe_cache_policy": "lru",
+      "unit_bytes": {
+        "kv_per_token": 28672,
+        "moe_per_expert": 1769488,
+        "mamba_per_slot": 0,
+        "swa_per_token": 71680
+      },
+      "swa_full_tokens_ratio": 0.2,
+      "swa_page_size": 1,
+      "num_swa_pages": 14745,
+      "cache_budget_bytes": 8967631667,
+      "reasoning": {
+        "gears": [
+          "on"
+        ],
+        "default": "on",
+        "kwargs": {
+          "on": {}
+        }
+      },
+      "limits": {
+        "kv_tokens": {
+          "min": 1,
+          "max": 312766
+        },
+        "moe_experts": {
+          "min": 256,
+          "max": 5067
+        },
+        "mamba_slots": {
+          "min": 0,
+          "max": 0
+        },
+        "swa_tokens": {
+          "min": 1829,
+          "max": 125106
+        }
+      }
+    }
+  },
+  "max_cache_candidate": 3328,
+  "swa_pages": 9216,
+  "rebuilds": [
+    {
+      "request_id": "5188aadf-17fd-4928-8349-27e683fe7b4e",
+      "status": "ok",
+      "moe_cache_size": 3328,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 9216,
+      "error": null
+    }
+  ],
+  "final_status": {
+    "state": "serving",
+    "last_rebuild": {
+      "request_id": "5188aadf-17fd-4928-8349-27e683fe7b4e",
+      "status": "ok",
+      "moe_cache_size": 3328,
+      "num_pages": 73728,
+      "mamba_slots": 0,
+      "num_swa_pages": 9216,
+      "error": null
+    },
+    "geometry": {
+      "num_pages": 73728,
+      "page_size": 1,
+      "moe_cache_size": 3328,
+      "num_mamba_slots": 0,
+      "num_experts": 256,
+      "num_moe_layers": 47,
+      "moe_cache_policy": "lru",
+      "unit_bytes": {
+        "kv_per_token": 28672,
+        "moe_per_expert": 1769488,
+        "mamba_per_slot": 0,
+        "swa_per_token": 71680
+      },
+      "swa_full_tokens_ratio": 0.125,
+      "swa_page_size": 1,
+      "num_swa_pages": 9216,
+      "cache_budget_bytes": 8967631667,
+      "reasoning": {
+        "gears": [
+          "on"
+        ],
+        "default": "on",
+        "kwargs": {
+          "on": {}
+        }
+      },
+      "limits": {
+        "kv_tokens": {
+          "min": 1,
+          "max": 312766
+        },
+        "moe_experts": {
+          "min": 256,
+          "max": 5067
+        },
+        "mamba_slots": {
+          "min": 0,
+          "max": 0
+        },
+        "swa_tokens": {
+          "min": 1829,
+          "max": 125106
+        }
+      }
+    }
+  },
+  "stats": {
+    "instance_id": "7fe0b2c0-ff28-48f5-8988-37434101c41c",
+    "model": {
+      "id": "flint-profile",
+      "ctx": 73728,
+      "attn": "hybrid_swa",
+      "moe": true,
+      "input_modalities": [
+        "text"
+      ],
+      "sampling": {
+        "temperature": 1.0,
+        "top_k": 20,
+        "top_p": 0.949999988079071
+      }
+    },
+    "uptime_s": 26,
+    "kv": {
+      "used_pages": 0,
+      "total_pages": 73728,
+      "page_size": 1
+    },
+    "mamba": null,
+    "swa": {
+      "used_pages": 0,
+      "total_pages": 9216,
+      "page_size": 1
+    },
+    "vram_bytes": 10995367936,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3060",
+        "uuid": "<GPU-UUID>",
+        "total_bytes": 12534939648
+      }
+    ],
+    "throughput": {
+      "decode_tps": 55.8,
+      "prefill_tps": 0.0
+    },
+    "requests": {
+      "active": 0,
+      "completed": 4,
+      "p95_ms": 8,
+      "ttft_mean_ms": 0,
+      "prompt_tokens_total": 26624,
+      "completion_tokens_total": 896
+    }
+  }
+}

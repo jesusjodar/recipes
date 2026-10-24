@@ -28,6 +28,35 @@
     "flint": {
       "repo": "RecursiveSI/flint-nvfp4-gguf",
       "current_revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf"
+    },
+    "nemotron": {
+      "repo": "unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF",
+      "current_revision": "b738967d6da3441a7d1c71fcec15e49e32e16ecd",
+      "local_weights_bytes": 8192955584,
+      "weight_revision_verified": true,
+      "verification": "Full SHA-256 matches Hub LFS blob at pinned revision",
+      "target_sha256": "6176bd788769bd58042c165d3dc8e8c86a8ca5c90d5de188a364b31dc9560810",
+      "drafter": {
+        "enabled": true,
+        "type": "draft-dflash",
+        "repository": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash",
+        "download_revision": "0949a2eb7152ec6fda1a91ff9302aecbcd464fbf",
+        "filename": "Nemotron-3.5-Bolt-E4B-DFlash-BF16.gguf",
+        "legacy_local_filename": "dflash-nvidia-BF16.gguf",
+        "file_bytes": 736812096,
+        "sha256": "8103aa42fd31fb661c3fbe8701d04d698ea2c5d09351dc3e8c9da639958de989",
+        "quantization": "BF16 GGUF",
+        "max_draft_tokens": 7
+      },
+      "engine": "llama.cpp b11828 CUDA 13.4",
+      "local_library": "Desktop/AI/models",
+      "additional_drafter": {
+        "repository": "unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF",
+        "filename": "dflash-NVIDIA-Nemotron-3.5-Bolt-E4B-Q8_0.gguf",
+        "sha256": "9a63662ae8395b8bfc1a1b00d7a9ef354120f172704bd6ba88d3870cf22d4d03",
+        "selected": false,
+        "reason": "Lower mean speed in four short agentic prompts"
+      }
     }
   },
   "desktop_cache_profiles": {

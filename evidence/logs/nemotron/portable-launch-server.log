@@ -1,0 +1,48 @@
++ <recipes-checkout>/.runtime/llama-cpp/llama-b11828/llama-server -m <HOME>/Desktop/AI/models/NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf -md <HOME>/Desktop/AI/models/dflash-nvidia-BF16.gguf --host 127.0.0.1 --port 1929 --alias nemotron --device CUDA0 --spec-draft-device CUDA0 --spec-type draft-dflash --spec-draft-n-max 7 --spec-draft-ngl 99 -ngl 99 -fa on --jinja -c 65536 -np 1 --fit off --temp 1.0 --top-p 0.95 -n 8192
+0.00.403.590 I srv  llama_server: initializing ...
+0.00.403.601 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.403.922 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.405.382 I srv    load_model: loading model '<HOME>/Desktop/AI/models/NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf'
+0.00.747.989 W load: control-looking token:    212 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.00.748.018 W load: control-looking token:     50 '<|tool_response>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.00.750.886 W load: '</s>' is a normal token here, removing it from EOG list
+0.01.686.816 I cmn          init: llama threadpool init, n_threads = 6
+0.01.784.640 I common_speculative_init_result: loading draft model '<HOME>/Desktop/AI/models/dflash-nvidia-BF16.gguf'
+0.02.002.430 W load: control-looking token:    212 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.02.002.460 W load: control-looking token:     50 '<|tool_response>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.02.005.475 W load: '</s>' is a normal token here, removing it from EOG list
+0.02.138.891 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 65536, kv_unified = 'false'
+0.02.138.919 I common_speculative_impl_draft_dflash: adding speculative implementation 'draft-dflash'
+0.02.138.920 I common_speculative_impl_draft_dflash: - n_max=7, n_min=0, p_min=0.00
+0.02.138.920 I common_speculative_impl_draft_dflash: - block_size=8, mask_token_id=4, n_extract=5, sample_from_anchor=true
+0.02.168.398 I srv  llama_server: model loaded
+0.02.168.404 I srv  llama_server: listening on http://127.0.0.1:1929
+LISTO: nemotron en http://127.0.0.1:1929/v1 (una generación simultánea)
+0.02.184.316 I slot get_availabl: id  0 | task -1 | selected slot by LRU, n_tokens = 0, t_last = -1
+0.02.184.347 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.02.513.914 I slot print_timing: id  0 | task 0 | prompt eval time =     216.15 ms /    20 tokens (   10.81 ms per token,    92.53 tokens per second)
+0.02.513.917 I slot print_timing: id  0 | task 0 |        eval time =     113.32 ms /     3 tokens (   56.66 ms per token,    17.65 tokens per second)
+0.02.513.917 I slot print_timing: id  0 | task 0 |       total time =     329.47 ms /    23 tokens
+0.02.513.919 I slot print_timing: id  0 | task 0 |    graphs reused =          2
+0.02.513.920 I slot print_timing: id  0 | task 0 |   graph reallocs =          0    /     0        (same size) / (changed size)
+0.02.513.924 I slot print_timing: id  0 | task 0 | draft acceptance = 0.14286 (    1 accepted /     7 generated), mean len =  2.00
+0.02.513.953 I slot      release: id  0 | task 0 | stop processing: n_tokens = 22, truncated = 0
+0.02.515.540 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 1.000 (> 0.100 thold), f_keep = 0.909
+0.02.515.565 I slot launch_slot_: id  0 | task 5 | processing task, is_child = 0
+0.02.587.878 I slot print_timing: id  0 | task 5 | prompt eval time =      39.93 ms /     5 tokens (    7.99 ms per token,   125.22 tokens per second)
+0.02.587.881 I slot print_timing: id  0 | task 5 |        eval time =      32.30 ms /     2 tokens (   32.30 ms per token,    30.96 tokens per second)
+0.02.587.882 I slot print_timing: id  0 | task 5 |       total time =      72.23 ms /     7 tokens
+0.02.587.882 I slot print_timing: id  0 | task 5 |    graphs reused =          2
+0.02.587.882 I slot print_timing: id  0 | task 5 |   graph reallocs =          0    /     0        (same size) / (changed size)
+0.02.587.887 I slot print_timing: id  0 | task 5 | draft acceptance = 0.00000 (    0 accepted /     7 generated), mean len =  1.00
+0.02.587.905 I slot      release: id  0 | task 5 | stop processing: n_tokens = 21, truncated = 0
+0.02.589.758 I slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 1.000 (> 0.100 thold), f_keep = 0.952
+0.02.589.783 I slot launch_slot_: id  0 | task 9 | processing task, is_child = 0
+0.02.664.623 I slot print_timing: id  0 | task 9 | prompt eval time =      42.22 ms /     5 tokens (    8.44 ms per token,   118.43 tokens per second)
+0.02.664.626 I slot print_timing: id  0 | task 9 |        eval time =      32.53 ms /     3 tokens (   16.27 ms per token,    61.48 tokens per second)
+0.02.664.626 I slot print_timing: id  0 | task 9 |       total time =      74.75 ms /     8 tokens
+0.02.664.627 I slot print_timing: id  0 | task 9 |    graphs reused =          2
+0.02.664.627 I slot print_timing: id  0 | task 9 |   graph reallocs =          0    /     0        (same size) / (changed size)
+0.02.664.630 I slot print_timing: id  0 | task 9 | draft acceptance = 0.14286 (    1 accepted /     7 generated), mean len =  2.00
+0.02.664.648 I slot      release: id  0 | task 9 | stop processing: n_tokens = 22, truncated = 0
+0.02.915.333 I srv    operator(): operator(): cleaning up before exit...

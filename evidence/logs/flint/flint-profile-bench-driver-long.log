@@ -1,0 +1,15 @@
+READY long-hybrid-fetch1-chunk4096-d2d1
+CACHE 3456, SWA 5120, max 3456
+{'label': 'long-hybrid-fetch1-chunk4096-d2d1-c3456-warmup', 'cache': 3456, 'prompt_tokens': 2048, 'cached_tokens': 0, 'completion_tokens': 128, 'events': 128, 'ttft_s': 0.9849667260004935, 'effective_prefill_tok_s': 2079.258056072621, 'decode_tok_s': 59.94862564222256, 'total_s': 3.104369136999594}
+STREAM long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold: 1024 events
+STREAM long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold: 2048 events
+STREAM long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold: 3072 events
+STREAM long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold: 4096 events
+STREAM long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold: 5120 events
+STREAM long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold: 6144 events
+STREAM long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold: 7168 events
+STREAM long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold: 8192 events
+{'label': 'long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-cold', 'cache': 3456, 'prompt_tokens': 65536, 'cached_tokens': 0, 'completion_tokens': 8192, 'events': 8192, 'ttft_s': 42.456968071999654, 'effective_prefill_tok_s': 1543.5864353022644, 'decode_tok_s': 49.96602663233037, 'total_s': 206.38953015699917}
+{'label': 'long-hybrid-fetch1-chunk4096-d2d1-c3456-64k-warm', 'cache': 3456, 'prompt_tokens': 65536, 'cached_tokens': 65535, 'completion_tokens': 256, 'events': 256, 'ttft_s': 0.8844108459998097, 'effective_prefill_tok_s': 1.1306962194357975, 'decode_tok_s': 50.376462971943624, 'total_s': 5.946843125000669}
+LONG TOOL ROUND TRIP PASSED
+DONE long-hybrid-fetch1-chunk4096-d2d1
