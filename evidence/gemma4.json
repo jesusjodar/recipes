@@ -15,7 +15,7 @@
     0
   ],
   "method": "HTTP stream to first nonempty content OR reasoning event; warmup excluded; distinct synthetic prefixes. See README for timing formulas.",
-  "full_context_and_output_generation_validated": false,
+  "full_context_and_output_generation_validated": true,
   "historical": {
     "date": "2026-10-22",
     "source": "Extracto de salida real de herramientas conservada en la sesión local; logs temporales originales no disponibles",
@@ -58,5 +58,52 @@
   "measured_ignore_eos": true,
   "failed_attempt": "evidence/logs/gemma4/failed-prefill8192-server.log",
   "profile_change": "Reduced prefill ceiling 8192 -> 1024 after CUDA OOM; context and expert cache unchanged.",
-  "environment": "evidence/environment-2026-10-24.json"
+  "environment": "evidence/environment-2026-10-24.json",
+  "full_context_validation_2026_10_24": {
+    "complete": true,
+    "error": null,
+    "context_capacity": 66560,
+    "configuration_sha256": "0771678bcc800e338c54557965433d61757d6eb0a69222cbe997663b9ebefb8a",
+    "prompt_tokens": 58368,
+    "output_tokens": 8192,
+    "prefill_effective_tok_s": 884.2561755244733,
+    "decode_http_tok_s": 30.197836033789297,
+    "ttft_s": 66.00123540599998,
+    "elapsed_s": 337.2461194899997,
+    "cached_tokens_cold": 6,
+    "native_timings": {},
+    "engine_allocated_tokens": 66560,
+    "reserved_engine_tokens": 0,
+    "prefix_reuse": {
+      "cached_tokens": 58367,
+      "ttft_s": 0.9571339759995681,
+      "decode_http_tok_s": 30.286290528592158
+    },
+    "gpu_peak_mib": 11741.0,
+    "gpu_peak_temperature_c": 80.0,
+    "checks": [
+      {
+        "name": "long_context_plus_8192",
+        "passed": true
+      },
+      {
+        "name": "long_tool_round_trip",
+        "passed": true,
+        "call_prompt_tokens": 56370,
+        "followup_prompt_tokens": 56401
+      },
+      {
+        "name": "/v1/responses",
+        "passed": true
+      },
+      {
+        "name": "/v1/messages",
+        "passed": true
+      }
+    ],
+    "evidence": "evidence/logs/validation-2026-10-24/gemma4/results.json"
+  },
+  "full_context_generation_validated": true,
+  "record_scope_note": "Root throughput fields retain the dated short or historical series; current full-context data are in full_context_validation_2026_10_24.",
+  "validation_summary": "evidence/validation-2026-10-24.json"
 }

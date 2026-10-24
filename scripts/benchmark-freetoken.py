@@ -44,7 +44,7 @@ def main():
         request = urllib.request.Request(args.url.rstrip('/') + '/v1/chat/completions',
                                          data=json.dumps(body).encode(),
                                          headers={'Content-Type': 'application/json'})
-        first = last = None
+        first = last = generation_end = None
         usage = {}
         events = []
         started = time.perf_counter()
@@ -59,18 +59,21 @@ def main():
                 events.append(event)
                 if event.get('usage'):
                     usage = event['usage']
+                    generation_end = time.perf_counter()
                 if any(c.get('delta', {}).get('content') or c.get('delta', {}).get('reasoning_content')
                        for c in event.get('choices', [])):
                     now = time.perf_counter()
                     first = now if first is None else first
                     last = now
-        if not usage or first is None or last <= first:
+        if not usage or first is None or last <= first or generation_end is None:
             raise RuntimeError('Missing usage or insufficient streamed tokens; no throughput inferred.')
         record = {'run': i, 'warmup': i == 0, 'requested_raw_content_tokens': target,
                   'request': body, 'usage': usage, 'elapsed_s': time.perf_counter() - started,
                   'ttft_s': first - started,
                   'prefill_effective_tok_s': usage['prompt_tokens'] / (first - started),
-                  'decode_http_tok_s': (usage['completion_tokens'] - 1) / (last - first), 'events': events}
+                  'decode_visible_span_tok_s': (usage['completion_tokens'] - 1) / (last - first),
+                  'decode_http_tok_s': (usage['completion_tokens'] - 1) / (generation_end - first),
+                  'generation_end_s': generation_end-started, 'events': events}
         records.append(record)
         args.output.write_text(json.dumps(result, indent=2) + '\n')
         print({k: v for k, v in record.items() if k not in ['request', 'events']}, flush=True)

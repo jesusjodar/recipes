@@ -1,0 +1,247 @@
+{
+  "date": "2026-10-24",
+  "method": "HTTP streaming, first/last nonempty content or reasoning event; uncached prompt tokens / TTFT; (completion_tokens - 1) / first-content-to-terminal-usage duration, including trailing non-rendered tokens. Forced 8192-token capacity test uses ignore_eos and is not a quality evaluation.",
+  "models": {
+    "qwen3.6": {
+      "complete": true,
+      "error": null,
+      "context_capacity": 66560,
+      "configuration_sha256": "1328148a05125ffb875bf5f9f5709bf9ab228675262d67cc0c7d037eda1123bd",
+      "prompt_tokens": 58368,
+      "output_tokens": 8192,
+      "prefill_effective_tok_s": 1739.2042306334808,
+      "decode_http_tok_s": 60.3900040764865,
+      "ttft_s": 33.56017595399953,
+      "elapsed_s": 169.1954263839998,
+      "cached_tokens_cold": 0,
+      "native_timings": {},
+      "engine_allocated_tokens": 66560,
+      "reserved_engine_tokens": 0,
+      "prefix_reuse": {
+        "cached_tokens": 58304,
+        "ttft_s": 2.9076707029998943,
+        "decode_http_tok_s": 62.1328984145386
+      },
+      "gpu_peak_mib": 11292.0,
+      "gpu_peak_temperature_c": 78.0,
+      "checks": [
+        {
+          "name": "long_context_plus_8192",
+          "passed": true
+        },
+        {
+          "name": "long_tool_round_trip",
+          "passed": true,
+          "call_prompt_tokens": 56582,
+          "followup_prompt_tokens": 56667
+        },
+        {
+          "name": "/v1/responses",
+          "passed": true
+        },
+        {
+          "name": "/v1/messages",
+          "passed": true
+        }
+      ],
+      "evidence": "evidence/logs/validation-2026-10-24/qwen3.6/results.json"
+    },
+    "gemma4": {
+      "complete": true,
+      "error": null,
+      "context_capacity": 66560,
+      "configuration_sha256": "0771678bcc800e338c54557965433d61757d6eb0a69222cbe997663b9ebefb8a",
+      "prompt_tokens": 58368,
+      "output_tokens": 8192,
+      "prefill_effective_tok_s": 884.2561755244733,
+      "decode_http_tok_s": 30.197836033789297,
+      "ttft_s": 66.00123540599998,
+      "elapsed_s": 337.2461194899997,
+      "cached_tokens_cold": 6,
+      "native_timings": {},
+      "engine_allocated_tokens": 66560,
+      "reserved_engine_tokens": 0,
+      "prefix_reuse": {
+        "cached_tokens": 58367,
+        "ttft_s": 0.9571339759995681,
+        "decode_http_tok_s": 30.286290528592158
+      },
+      "gpu_peak_mib": 11741.0,
+      "gpu_peak_temperature_c": 80.0,
+      "checks": [
+        {
+          "name": "long_context_plus_8192",
+          "passed": true
+        },
+        {
+          "name": "long_tool_round_trip",
+          "passed": true,
+          "call_prompt_tokens": 56370,
+          "followup_prompt_tokens": 56401
+        },
+        {
+          "name": "/v1/responses",
+          "passed": true
+        },
+        {
+          "name": "/v1/messages",
+          "passed": true
+        }
+      ],
+      "evidence": "evidence/logs/validation-2026-10-24/gemma4/results.json"
+    },
+    "gpt-oss": {
+      "complete": true,
+      "error": null,
+      "context_capacity": 66560,
+      "configuration_sha256": "9a171709ed9c6eff5f19e74cf3792a99319a7672bb46e371e21c49e9575df8d5",
+      "prompt_tokens": 58368,
+      "output_tokens": 8192,
+      "prefill_effective_tok_s": 1444.8860440541212,
+      "decode_http_tok_s": 34.93451718150218,
+      "ttft_s": 40.39626532500006,
+      "elapsed_s": 274.86370972700024,
+      "cached_tokens_cold": 0,
+      "native_timings": {},
+      "engine_allocated_tokens": 66560,
+      "reserved_engine_tokens": 0,
+      "prefix_reuse": {
+        "cached_tokens": 58367,
+        "ttft_s": 1.1400836020002316,
+        "decode_http_tok_s": 36.33124691065548
+      },
+      "gpu_peak_mib": 10540.0,
+      "gpu_peak_temperature_c": 77.0,
+      "checks": [
+        {
+          "name": "long_context_plus_8192",
+          "passed": true
+        },
+        {
+          "name": "long_tool_round_trip",
+          "passed": true,
+          "call_prompt_tokens": 56375,
+          "followup_prompt_tokens": 56427
+        },
+        {
+          "name": "/v1/responses",
+          "passed": true
+        },
+        {
+          "name": "/v1/messages",
+          "passed": true
+        }
+      ],
+      "evidence": "evidence/logs/validation-2026-10-24/gpt-oss/results.json"
+    },
+    "flint": {
+      "complete": true,
+      "error": null,
+      "context_capacity": 73728,
+      "configuration_sha256": "ace3b92f715de2b4527489e36e3dd5077c059aca329c70de59a031fa93ba20a7",
+      "prompt_tokens": 65536,
+      "output_tokens": 8192,
+      "prefill_effective_tok_s": 1521.2903182615235,
+      "decode_http_tok_s": 50.32946914205419,
+      "ttft_s": 43.07921979999992,
+      "elapsed_s": 205.82711599999948,
+      "cached_tokens_cold": 0,
+      "native_timings": {},
+      "engine_allocated_tokens": 73728,
+      "reserved_engine_tokens": 0,
+      "prefix_reuse": {
+        "cached_tokens": 65535,
+        "ttft_s": 0.8063215160000254,
+        "decode_http_tok_s": 51.31905021701588
+      },
+      "gpu_peak_mib": 10935.0,
+      "gpu_peak_temperature_c": 74.0,
+      "checks": [
+        {
+          "name": "long_context_plus_8192",
+          "passed": true
+        },
+        {
+          "name": "long_tool_round_trip",
+          "passed": true,
+          "call_prompt_tokens": 63611,
+          "followup_prompt_tokens": 63658
+        },
+        {
+          "name": "/v1/responses",
+          "passed": true
+        },
+        {
+          "name": "/v1/messages",
+          "passed": true
+        }
+      ],
+      "evidence": "evidence/logs/validation-2026-10-24/flint/results.json"
+    },
+    "nemotron": {
+      "complete": true,
+      "error": null,
+      "context_capacity": 65536,
+      "configuration_sha256": "0c4b13c3803b31476c19ec21de44f8f3692a64a6e1d70908f896fcbb67240bcd",
+      "prompt_tokens": 57344,
+      "output_tokens": 8192,
+      "prefill_effective_tok_s": 1840.7566018665195,
+      "decode_http_tok_s": 142.94666719580496,
+      "ttft_s": 31.148604840998814,
+      "elapsed_s": 88.44984503699925,
+      "cached_tokens_cold": 7,
+      "native_timings": {
+        "cache_n": 7,
+        "prompt_n": 57337,
+        "prompt_ms": 31008.928,
+        "prompt_per_token_ms": 0.540818808099482,
+        "prompt_per_second": 1849.0481193029311,
+        "predicted_n": 8192,
+        "predicted_ms": 57337.869,
+        "predicted_per_token_ms": 7.000106092052253,
+        "predicted_per_second": 142.8549777460338,
+        "draft_n": 10920,
+        "draft_n_accepted": 6630
+      },
+      "engine_allocated_tokens": 65792,
+      "reserved_engine_tokens": 256,
+      "prefix_reuse": {
+        "cached_tokens": 57343,
+        "ttft_s": 0.1630502099997102,
+        "decode_http_tok_s": 77.42877755953619
+      },
+      "gpu_peak_mib": 8737.0,
+      "gpu_peak_temperature_c": 78.0,
+      "checks": [
+        {
+          "name": "long_context_plus_8192",
+          "passed": true
+        },
+        {
+          "name": "long_tool_round_trip",
+          "passed": true,
+          "call_prompt_tokens": 55341,
+          "followup_prompt_tokens": 55440
+        },
+        {
+          "name": "/v1/responses",
+          "passed": true
+        },
+        {
+          "name": "/v1/messages",
+          "passed": true
+        }
+      ],
+      "evidence": "evidence/logs/validation-2026-10-24/nemotron/results.json"
+    }
+  },
+  "checkpoint_weight_hashes_verified": {
+    "qwen3.6": true,
+    "gemma4": true,
+    "gpt-oss": true,
+    "flint": true,
+    "nemotron": true
+  },
+  "all_profiles_complete": true,
+  "all_recorded_checks_passed": true
+}

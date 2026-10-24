@@ -4,9 +4,9 @@
 
 [English](README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md)
 
-Mis recetas de inferencia local para **AMD Ryzen 5 5600X · RTX 3060 12 GiB · 32 GiB RAM**: pesos, versiones de engines, lanzadores automáticos, clientes agénticos y rendimiento medido. **Solo texto y una generación simultánea.** El repositorio sigue privado durante su preparación.
+Mis recetas de inferencia local para **AMD Ryzen 5 5600X · RTX 3060 12 GiB · 32 GiB RAM**: pesos, versiones de engines, lanzadores automáticos, clientes agénticos y rendimiento medido. **Solo texto y una generación simultánea.** Publicado con evidencias saneadas y comandos para reproducir las pruebas.
 
-Inventario y recuperación de logs: **24-10-2026**. Mediciones de Flint: 22 de octubre; Nemotron: 23; nuevas mediciones de Qwen/Gemma/GPT: 24. Son los perfiles elegidos entre los ajustes probados en este equipo; no demuestran un óptimo global.
+Inventario y validación de contexto completo: **24-10-2026**. Las comparativas históricas del 22–23 de octubre se conservan por separado. Son los perfiles elegidos entre los ajustes probados en este equipo; no demuestran un óptimo global.
 
 ## Índice
 
@@ -28,21 +28,21 @@ Inventario y recuperación de logs: **24-10-2026**. Mediciones de Flint: 22 de o
 <a id="models"></a>
 ## Modelos y rendimiento
 
-**El contexto incluye entrada, historial, plantillas, razonamiento y salida.** Las velocidades se expresan en tokens/s; las capacidades, en tokens. La salida es un presupuesto predeterminado, no una afirmación de que todos los modelos hayan generado esa cantidad en las pruebas.
+**El contexto incluye entrada, historial, plantillas, razonamiento y salida.** Los cinco perfiles publicados se probaron con todo su presupuesto de entrada y **8192 tokens de salida reales** el 24-10-2026. La tabla principal muestra esas peticiones largas, con el mismo método HTTP para todos los engines. Cada medición larga es una ejecución tras calentamiento, no una media estadística.
 
-| Modelo | Engine | Contexto total | Entrada reservando salida¹ | Salida¹ | Drafter | Prefill | Decode | Carga medida | Cuantización | Fuentes / config |
+| Modelo | Engine | Contexto total | Entrada reservando salida¹ | Salida¹ | Drafter | Prefill² | Decode² | Carga medida | Cuantización | Fuentes / config |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Qwen 3.6 35B A3B | FreeToken | 66560 | 58368 | 8192 | No | 2841,17² | 70,51² | 4106 + 200 × 3 | NVFP4 ModelOpt (mixto) | [Original](https://huggingface.co/Qwen/Qwen3.6-35B-A3B) · [Pesos](https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4) · [Config](profiles/qwen3.6.json) |
-| Gemma 4 26B A4B | FreeToken | 66560 | 58368 | 8192 | No | 1442,59² | 32,11² | 4109 + 200 × 3 | NVFP4 ModelOpt (mixto) | [Original](https://huggingface.co/google/gemma-4-26B-A4B-it) · [Pesos](https://huggingface.co/nvidia/Gemma-4-26B-A4B-NVFP4) · [Config](profiles/gemma4.json) |
-| GPT-OSS 20B | FreeToken | 66560 | 58368 | 8192 | No | 2272,64² | 42,31² | 4163 + 200 × 3 | MXFP4 | [Original](https://huggingface.co/openai/gpt-oss-20b) · [Pesos](https://huggingface.co/openai/gpt-oss-20b) · [Config](profiles/gpt-oss.json) |
-| Flint 39.8B A2.5B | FreeToken | 73728 | 65536 | 8192 | No | 1543,59³ | 49,97³ | 65536 + 8192 | NVFP4 GGUF oficial | [Original](https://huggingface.co/RecursiveSI/flint) · [Pesos](https://huggingface.co/RecursiveSI/flint-nvfp4-gguf) · [Config](profiles/flint.json) |
-| NVIDIA Nemotron 3.5 Bolt E4B | llama.cpp | 65536 | 57344 | 8192 | BF16 DFlash | 1964,10³ | 108,04³ | 277–411 + 1242–1762 | Unsloth UD-Q8_K_XL GGUF (mixto) | [Original](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16) · [Pesos](https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF) · [Config](profiles/nemotron.json) |
+| Qwen 3.6 35B A3B | FreeToken | 66560 | 58368 | 8192 | No | 1739,20 | 60,39 | 58368 + 8192 | NVFP4 ModelOpt (mixto) | [Original](https://huggingface.co/Qwen/Qwen3.6-35B-A3B) · [Pesos](https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4) · [Config](profiles/qwen3.6.json) |
+| Gemma 4 26B A4B | FreeToken | 66560 | 58368 | 8192 | No | 884,26 | 30,20 | 58368 + 8192 | NVFP4 ModelOpt (mixto) | [Original](https://huggingface.co/google/gemma-4-26B-A4B-it) · [Pesos](https://huggingface.co/nvidia/Gemma-4-26B-A4B-NVFP4) · [Config](profiles/gemma4.json) |
+| GPT-OSS 20B | FreeToken | 66560 | 58368 | 8192 | No | 1444,89 | 34,93 | 58368 + 8192 | MXFP4 | [Original](https://huggingface.co/openai/gpt-oss-20b) · [Pesos](https://huggingface.co/openai/gpt-oss-20b) · [Config](profiles/gpt-oss.json) |
+| Flint 39.8B A2.5B | FreeToken | 73728 | 65536 | 8192 | No | 1521,29 | 50,33 | 65536 + 8192 | NVFP4 GGUF oficial | [Original](https://huggingface.co/RecursiveSI/flint) · [Pesos](https://huggingface.co/RecursiveSI/flint-nvfp4-gguf) · [Config](profiles/flint.json) |
+| NVIDIA Nemotron 3.5 Bolt E4B | llama.cpp | 65536 | 57344 | 8192 | BF16 DFlash | 1840,76 | 142,95 | 57344 + 8192 | Unsloth UD-Q8_K_XL GGUF (mixto) | [Original](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16) · [Pesos](https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF) · [Config](profiles/nemotron.json) |
 
-1. El catálogo reserva **8192 tokens de salida** para agentes; el razonamiento también los consume. La entrada incluye sistema, esquemas de herramientas y plantilla. Solo Flint conserva una ejecución de 65536 de entrada + 8192 de salida. Un contexto total de 65536, como el de Nemotron, deja 57344 para entrada con esta reserva.
-2. Qwen/Gemma/GPT: **mediciones nuevas mediante streaming HTTP**, media de tres peticiones tras calentamiento. Prefill = tokens de prompt / tiempo hasta el primer evento no vacío de texto **o razonamiento**. Decode = (tokens de salida − 1) / tiempo entre el primero y el último de esos eventos. Incluye el servidor local y supone correspondencia entre contadores y chunks. Se usan prefijos sintéticos distintos; los logs registran los tokens cacheados. Estas cifras sustituyen los logs históricos incompletos en la tabla principal.
-3. Flint usa el protocolo HTTP histórico, hasta el primer evento de **texto**. Nemotron usa los tiempos por petición de llama.cpp; su prefill cuenta solo tokens no cacheados (38 recuperados por petición). **Las cargas y métricas distintas no permiten comparar engines de forma controlada.** Un prompt corto con capacidad de 64K no mide el rendimiento con 64K de historial activo.
+¹ La entrada incluye sistema, plantilla y herramientas. La salida es el default habitual de 8192 y se forzó a esa longitud con `ignore_eos` **solo en el benchmark**. El uso normal respeta EOS. Se cuenta el uso de tokens del API, incluidos los especiales sin texto visible. Nemotron asigna 65792 slots físicos y reserva 256 internamente, dejando 65536 utilizables por los clientes.
 
-Las cifras históricas de Gemma/GPT siguen en [sus evidencias](evidence): 328,21 / 41,24 y 307,26 / 65,15. Usan contabilidad periódica del engine y no deben mezclarse con las velocidades HTTP nuevas.
+² Prefill efectivo = tokens de prompt **no cacheados** / tiempo hasta el primer evento no vacío de texto o razonamiento; decode = (tokens de salida − 1) / intervalo desde el primer contenido hasta el evento final de uso, incluidos los tokens finales sin representación visible. Incluye el servidor local y los efectos de contabilidad de tokens/chunks. Los prompts contienen fuentes de este repositorio y prefijos sintéticos distintos. El mismo método no iguala los tokenizers ni las cargas entre modelos. Estas pruebas acreditan capacidad y comportamiento de serving, no calidad general de programación.
+
+[Resultados, caché, ciclos de herramienta y API](docs/validation.md) · [Resumen estructurado](evidence/validation-2026-10-24.json) · [Peticiones, eventos SSE, logs y trazas GPU completos](evidence/logs/validation-2026-10-24). Las cifras cortas anteriores y las periódicas del engine se conservan como series históricas en las evidencias por modelo.
 
 <a id="hardware"></a>
 ## Equipo y alcance
@@ -56,7 +56,7 @@ También hay una RTX 2070 de 8 GiB. Los experimentos anteriores con ambas GPU su
 
 ![De los pesos al flujo de trabajo](assets/workflow-blueprint.png)
 
-Requisitos: Linux x86_64, Python 3.12+, Git, driver NVIDIA compatible con el runtime CUDA elegido, espacio/RAM y [`uv`](https://docs.astral.sh/uv/getting-started/installation/) para FreeToken. FreeToken usa wheels CPython 3.12 fijados y puede necesitar toolkit CUDA 13 para kernels sin caché. Nemotron usa binarios/runtime oficiales de llama.cpp b11828 CUDA 13.4 con SHA-256 verificado.
+Requisitos: Linux x86_64, Python 3.12+, compilador C/C++ para los stubs de Triton, Git, driver NVIDIA compatible con el runtime CUDA elegido, espacio/RAM y [`uv`](https://docs.astral.sh/uv/getting-started/installation/) para FreeToken. FreeToken usa wheels CPython 3.12 fijados y puede necesitar toolkit CUDA 13 para kernels sin caché. Nemotron usa binarios/runtime oficiales de llama.cpp b11828 CUDA 13.4 con SHA-256 verificado.
 
 ```bash
 gh repo clone jesusjodar/recipes
@@ -82,7 +82,7 @@ Ejecuta **un servidor cada vez** y espera a `LISTO` antes de conectar el cliente
 ./recipes serve nemotron --print-command
 ```
 
-La biblioteca predeterminada es `~/.freetoken/models`; usa `RECIPES_MODEL_DIR` para cambiarla. Nemotron también reutiliza los archivos de `~/Desktop/AI/models` si existen y sus hashes son correctos. Sus archivos de engine pueden reutilizarse desde `~/Desktop/AI/bin`. Qwen/Gemma/GPT reutilizan shards locales completos, cuya revisión histórica de pesos se desconoce; los pins publicados se aplican a **nuevas descargas**. El modelo y drafters de Nemotron tienen verificación SHA-256 completa contra los blobs del Hub. [Inventario](evidence/inventory.json) · [Versiones fijadas](runtime.json).
+La biblioteca predeterminada es `~/.freetoken/models`; usa `RECIPES_MODEL_DIR` para cambiarla. Nemotron también reutiliza los archivos de `~/Desktop/AI/models` si existen y sus hashes son correctos. Sus archivos de engine pueden reutilizarse desde `~/Desktop/AI/bin`. Los cinco modelos actuales tienen verificación SHA-256 completa contra los blobs del Hub de sus revisiones fijadas; las ejecuciones históricas mantienen su fecha separada. Se reutilizan los shards locales tras la comprobación registrada. Los drafters de Nemotron también están verificados. [Inventario](evidence/inventory.json) · [Versiones fijadas](runtime.json).
 
 <a id="recipes"></a>
 ## Recetas por modelo
@@ -90,7 +90,7 @@ La biblioteca predeterminada es `~/.freetoken/models`; usa `RECIPES_MODEL_DIR` p
 <a id="qwen"></a>
 ### Qwen 3.6 35B A3B
 
-Contexto total 66560, 3328 plazas de expertos, cuatro slots de estado GDN/Mamba, hybrid fetch 1. Arranca con 1024 expertos y reconstruye después. El campo Desktop `swaTokens=2048` no se usa en este modelo recurrente; **el rebuild CLI omite `num_swa_pages`**, que el engine rechaza. Muestreo: temperatura 1, top-p 0,95, top-k 20.
+Contexto total 66560, 3328 plazas de expertos, cuatro slots GDN/Mamba, hybrid fetch 1. Completó **58368 de entrada + 8192 de salida**. El techo de prefill 8192 agotó el workspace GDN; la receta validada usa **2048** y mantiene contexto y caché de expertos. Arranca con 1024 expertos y reconstruye. El campo Desktop `swaTokens=2048` no se usa en este modelo recurrente y se omite del rebuild CLI. Muestreo: temperatura 1, top-p 0,95, top-k 20. La validación conserva la reutilización de prefijo y el ciclo largo de herramienta.
 
 ```bash
 ./recipes install
@@ -98,12 +98,12 @@ Contexto total 66560, 3328 plazas de expertos, cuatro slots de estado GDN/Mamba,
 ./recipes serve qwen3.6
 ```
 
-Las nuevas evidencias incluyen tres peticiones de 4106 de entrada + 200 de salida, logs completos de arranque/rebuild y eventos SSE. No validan el contexto activo completo ni la salida predeterminada de 8192. [Perfil](profiles/qwen3.6.json) · [Mediciones](evidence/qwen3.6.json) · [Clientes](clients/qwen3.6).
+[Perfil](profiles/qwen3.6.json) · [Evidencia](evidence/qwen3.6.json) · [Clientes](clients/qwen3.6)
 
 <a id="gemma"></a>
 ### Gemma 4 26B A4B
 
-**Sin visión ni audio.** Contexto total 66560, 448 expertos, hybrid fetch 1. La CLI conserva su pool SWA inicial de 13312 tokens; Desktop guarda 1024. Son geometrías diferentes. La nueva prueba detectó un OOM CUDA con techo de prefill 8192; la receta ahora divide el prefill en bloques de **1024**, y conserva el fallo y las mediciones posteriores correctas. Muestreo habitual: temperatura 1, top-p 0,95, top-k 64.
+**Sin visión ni audio.** Contexto total 66560, 448 expertos, hybrid fetch 1 y prefill **1024**. La CLI conserva el pool SWA inicial de **13312**; Desktop guarda **1024**, por lo que son geometrías distintas. Se conserva el OOM anterior con techo prefill 8192. La nueva prueba completó **58368 de entrada + 8192 de salida** con la configuración CLI publicada. Muestreo habitual: temperatura 1, top-p 0,95, top-k 64. El perfil antiguo de 1425 expertos no cabía con el contexto mayor.
 
 ```bash
 ./recipes install
@@ -111,12 +111,12 @@ Las nuevas evidencias incluyen tres peticiones de 4106 de entrada + 200 de salid
 ./recipes serve gemma4
 ```
 
-La configuración antigua de 1425 expertos no cabía con el contexto mayor. Los logs nuevos de peticiones cortas sustituyen el extracto anterior para esta receta CLI; no prueban generación en toda la capacidad de 66560 tokens. [Perfil](profiles/gemma4.json) · [Mediciones y extracto histórico](evidence/gemma4.json) · [Clientes](clients/gemma4).
+[Perfil](profiles/gemma4.json) · [Evidencia](evidence/gemma4.json) · [Clientes](clients/gemma4)
 
 <a id="gpt-oss"></a>
 ### GPT-OSS 20B
 
-Pesos MXFP4, contexto total 66560, 256 expertos, hybrid fetch 1. El perfil anterior de 535 expertos a 16K no dejaba espacio para el contexto mayor. Pool SWA CLI: 13312; Desktop: 512. El engine usa Harmony y los defaults de muestreo del checkpoint. Las mediciones piden temperatura 0.
+MXFP4, contexto total 66560, 256 expertos, hybrid fetch 1. La nueva prueba completó **58368 de entrada + 8192 de salida**. El perfil previo de 535 expertos a 16K no dejaba espacio para el contexto mayor. Pool SWA CLI: **13312**; Desktop: **512**. El engine usa Harmony y los defaults de muestreo del checkpoint; los benchmarks piden temperatura 0. El informe registra los resultados reales del ciclo largo de herramienta y las API.
 
 ```bash
 ./recipes install
@@ -124,7 +124,7 @@ Pesos MXFP4, contexto total 66560, 256 expertos, hybrid fetch 1. El perfil anter
 ./recipes serve gpt-oss
 ```
 
-[Perfil](profiles/gpt-oss.json) · [Mediciones y extracto histórico](evidence/gpt-oss.json) · [Clientes](clients/gpt-oss). La reserva de contexto se distingue de la entrada corta realmente medida.
+[Perfil](profiles/gpt-oss.json) · [Evidencia](evidence/gpt-oss.json) · [Clientes](clients/gpt-oss)
 
 <a id="flint"></a>
 ### Flint 39,8B A2,5B
@@ -137,7 +137,7 @@ GGUF NVFP4 oficial, revisión `6ec43e19…`. **65536 de entrada + 8192 de salida
 ./recipes serve flint
 ```
 
-El soporte está propuesto en [FreeToken #797](https://github.com/FlashML-org/FreeToken/pull/797). El instalador fija el commit Python revisado `6ee048e…` y reutiliza las extensiones nativas del wheel; **el rendimiento se midió en el árbol anterior `edfba5e…` y no se ha repetido en el commit instalado**. No es una compilación CUDA limpia desde fuentes.
+El soporte está propuesto en [FreeToken #797](https://github.com/FlashML-org/FreeToken/pull/797). El instalador fija el commit Python revisado `6ee048e…` y reutiliza las extensiones nativas del wheel; **la nueva prueba larga se ha ejecutado en este mismo commit instalado**. La tabla siguiente conserva las mediciones anteriores de `edfba5e…` como comparación histórica. No es una compilación CUDA limpia desde fuentes.
 
 | Carga histórica | Prefill efectivo | Decode | TTFT |
 |---|---:|---:|---:|
@@ -145,14 +145,18 @@ El soporte está propuesto en [FreeToken #797](https://github.com/FlashML-org/Fr
 | 65536 + 8192, frío, una ejecución | 1543,59 | 49,97 | 42,46 s |
 | 65536 + 256, prefijo reutilizado | 65535 tokens recuperados | 50,38 | 0,88 s |
 
-Solo el benchmark fuerza `ignore_eos`; el uso habitual respeta EOS. Se completó además un ciclo de herramienta a >64K, que no demuestra calidad general de programación. Pico observado: 10,61 GiB de VRAM con escritorio; expertos en RAM: unos 19,8 GiB. Muestreo: temperatura 1, top-p 0,95, top-k 20. [Perfil](profiles/flint.json) · [Resultados](evidence/flint.json) · [Logs del barrido](evidence/logs/flint) · [Clientes](clients/flint).
+Solo el benchmark fuerza `ignore_eos`; el uso habitual respeta EOS. Se completó además un ciclo de herramienta a >64K, que no demuestra calidad general de programación. Pico histórico observado: 10,61 GiB de VRAM con escritorio; expertos en RAM: unos 19,8 GiB. Muestreo: temperatura 1, top-p 0,95, top-k 20. [Perfil](profiles/flint.json) · [Resultados](evidence/flint.json) · [Logs del barrido](evidence/logs/flint) · [Clientes](clients/flint).
 
 También existe en investigación la exportación [Flint ModelOpt de FutureMLS-Lab](https://huggingface.co/FutureMLS-Lab/flint-nvfp4-coldgptq), revisión `56f37fcf…`, redistribuida localmente en safetensors por capa. Se usó para paridad, AIME y reconstrucción de caché con capacidad de serving 8192, sin throughput de contexto largo ni objetivo de salida optimizados. Está inventariada y no se anuncia como otra receta optimizada. [Logs de validación](evidence/logs/flint-validation).
 
 <a id="nemotron"></a>
 ### NVIDIA Nemotron 3.5 Bolt E4B + DFlash
 
-**llama.cpp b11828 CUDA 13.4**, modelo Unsloth **UD-Q8_K_XL**, drafter NVIDIA oficial **BF16 GGUF DFlash**, máximo draft 7 (bloque de 8), modelo y drafter enteros en GPU, Flash Attention, Jinja, un slot, fitting desactivado y **65536 de contexto total**. Sin proyector visual. Temperatura 1 y top-p 0,95. El catálogo añade un default de salida de 8192; las peticiones históricas fijaban sus propios límites.
+**llama.cpp b11828 CUDA 13.4**, modelo Unsloth **UD-Q8_K_XL** y drafter NVIDIA oficial **BF16 GGUF DFlash**. Draft máximo 7 (bloque de 8), ambos enteros en GPU, Flash Attention, Jinja, un slot, fitting desactivado y **context shift desactivado explícitamente**. Asignación física **65792**, con **256 slots internos para DFlash**; contexto utilizable por clientes **65536**, probado con **57344 de entrada + 8192 de salida reales**. Sin proyector visual. Muestreo habitual: temperatura 1 y top-p 0,95; la prueba de longitud fija pide temperatura 0.
+
+Las tareas cortas históricas con capacidad 64K alcanzaron **1964,10 prefill del engine / 108,04 decode del engine / 106,86 salida API tok/s**, con 277–411 de entrada y 1242–1762 de salida. Son métricas cortas separadas del nuevo resultado de contexto completo. Las cuatro tareas a 8K dieron **117,63 API / 121,63 decode del engine** con BF16, frente a **85,34 / 87,52** con el drafter Unsloth Q8_0 descargado. Se elige BF16; no son resultados de drafter NVFP4 nativo. Los parches históricos generados no se verificaron como correctos.
+
+El endpoint portable usa **1919**. El servicio previo de Desktop/AI usa **8000**; la batería lo pausó estando inactivo y lo restauró al finalizar.
 
 ```bash
 ./recipes install --llama-cpp
@@ -160,11 +164,7 @@ También existe en investigación la exportación [Flint ModelOpt de FutureMLS-L
 ./recipes serve nemotron
 ```
 
-Con capacidad 64K, tres tareas sintéticas de código usaron 277–411 tokens de prompt y generaron **1242 / 1721 / 1762**, todas terminadas normalmente. Media del engine: prefill **1964,10**, decode **108,04**; salida/tiempo total API: **106,86**; aceptación de draft: **32,4 %**. Cada petición reutilizó 38 tokens de prompt. VRAM aproximada: 8,6 GiB. **No se ha medido con un historial activo cercano a 64K.** Los parches generados son muestras de tiempo, no soluciones verificadas.
-
-Cuatro tareas anteriores con contexto 8K y 256 tokens de salida dieron **117,63 API / 121,63 decode del engine** con BF16 oficial, frente a **85,34 / 87,52** con el drafter Unsloth Q8_0 descargado. Se elige BF16. No son resultados de un drafter NVFP4 nativo; ese experimento no es una receta medida. El endpoint nuevo usa **1919**, como los clientes; el servicio existente de Desktop/AI usa **8000** y estos comandos no lo modifican.
-
-[Perfil](profiles/nemotron.json) · [Evidencia](evidence/nemotron.json) · [JSON y scripts originales](evidence/logs/nemotron) · [Clientes](clients/nemotron) · [Pesos](https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF) · [Drafter oficial](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash).
+[Perfil](profiles/nemotron.json) · [Evidencia](evidence/nemotron.json) · [Clientes](clients/nemotron)
 
 <a id="api"></a>
 ## API compatible con OpenAI
@@ -275,7 +275,18 @@ Para reproducir, sirve un modelo con la geometría registrada y guarda stdout/st
   --output /tmp/gemma4-nueva-medicion.json
 ```
 
-Registra revisión del engine, hardware, hashes de pesos, tokens reales, caché, política EOS, calentamiento y todas las muestras. Las pruebas nuevas usan `ignore_eos` solo para fijar la longitud. Antes de afirmar rendimiento de contexto completo, mide entrada/salida reales cerca del límite. El instalador guarda `uv pip freeze` local, no un lock transitivo completo; no se ha validado un bootstrap FreeToken limpio.
+Registra revisión del engine, hardware, hashes de pesos, tokens reales, caché, política EOS, calentamiento y todas las muestras. Las pruebas nuevas usan `ignore_eos` solo para fijar la longitud. Antes de afirmar rendimiento de contexto completo, mide entrada/salida reales cerca del límite. El instalador guarda `uv pip freeze` local, con las 103 versiones de paquetes fijadas en [constraints-validated.txt](constraints-validated.txt); el nuevo entorno aislado de FreeToken se instaló y se usó para estas pruebas, con ambas cachés binarias de FlashInfer fijadas.
+
+### Reproducir la validación completa
+
+Detén otros servidores para liberar VRAM y ejecuta:
+
+```bash
+.venv/bin/python scripts/validate-profiles.py --output /tmp/recipes-validation
+python3 -m unittest discover -s tests -v
+```
+
+La batería arranca cada perfil, construye un prompt sintético exacto mediante el contador del servidor, genera 8192 tokens, repite el prefijo, realiza un ciclo natural de herramienta y comprueba Responses/Messages. Guarda peticiones, eventos SSE con tiempos, stdout/stderr y telemetría GPU. `--models qwen3.6` selecciona un modelo. En este equipo, `--pause-user-service nemotron-e4b.service` pausa y restaura el servicio existente cuando está inactivo. El [informe de validación](docs/validation.md) contiene los resultados, incluidos los fallos de comprobación que se hayan producido.
 
 <a id="layout"></a>
 ## Estructura y licencias

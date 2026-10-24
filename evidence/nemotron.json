@@ -48,7 +48,7 @@
   "target_sha256": "6176bd788769bd58042c165d3dc8e8c86a8ca5c90d5de188a364b31dc9560810",
   "historical_output_limit": 2400,
   "recipe_output_default": 8192,
-  "full_context_and_output_generation_validated": false,
+  "full_context_and_output_generation_validated": true,
   "comparison_8k": {
     "bf16_drafter_mean_api_tok_s": 117.62635376154395,
     "bf16_drafter_mean_decode_engine_tok_s": 121.63487259592281,
@@ -71,5 +71,64 @@
       "messages": 200
     },
     "scope": "Short requests only; not a new throughput or near-full-context benchmark"
-  }
+  },
+  "full_context_validation_2026_10_24": {
+    "complete": true,
+    "error": null,
+    "context_capacity": 65536,
+    "configuration_sha256": "0c4b13c3803b31476c19ec21de44f8f3692a64a6e1d70908f896fcbb67240bcd",
+    "prompt_tokens": 57344,
+    "output_tokens": 8192,
+    "prefill_effective_tok_s": 1840.7566018665195,
+    "decode_http_tok_s": 142.94666719580496,
+    "ttft_s": 31.148604840998814,
+    "elapsed_s": 88.44984503699925,
+    "cached_tokens_cold": 7,
+    "native_timings": {
+      "cache_n": 7,
+      "prompt_n": 57337,
+      "prompt_ms": 31008.928,
+      "prompt_per_token_ms": 0.540818808099482,
+      "prompt_per_second": 1849.0481193029311,
+      "predicted_n": 8192,
+      "predicted_ms": 57337.869,
+      "predicted_per_token_ms": 7.000106092052253,
+      "predicted_per_second": 142.8549777460338,
+      "draft_n": 10920,
+      "draft_n_accepted": 6630
+    },
+    "engine_allocated_tokens": 65792,
+    "reserved_engine_tokens": 256,
+    "prefix_reuse": {
+      "cached_tokens": 57343,
+      "ttft_s": 0.1630502099997102,
+      "decode_http_tok_s": 77.42877755953619
+    },
+    "gpu_peak_mib": 8737.0,
+    "gpu_peak_temperature_c": 78.0,
+    "checks": [
+      {
+        "name": "long_context_plus_8192",
+        "passed": true
+      },
+      {
+        "name": "long_tool_round_trip",
+        "passed": true,
+        "call_prompt_tokens": 55341,
+        "followup_prompt_tokens": 55440
+      },
+      {
+        "name": "/v1/responses",
+        "passed": true
+      },
+      {
+        "name": "/v1/messages",
+        "passed": true
+      }
+    ],
+    "evidence": "evidence/logs/validation-2026-10-24/nemotron/results.json"
+  },
+  "full_context_generation_validated": true,
+  "record_scope_note": "Root throughput fields retain the dated short or historical series; current full-context data are in full_context_validation_2026_10_24.",
+  "validation_summary": "evidence/validation-2026-10-24.json"
 }

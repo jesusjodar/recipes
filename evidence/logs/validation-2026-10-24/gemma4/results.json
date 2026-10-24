@@ -1,0 +1,278 @@
+{
+  "model": "gemma4",
+  "date": "2026-10-24T09:27:12.825191+00:00",
+  "profile_sha256": "9b05573aede1afa0017c54300268acf65f9bbfab7f1e635cccf34cee42b412f5",
+  "profile": {
+    "schema_version": 1,
+    "id": "gemma4",
+    "name": "Gemma 4 26B A4B",
+    "status": "Measured 2026-10-24: three ~4K input + 200 output requests; complete logs",
+    "hardware": "ryzen-5600x-rtx3060",
+    "engine": "desktop-wheel",
+    "model": {
+      "repository": "nvidia/Gemma-4-26B-A4B-NVFP4",
+      "original_url": "https://huggingface.co/google/gemma-4-26B-A4B-it",
+      "local_directory": "Gemma-4-26B-A4B-NVFP4",
+      "download_revision": "a19cfe00be84568a6867111c9a68c9c44fdcffe6",
+      "historical_weight_revision_verified": false,
+      "download_patterns": [
+        "*.json",
+        "*.safetensors",
+        "*.jinja",
+        "*.txt",
+        "*.model",
+        "*.tiktoken",
+        "README.md",
+        "LICENSE*"
+      ]
+    },
+    "quantization": "NVFP4 ModelOpt (mixto)",
+    "modalities": [
+      "text"
+    ],
+    "drafter": {
+      "enabled": false,
+      "model": null
+    },
+    "context": {
+      "total_tokens": 66560,
+      "input_budget_with_reserved_output": 58368,
+      "output_tokens": 8192,
+      "output_status": "new_explicit_agent_default; historical_measurement_used_200_tokens"
+    },
+    "server_arguments": [
+      "--moe-strategy",
+      "hybrid",
+      "--moe-hybrid-max-fetch",
+      "1",
+      "--moe-cpu-threads",
+      "0",
+      "--max-running-requests",
+      "1",
+      "--text-model-only",
+      "--moe-cache-size",
+      "448",
+      "--num-tokens",
+      "66560",
+      "--max-seq-len-override",
+      "66560",
+      "--max-output-tokens",
+      "8192",
+      "--memory-ratio",
+      "0.95",
+      "--max-prefill-length",
+      "1024",
+      "--mm-disable",
+      "vision",
+      "audio",
+      "--enable-cache-report"
+    ],
+    "cache_rebuild": null,
+    "desktop_cache": {
+      "kvSize": 66560,
+      "moeExperts": 448,
+      "swaTokens": 1024,
+      "mambaSlots": 4
+    },
+    "sampling": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 64
+    },
+    "environment": {},
+    "evidence": "evidence/gemma4.json",
+    "prefill_note": "2026-10-24: 8192 ceiling OOMed on a 4109-token request with 66560 context capacity and 448 experts. Lowered to 1024; see preserved failure log and new benchmark.",
+    "cache_report_note": "Enabled for validation to report actual reused prompt tokens in HTTP usage."
+  },
+  "runs": [
+    {
+      "label": "warmup",
+      "usage": {
+        "prompt_tokens": 1024,
+        "completion_tokens": 64,
+        "total_tokens": 1088
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 64,
+      "elapsed_s": 2.9954991439999503,
+      "ttft_s": 1.0109209530000953,
+      "prefill_effective_tok_s": 1012.93775439226,
+      "prefill_including_cached_tok_s": 1012.93775439226,
+      "decode_http_tok_s": 31.748187663148254,
+      "api_output_tok_s": 21.36538751085721,
+      "text_events": 64,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "To implement a persistent prefix caching system for an inference engine (like the one implied by the `freetoken` repository), we must design a system that stores the KV (Key-Value) states of processed prompt prefixes on disk. This allows subsequent requests with the same prefix to skip computation.\n\n### 1."
+      },
+      "forced_length_passed": true,
+      "cached_tokens": 0,
+      "cache_count_source": "FreeToken enabled cache report omits details for zero cache hits",
+      "decode_visible_span_tok_s": 31.755168737772404,
+      "generation_end_s": 2.995286192000094,
+      "suppressed_output_tail_s": 0.0004362439995020395
+    },
+    {
+      "label": "long-cold",
+      "usage": {
+        "prompt_tokens": 58368,
+        "completion_tokens": 8192,
+        "total_tokens": 66560,
+        "prompt_tokens_details": {
+          "cached_tokens": 6
+        }
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 8192,
+      "elapsed_s": 337.2461194899997,
+      "ttft_s": 66.00123540599998,
+      "prefill_effective_tok_s": 884.2561755244733,
+      "prefill_including_cached_tok_s": 884.3470829137531,
+      "decode_http_tok_s": 30.197836033789297,
+      "api_output_tok_s": 24.290865117702015,
+      "text_events": 8192,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "To implement persistent prefix caching for the FreeToken engine, we must move beyond in-memory LRU caches. The goal is to allow the engine to restart or scale without losing the \"pre-computed\" KV (Key-Value) states of common system prompts or long conversation histories.\n\n### 1. Design Philosophy\n\nThe implementation follows a **Tiered Storage Architecture**:\n\n1.  **L1: In-Memory Cache (Hot):** The current active KV tensors residing in GPU VRAM for immediate access.\n2.  **L2: Persistent Disk Cache (Warm):** Serialized KV tensors stored on NVMe SSDs. This survives process restarts.\n3.  **The Index (Metadata):** A lightweight, ACID-compliant database (SQLite) that maps a hash of the prompt prefix to a file offset/ID in the L2 storage.\n\n#### Key Mechanisms:\n*   **Prefix Hashing:** We use a rolling hash (or a cryptographic hash like SHA-256) of the token IDs. If a new prompt is `[A, B, C, D]` and we have `[A, B, C]` cached, we only compute the KV for `D`.\n*   **Invalidation (TTL & Eviction):** We implement a \"Least Recently Used\" (LRU) policy for the disk. When the disk quota is hit, the oldest/least-used prefix blocks are deleted.\n*   **Concurrency:** We use **File Locking (flock)** and a **Write-Ahead Log (WAL)** in SQLite to ensure that multiple inference workers can read from the cache simultaneously without corruption.\n\n---\n\n### 2. Implementation Plan\n\n1.  **Schema Definition:** Create a SQLite table: `prefix_cache(hash TEXT PRIMARY KEY, token_count INTEGER, file_path TEXT, last_accessed TIMESTAMP)`.\n2.  **Serialization Layer:** Use `safetensors` or `torch.save` to write the KV tensors to disk. `safetensors` is preferred for its zero-copy loading capabilities.\n3.  **The Manager Class:** A singleton `PrefixCacheManager` that handles:\n    *   `lookup(token_ids)`: Finds the longest matching prefix.\n    *   `commit(token_ids, kv_tensors)`: Saves new prefixes.\n    *   `evict()`: Cleans up old files.\n4.  **Integration:** Hook into the `freetoken.cli.serve` loop (as seen in the synthetic snapshots) to check the cache before the prefill stage.\n\n---\n\n### 3. Python Implementation\n\nThis code provides the core logic for the `PrefixCacheManager`.\n\n```python\nimport os\nimport sqlite3\nimport hashlib\nimport torch\nimport time\nfrom pathlib import Path\nfrom typing import Optional, Tuple, Dict\n\nclass PersistentPrefixCache:\n    def __init__(self, cache_dir: str, max_disk_gb: float = 10.0):\n        self.cache_dir = Path(cache_dir)\n        self.cache_dir.mkdir(parents=True, exist_ok=True)\n        self.storage_path = self.cache_dir / \"kv_blobs.bin\"\n        self.db_path = self.cache_dir / \"cache_index.db\"\n        self.max_size = max_disk_gb * 1024**3\n        self._init_db()\n\n    def _init_db(self):\n        \"\"\"Initialize the SQLite index with WAL mode for concurrent access.\"\"\"\n        with sqlite3.connect(self.db_path) as conn:\n            conn.execute(\"PRAGMA journal_mode=WAL;\")\n            conn.execute(\"\"\"\n                CREATE TABLE IF NOT EXISTS prefix_index (\n                    prefix_hash TEXT PRIMARY KEY,\n                    token_count INTEGER,\n                    file_offset INTEGER,\n                    file_size INTEGER,\n                    last_used REAL\n                )\n            \"\"\")\n\n    def _compute_hash(self, tokens: list[int]) -> str:\n        return hashlib.sha256(bytes(tokens)).hexdigest()\n\n    def lookup(self, tokens: list[int]) -> Tuple[Optional[int], Optional[Dict[str, torch.Tensor]]]:\n        \"\"\"\n        Finds the longest prefix in the cache.\n        Returns (match_length, kv_cache_dict).\n        \"\"\"\n        # In a real implementation, we would iterate backwards from the full length\n        # to find the longest matching prefix. For brevity, we check the full hash.\n        target_hash = self._compute_hash(tokens)\n        \n        with sqlite3.connect(self.db_path) as conn:\n            row = conn.execute(\n                \"SELECT token_count, file_offset, file_size FROM prefix_index WHERE prefix_hash = ?\",\n                (target_hash,)\n            ).fetchone()\n            \n            if row:\n                token_count, offset, size = row\n                # Update LRU timestamp\n                conn.execute(\n                    \"UPDATE prefix_index SET last_used = ? WHERE prefix_hash = ?\",\n                    (time.time(), target_hash)\n                )\n                \n                # Load tensors from disk\n                # Note: In production, use mmap for zero-copy loading\n                with open(self.storage_path, \"rb\") as f:\n                    f.seek(offset)\n                    # This is a simplified load; real implementation would use safetensors\n                    data = torch.load(f, map_location=\"cpu\") \n                    return token_count, data\n                    \n        return 0, None\n\n    def commit(self, tokens: list[int], kv_cache: Dict[str, torch.Tensor]):\n        \"\"\"Persists a new prefix to disk.\"\"\"\n        prefix_hash = self._compute_hash(tokens)\n        token_count = len(tokens)\n        \n        # 1. Check for eviction if disk is full\n        self._ensure_capacity(torch.tensor(kv_cache[next(iter(kv_cache))]).element_size() * len(kv_cache))\n\n        # 2. Append to binary storage\n        with open(self.storage_path, \"ab\") as f:\n            offset = f.tell()\n            # We use torch.save for the demo, but safetensors is better for production\n            torch.save(kv_cache, f)\n            size = f.tell() - offset\n\n        # 3. Update Index\n        with sqlite3.connect(self.db_path) as conn:\n            conn.execute(\"\"\"\n                INSERT OR REPLACE INTO prefix_index \n                (prefix_hash, token_count, file_offset, file_size, last_used)\n                VALUES (?, ?, ?, ?, ?)\n            \"\"\", (prefix_hash, token_count, offset, size, time.time()))\n\n    def _ensure_capacity(self, new_data_size: int):\n        \"\"\"Evicts least recently used prefixes if storage exceeds max_size.\"\"\"\n        current_size = self.storage_path.stat().st_size if self.storage_path.exists() else 0\n        if current_size + new_data_size < self.max_size:\n            return\n\n        with sqlite3.connect(self.db_path) as conn:\n            # Find oldest entries\n            old_entries = conn.execute(\n                \"SELECT prefix_hash, file_offset, file_size FROM prefix_index ORDER BY last_used ASC\"\n            ).fetchall()\n\n            for p_hash, offset, size in old_entries:\n                if current_size + new_data_size < self.max_size:\n                    break\n                # In a real implementation, we would use a sparse file or \n                # compact the storage periodically. Here we just remove from index.\n                conn.execute(\"DELETE FROM prefix_index WHERE prefix_hash = ?\", (p_hash,))\n                current_size -= size\n                # Note: Actual file deletion/compaction is complex; \n                # usually handled by a background 'compaction' thread.\n\n# --- Usage Example ---\nif __name__ == \"__main__\":\n    cache = PersistentPrefixCache(cache_dir=\"./freetoken_cache\")\n    \n    # Simulated tokens and KV cache\n    sample_tokens = [1, 2, 3, 4, 5]\n    sample_kv = {\"k\": torch.randn(1, 5, 128), \"v\": torch.randn(1, 5, 128)}\n\n    print(\"Committing prefix...\")\n    cache.commit(sample_tokens, sample_kv)\n\n    print(\"Looking up prefix...\")\n    match_len, loaded_kv = cache.lookup(sample_tokens)\n    \n    if loaded_kv:\n        print(f\"Success! Found match of length {match_len}\")\n        print(f\"Tensor shape: {loaded_kv['k'].shape}\")\n    else:\n        print(\"Cache miss.\")\n```\n\n### 4. Complexity Analysis\n\n*   **Time Complexity:**\n    *   **Lookup:** $O(1)$ for hash calculation + $O(\\log N)$ for SQLite B-Tree lookup.\n    *   **Commit:** $O(1)$ for file append + $O(\\log N)$ for index update.\n*   **Space Complexity:**\n    *   **Index:** $O(N)$ where $N$ is the number of unique prefixes.\n    *   **Storage:** $O(M)$ where $M$ is the user-defined disk limit.\n*   **Concurrency:** By using `PRAGMA journal_mode=WAL`, we allow multiple readers to access the index while a single writer is committing, which is critical for high-throughput inference servers.<turn|>---\n### 5. Summary of Design Advantages\n\n| Feature | Implementation Detail | Benefit |\n| :--- | :--- | :--- |\n| **Persistence** | SQLite + Binary Blob | Survives engine crashes and reboots. |\n| **Speed** | Rolling Hash + mmap | Near-instantaneous prefix matching. |\n| **Scalability** | WAL Mode | Supports multiple concurrent inference workers. |\n| **Reliability** | LRU Eviction | Prevents disk exhaustion in long-running sessions. |<turn|><turn|><turn|>\n<channel|>\n<eos><turn|>\nthought\n<channel|>To implement persistent prefix caching for the FreeToken engine, we must move beyond in-memory LRU caches. The goal is to allow the engine to restart or scale without losing the \"pre-computed\" KV (Key-Value) states of common system prompts or long conversation histories.\n\n### 1. Design Philosophy\n\nThe implementation follows a **Tiered Storage Architecture**:\n\n1.  **L1: In-Memory Cache (Hot):** The current active KV tensors residing in GPU VRAM for immediate access.\n2.  **L2: Persistent Disk Cache (Warm):** Serialized KV tensors stored on NVMe SSDs. This survives process restarts.\n3.  **The Index (Metadata):** A lightweight, ACID-compliant database (SQLite) that maps a hash of the prompt prefix to a file offset/ID in the L2 storage.\n\n#### Key Mechanisms:\n*   **Prefix Hashing:** We use a rolling hash (or a cryptographic hash like SHA-256) of the token IDs. If a new prompt is `[A, B, C, D]` and we have `[A, B, C]` cached, we only compute the KV for `D`.\n*   **Invalidation (TTL & Eviction):** We implement a \"Least Recently Used\" (LRU) policy for the disk. When the disk quota is hit, the oldest/least-used prefix blocks are deleted.\n*   **Concurrency:** We use **File Locking (flock)** and a **Write-Ahead Log (WAL)** in SQLite to ensure that multiple inference workers can read from the cache simultaneously without corruption.\n\n---\n\n### 2. Implementation Plan\n\n1.  **Schema Definition:** Create a SQLite table: `prefix_cache(hash TEXT PRIMARY KEY, token_count INTEGER, file_path TEXT, last_accessed TIMESTAMP)`.\n2.  **Serialization Layer:** Use `safetensors` or `torch.save` to write the KV tensors to disk. `safetensors` is preferred for its zero-copy loading capabilities.\n3.  **The Manager Class:** A singleton `PrefixCacheManager` that handles:\n    *   `lookup(token_ids)`: Finds the longest matching prefix.\n    *   `commit(token_ids, kv_tensors)`: Saves new prefixes.\n    *   `evict()`: Cleans up old files.\n4.  **Integration:** Hook into the `freetoken.cli.serve` loop (as seen in the synthetic snapshots) to check the cache before the prefill stage.\n\n---\n\n### 3. Python Implementation\n\nThis code provides the core logic for the `PrefixCacheManager`.\n\n```python\nimport sqlite3\nimport hashlib\nimport torch\nimport time\nfrom pathlib import Path\nfrom typing import Optional, Tuple, Dict\n\nclass PersistentPrefixCache:\n    def __init__(self, cache_dir: str, max_disk_gb: float = 10.0):\n        self.cache_dir = Path(cache_dir)\n        self.cache_dir.mkdir(parents=True, exist_ok=True)\n        self.storage_path = self.cache_dir / \"kv_blobs.bin\"\n        self.db_path = self.cache_dir / \"cache_index.db\"\n        self.max_size = max_disk_gb * 1024**3\n        self._init_db()\n\n    def _init_db(self):\n        \"\"\"Initialize the SQLite index with WAL mode for concurrent access.\"\"\"\n        with sqlite3.connect(self.db_path) as conn:\n            conn.execute(\"PRAGMA journal_mode=WAL;\")\n            conn.execute(\"\"\"\n                CREATE TABLE IF NOT EXISTS prefix_index (\n                    prefix_hash TEXT PRIMARY KEY,\n                    token_count INTEGER,\n                    file_offset INTEGER,\n                    file_size INTEGER,\n                    last_used REAL\n                )\n            \"\"\")\n\n    def _compute_hash(self, tokens: list[int]) -> str:\n        return hashlib.sha256(bytes(tokens)).hexdigest()\n\n    def lookup(self, tokens: list[int]) -> Tuple[Optional[int], Optional[Dict[str, torch.Tensor]]]:\n        \"\"\"\n        Finds the longest prefix in the cache.\n        Returns (match_length, kv_cache_dict).\n        \"\"\"\n        # In a real implementation, we would iterate backwards from the full length\n        # to find the longest matching prefix. For brevity, we check the full hash.\n        target_hash = self._compute_hash(tokens)\n        \n        with sqlite3.connect(self.db_path) as conn:\n            row = conn.execute(\n                \"SELECT token_count, file_offset, file_size FROM prefix_index WHERE prefix_hash = ?\",\n                (target_hash,)\n            ).fetchone()\n            \n            if row:\n                token_count, offset, size = row\n                # Update LRU timestamp\n                conn.execute(\n                    \"UPDATE prefix_index SET last_used = ? WHERE prefix_hash = ?\",\n                    (time.time(), target_hash)\n                )\n                \n                # Load tensors from disk\n                # Note: In production, use mmap for zero-copy loading\n                with open(self.storage_path, \"rb\") as f:\n                    f.seek(offset)\n                    # This is a simplified load; real implementation would use safetensors\n                    data = torch.load(f, map_location=\"cpu\") \n                    return token_count, data\n                    \n        return 0, None\n\n    def commit(self, tokens: list[int], kv_cache: Dict[str, torch.Tensor]):\n        \"\"\"Persists a new prefix to disk.\"\"\"\n        prefix_hash = self._compute_hash(tokens)\n        token_count = len(tokens)\n        \n        # 1. Check for eviction if disk is full\n        self._ensure_capacity(torch.tensor(kv_cache[next(iter(kv_cache))]).element_size() * len(kv_cache))\n\n        # 2. Append to binary storage\n        with open(self.storage_path, \"ab\") as f:\n            offset = f.tell()\n            # We use torch.save for the demo, but safetensors is better for production\n            torch.save(kv_cache, f)\n            size = f.tell() - offset\n\n        # 3. Update Index\n        with sqlite3.connect(self.db_path) as conn:\n            conn.execute(\"\"\"\n                INSERT OR REPLACE INTO prefix_index \n                (prefix_hash, token_count, file_offset, file_size, last_used)\n                VALUES (?, ?, ?, ?, ?)\n            \"\"\", (prefix_hash, token_count, offset, size, time.time()))\n\n    def _ensure_capacity(self, new_data_size: int):\n        \"\"\"Evicts least recently used prefixes if storage exceeds max_size.\"\"\"\n        current_size = self.storage_path.stat().st_size if self.storage_path.exists() else 0\n        if current_size + new_data_size < self.max_size:\n            return\n\n        with sqlite3.connect(self.db_path) as conn:\n            # Find oldest entries\n            old_entries = conn.execute(\n                \"SELECT prefix_hash, file_offset, file_size FROM prefix_index ORDER BY last_used ASC\"\n            ).fetchall()\n\n            for p_hash, offset, size in old_entries:\n                if current_size + new_data_size < self.max_size:\n                    break\n                # In a real implementation, we would use a sparse file or \n                # compact the storage periodically. Here we just remove from index.\n                conn.execute(\"DELETE FROM prefix_index WHERE prefix_hash = ?\", (p_hash,))\n                current_size -= size\n                # Note: Actual file deletion/compaction is complex; \n                # usually handled by a background 'compaction' thread.\n\n# --- Usage Example ---\nif __name__ == \"__main__\":\n    cache = PersistentPrefixCache(cache_dir=\"./freetoken_cache\")\n    \n    # Simulated tokens and KV cache\n    sample_tokens = [1, 2, 3, 4, 5]\n    sample_kv = {\"k\": torch.randn(1, 5, 128), \"v\": torch.randn(1, 5, 128)}\n\n    print(\"Committing prefix...\")\n    cache.commit(sample_tokens, sample_kv)\n\n    print(\"Looking up prefix...\")\n    match_len, loaded_kv = cache.lookup(sample_tokens)\n    \n    if loaded_kv:\n        print(f\"Success! Found match of length {match_len}\")\n        print(f\"Tensor shape: {loaded_kv['k'].shape}\")\n    else:\n        print(\"Cache miss.\")\n```\n\n---\n\n### 4. Complexity Analysis\n\n*   **Time Complexity:**\n    *   **Lookup:** $O(1)$ for hash calculation + $O(\\log N)$ for SQLite B-Tree lookup.\n    *   **Commit:** $O(1)$ for file append + $O(\\log N)$ for index update.\n*   **Space Complexity:**\n    *   **Index:** $O(N)$ where $N$ is the number of unique prefixes.\n    *   **Storage:** $O(M)$ where $M$ is the user-defined disk limit.\n*   **Concurrency:** By using `PRAGMA journal_mode=WAL`, we allow multiple readers to access the index while a single writer is committing, which is critical for high-throughput inference servers.\n\n---\n\n### 5. Summary of Design Advantages\n\n| Feature | Implementation Detail | Benefit |\n| :--- | :--- | :--- |\n| **Persistence** | SQLite + Binary Blob | Survives engine crashes and reboots. |\n| **Speed** | Rolling Hash + mmap | Near-instantaneous prefix matching. |\n| **Scalability** | WAL Mode | Supports multiple concurrent inference workers. |\n| **Reliability** | LRU Eviction | Prevents disk exhaustion in long-running sessions. |<turn|><turn|>\nthought\n<channel|>To implement persistent prefix caching for the FreeToken engine, we must move beyond in-memory LRU caches. The goal is to allow the engine to restart or scale without losing the \"pre-computed\" KV (Key-Value) states of common system prompts or long conversation histories.\n\n### 1. Design Philosophy\n\nThe implementation follows a **Tiered Storage Architecture**:\n\n1.  **L1: In-Memory Cache (Hot):** The current active KV tensors residing in GPU VRAM for immediate access.\n2.  **L2: Persistent Disk Cache (Warm):** Serialized KV tensors stored on NVMe SSDs. This survives process restarts.\n3.  **The Index (Metadata):** A lightweight, ACID-compliant database (SQLite) that maps a hash of the prompt prefix to a file offset/ID in the L2 storage.\n\n#### Key Mechanisms:\n*   **Prefix Hashing:** We use a rolling hash (or a cryptographic hash like SHA-256) of the token IDs. If a new prompt is `[A, B, C, D]` and we have `[A, B, C]` cached, we only compute the KV for `D`.\n*   **Invalidation (TTL & Eviction):** We implement a \"Least Recently Used\" (LRU) policy for the disk. When the disk quota is hit, the oldest/least-used prefix blocks are deleted.\n*   **Concurrency:** We use **File Locking (flock)** and a **Write-Ahead Log (WAL)** in SQLite to ensure that multiple inference workers can read from the cache simultaneously without corruption.\n\n---\n\n### 2. Implementation Plan\n\n1.  **Schema Definition:** Create a SQLite table: `prefix_cache(hash TEXT PRIMARY KEY, token_count INTEGER, file_path TEXT, last_accessed TIMESTAMP)`.\n2.  **Serialization Layer:** Use `safetensors` or `torch.save` to write the KV tensors to disk. `safetensors` is preferred for its zero-copy loading capabilities.\n3.  **The Manager Class:** A singleton `PrefixCacheManager` that handles:\n    *   `lookup(token_ids)`: Finds the longest matching prefix.\n    *   `commit(token_ids, kv_tensors)`: Saves new prefixes.\n    *   `evict()`: Cleans up old files.\n4.  **Integration:** Hook into the `freetoken.cli.serve` loop (as seen in the synthetic snapshots) to check the cache before the prefill stage.\n\n---\n\n### 3. Python Implementation\n\nThis code provides the core logic for the `PrefixCacheManager`.\n\n```python\nimport sqlite3\nimport hashlib\nimport torch\nimport time\nfrom pathlib import Path\nfrom typing import Optional, Tuple, Dict\n\nclass PersistentPrefixCache:\n    def __init__(self, cache_dir: str, max_disk_gb: float = 10.0):\n        self.cache_dir = Path(cache_dir)\n        self.cache_dir.mkdir(parents=True, exist_ok=True)\n        self.storage_path = self.cache_dir / \"kv_blobs.bin\"\n        self.db_path = self.cache_dir / \"cache_index.db\"\n        self.max_size = max_disk_gb * 1024**3\n        self._init_db()\n\n    def _init_db(self):\n        \"\"\"Initialize the SQLite index with WAL mode for concurrent access.\"\"\"\n        with sqlite3.connect(self.db_path) as conn:\n            conn.execute(\"PRAGMA journal_mode=WAL;\")\n            conn.execute(\"\"\"\n                CREATE TABLE IF NOT EXISTS prefix_index (\n                    prefix_hash TEXT PRIMARY KEY,\n                    token_count INTEGER,\n                    file_offset INTEGER,\n                    file_size INTEGER,\n                    last_used REAL\n                )\n            \"\"\")\n\n    def _compute_hash(self, tokens: list[int]) -> str:\n        return hashlib.sha256(bytes(tokens)).hexdigest()\n\n    def lookup(self, tokens: list[int]) -> Tuple[Optional[int], Optional[Dict[str, torch.Tensor]]]:\n        \"\"\"\n        Finds the longest prefix in the cache.\n        Returns (match_length, kv_cache_dict).\n        \"\"\"\n        # In a real implementation, we would iterate backwards from the full length\n        # to find the longest matching prefix. For brevity, we check the full hash.\n        target_hash = self._compute_hash(tokens)\n        \n        with sqlite3.connect(self.db_path) as conn:\n            row = conn.execute(\n                \"SELECT token_count, file_offset, file_size FROM prefix_index WHERE prefix_hash = ?\",\n                (target_hash,)\n            ).fetchone()\n            \n            if row:\n                token_count, offset, size = row\n                # Update LRU timestamp\n                conn.execute(\n                    \"UPDATE prefix_index SET last_used = ? WHERE prefix_hash = ?\",\n                    (time.time(), target_hash)\n                )\n                \n                # Load tensors from disk\n                # Note: In production, use mmap for zero-copy loading\n                with open(self.storage_path, \"rb\") as f:\n                    f.seek(offset)\n                    # This is a simplified load; real implementation would use safetensors\n                    data = torch.load(f, map_location=\"cpu\") \n                    return token_count, data\n                    \n        return 0, None\n\n    def commit(self, tokens: list[int], kv_cache: Dict[str, torch.Tensor]):\n        \"\"\"Persists a new prefix to disk.\"\"\"\n        prefix_hash = self._compute_hash(tokens)\n        token_count = len(tokens)\n        \n        # 1. Check for eviction if disk is full\n        self._ensure_capacity(torch.tensor(kv_cache[next(iter(kv_cache))]).element_size() * len(kv_cache))\n\n        # 2. Append to binary storage\n        with open(self.storage_path, \"ab\") as f:\n            offset = f.tell()\n            # We use torch.save for the demo, but safetensors is better for production\n            torch.save(kv_cache, f)\n            size = f.tell() - offset\n\n        # 3. Update Index\n        with sqlite3.connect(self.db_path) as conn:\n            conn.execute(\"\"\"\n                INSERT OR REPLACE INTO prefix_index \n                (prefix_hash, token_count, file_offset, file_size, last_used)\n                VALUES (?, ?, ?, ?, ?)\n            \"\"\", (prefix_hash, token_count, offset, size, time.time()))\n\n    def _ensure_capacity(self, new_data_size: int):\n        \"\"\"Evicts least recently used prefixes if storage exceeds max_size.\"\"\"\n        current_size = self.storage_path.stat().st_size if self.storage_path.exists() else 0\n        if current_size + new_data_size < self.max_size:\n            return\n\n        with sqlite3.connect(self.db_path) as conn:\n            # Find oldest entries\n            old_entries = conn.execute(\n                \"SELECT prefix_hash, file_offset, file_size FROM prefix_index ORDER BY last_used ASC\"\n            ).fetchall()\n\n            for p_hash, offset, size in old_entries:\n                if current_size + new_data_size < self.max_size:\n                    break\n                # In a real implementation, we would use a sparse file or \n                # compact the storage periodically. Here we just remove from index.\n                conn.execute(\"DELETE FROM prefix_index WHERE prefix_hash = ?\", (p_hash,))\n                current_size -= size\n                # Note: Actual file deletion/compaction is complex; \n                # usually handled by a background 'compaction' thread.\n\n# --- Usage Example ---\nif __name__ == \"__main__\":\n    cache = PersistentPrefixCache(cache_dir=\"./freetoken_cache\")\n    \n    # Simulated tokens and KV cache\n    sample_tokens = [1, 2, 3, 4, 5]\n    sample_kv = {\"k\": torch.randn(1, 5, 128), \"v\": torch.randn(1, 5, 128)}\n\n    print(\"Committing prefix...\")\n    cache.commit(sample_tokens, sample_kv)\n\n    print(\"Looking up prefix...\")\n    match_len, loaded_kv = cache.lookup(sample_tokens)\n    \n    if loaded_kv:\n        print(f\"Success! Found match of length {match_len}\")\n        print(f\"Tensor shape: {loaded_kv['k'].shape}\")\n    else:\n        print(\"Cache miss.\")\n```\n\n---\n\n### 4. Complexity Analysis\n\n*   **Time Complexity:**\n    *   **Lookup:** $O(1)$ for hash calculation + $O(\\log N)$ for SQLite B-Tree lookup.\n    *   **Commit:** $O(1)$ for file append + $O(\\log N)$ for index update.\n*   **Space Complexity:**\n    *   **Index:** $O(N)$ where $N$ is the number of unique prefixes.\n    *   **Storage:** $O(M)$ where $M$ is the user-defined disk limit.\n*   **Concurrency:** By using `PRAGMA journal_mode=WAL`, we allow multiple readers to access the index while a single writer is committing, which is critical for high-throughput inference servers.\n\n---\n\n### 5. Summary of Design Advantages\n\n| Feature | Implementation Detail | Benefit |\n| :--- | :--- | :--- |\n| **Persistence** | SQLite + Binary Blob | Survives engine crashes and reboots. |\n| **Speed** | Rolling Hash + mmap | Near-instantaneous prefix matching. |\n| **Scalability** | WAL Mode | Supports multiple concurrent inference workers. |\n| **Reliability** | LRU Eviction | Prevents disk exhaustion in long-running sessions. |<turn|><turn|>thought\n<channel|>To implement persistent prefix caching for the FreeToken engine, we must move beyond in-memory LRU caches. The goal is to allow the engine to restart or scale without losing the \"pre-computed\" KV (Key-Value) states of common system prompts or long conversation histories.\n\n### 1. Design Philosophy\n\nThe implementation follows a **Tiered Storage Architecture**:\n\n1.  **L1: In-Memory Cache (Hot):** The current active KV tensors residing in GPU VRAM for immediate access.\n2.  **L2: Persistent Disk Cache (Warm):** Serialized KV tensors stored on NVMe SSDs. This survives process restarts.\n3.  **The Index (Metadata):** A lightweight, ACID-compliant database (SQLite) that maps a hash of the prompt prefix to a file offset/ID in the L2 storage.\n\n#### Key Mechanisms:\n*   **Prefix Hashing:** We use a rolling hash (or a cryptographic hash like SHA-256) of the token IDs. If a new prompt is `[A, B, C, D]` and we have `[A, B, C]` cached, we only compute the KV for `D`.\n*   **Invalidation (TTL & Eviction):** We implement a \"Least Recently Used\" (LRU) policy for the disk. When the disk quota is hit, the oldest/least-used prefix blocks are deleted.\n*   **Concurrency:** We use **File Locking (flock)** and a **Write-Ahead Log (WAL)** in SQLite to ensure that multiple inference workers can read from the cache simultaneously without corruption.\n\n---\n\n### 2. Implementation Plan\n\n1.  **Schema Definition:** Create a SQLite table: `prefix_cache(hash TEXT PRIMARY KEY, token_count INTEGER, file_path TEXT, last_accessed TIMESTAMP)`.\n2.  **Serialization Layer:** Use `safetensors` or `torch.save` to write the KV tensors to disk. `safetensors` is preferred for its zero-copy loading capabilities.\n3.  **The Manager Class:** A singleton `PrefixCacheManager` that handles:\n    *   `lookup(token_ids)`: Finds the longest matching prefix.\n    *   `commit(token_ids, kv_tensors)`: Saves new prefixes.\n    *   `evict()`: Cleans up old files.\n4.  **Integration:** Hook into the `freetoken.cli.serve` loop (as seen in the synthetic snapshots) to check the cache before the prefill stage.\n\n---\n\n### 3. Python Implementation\n\nThis code provides the core logic for the `PrefixCacheManager`.\n\n```python\nimport sqlite3\nimport hashlib\nimport torch\nimport time\nfrom pathlib import Path\nfrom typing import Optional, Tuple, Dict\n\nclass PersistentPrefixCache:\n    def __init__(self, cache_dir: str, max_disk_gb: float = 10.0):\n        self.cache_dir = Path(cache_dir)\n        self.cache_dir.mkdir(parents=True, exist_ok=True)\n        self.storage_path = self.cache_dir / \"kv_blobs.bin\"\n        self.db_path = self.cache_dir / \"cache_index.db\"\n        self.max_size = max_disk_gb * 1024**3\n        self._init_db()\n\n    def _init_db(self):\n        \"\"\"Initialize the SQLite index with WAL mode for concurrent access.\"\"\"\n        with sqlite3.connect(self.db_path) as conn:\n            conn.execute(\"PRAGMA journal_mode=WAL;\")\n            conn.execute(\"\"\"\n                CREATE TABLE IF NOT EXISTS prefix_index (\n                    prefix_hash TEXT PRIMARY KEY,\n                    token_count INTEGER,\n                    file_offset INTEGER,\n                    file_size INTEGER,\n                    last_used REAL\n                )\n            \"\"\")\n\n    def _compute_hash(self, tokens: list[int]) -> str:\n        return hashlib.sha256(bytes(tokens)).hexdigest()\n\n    def lookup(self, tokens: list[int]) -> Tuple[Optional[int], Optional[Dict[str, torch.Tensor]]]:\n        \"\"\"\n        Finds the longest prefix in the cache.\n        Returns (match_length, kv_cache_dict).\n        \"\"\"\n        # In a real implementation, we would iterate backwards from the full length\n        # to find the longest matching prefix. For brevity, we check the full hash.\n        target_hash = self._compute_hash(tokens)\n        \n        with sqlite3.connect(self.db_path) as conn:\n            row = conn.execute(\n                \"SELECT token_count, file_offset, file_size FROM prefix_index WHERE prefix_hash = ?\",\n                (target_hash,)\n            ).fetchone()\n            \n            if row:\n                token_count, offset, size = row\n                # Update LRU timestamp\n                conn.execute(\n                    \"UPDATE prefix_index SET last_used = ? WHERE prefix_hash = ?\",\n                    (time.time(), target_hash)\n                )\n                \n                # Load tensors from disk\n                # Note: In production, use mmap for zero-copy loading\n                with open(self.storage_path, \"rb\") as f:\n                    f.seek(offset)\n                    # This is a simplified load; real implementation would use safetensors\n                    data = torch.load(f, map_location=\"cpu\") \n                    return token_count, data\n                    \n        return 0, None\n\n    def commit(self, tokens: list[int], kv_cache: Dict[str, torch.Tensor]):\n        \"\"\"Persists a new prefix to disk.\"\"\"\n        prefix_hash = self._compute_hash(tokens)\n        token_count = len(tokens)\n        \n        # 1. Check for eviction if disk is full\n        self._ensure_capacity(torch.tensor(kv_cache[next(iter(kv_cache))]).element_size() * len(kv_cache))\n\n        # 2. Append to binary storage\n        with open(self.storage_path, \"ab\") as f:\n"
+      },
+      "forced_length_passed": true,
+      "expected_input_tokens": 58368,
+      "exact_budget_passed": true,
+      "cached_tokens": 6,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "decode_visible_span_tok_s": 30.197895782280643,
+      "generation_end_s": 337.24583686799997,
+      "suppressed_output_tail_s": 0.0005366750001485343
+    },
+    {
+      "label": "long-prefix-reuse",
+      "usage": {
+        "prompt_tokens": 58368,
+        "completion_tokens": 256,
+        "total_tokens": 58624,
+        "prompt_tokens_details": {
+          "cached_tokens": 58367
+        }
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 256,
+      "elapsed_s": 9.377011108999795,
+      "ttft_s": 0.9571339759995681,
+      "prefill_effective_tok_s": 1.0447858137683028,
+      "prefill_including_cached_tok_s": 60982.058378028305,
+      "decode_http_tok_s": 30.286290528592158,
+      "api_output_tok_s": 27.300810143468667,
+      "text_events": 256,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "To implement persistent prefix caching for the FreeToken engine, we must move beyond in-memory LRU caches. The goal is to allow the engine to restart or scale without losing the \"pre-computed\" KV (Key-Value) states of common system prompts or long conversation histories.\n\n### 1. Design Philosophy\n\nThe implementation follows a **Tiered Storage Architecture**:\n\n1.  **L1: In-Memory Cache (Hot):** The current active KV tensors residing in GPU VRAM for immediate access.\n2.  **L2: Persistent Disk Cache (Warm):** Serialized KV tensors stored on NVMe SSDs. This survives process restarts.\n3.  **The Index (Metadata):** A lightweight, ACID-compliant database (SQLite) that maps a `hash(prefix_tokens)` to a `disk_offset` and `metadata` (token count, model ID, etc.).\n\n#### Key Mechanisms:\n*   **Prefix Hashing:** We use a rolling hash or a cryptographic hash (SHA-256) of the token IDs. If a new request's prefix matches a known hash, we load the cache.\n*   **Invalidation (Eviction):** We implement a **Two-Factor"
+      },
+      "forced_length_passed": true,
+      "cached_tokens": 58367,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "decode_visible_span_tok_s": 30.287784522877903,
+      "generation_end_s": 9.37678509699981,
+      "suppressed_output_tail_s": 0.00041531300030328566
+    },
+    {
+      "label": "long-tool-call",
+      "usage": {
+        "prompt_tokens": 56370,
+        "completion_tokens": 16,
+        "total_tokens": 56386
+      },
+      "finish_reason": "tool_calls",
+      "forced_ignore_eos": false,
+      "requested_max_tokens": 1024,
+      "elapsed_s": 64.05670319899946,
+      "ttft_s": null,
+      "prefill_effective_tok_s": null,
+      "prefill_including_cached_tok_s": null,
+      "decode_http_tok_s": null,
+      "api_output_tok_s": 0.24977869919864865,
+      "text_events": 0,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_lookup-codeword_0_8aa1640c",
+            "type": "function",
+            "function": {
+              "name": "lookup_codeword",
+              "arguments": "{\"key\":\"recipe\"}"
+            }
+          }
+        ]
+      },
+      "forced_length_passed": null,
+      "cached_tokens": 0,
+      "cache_count_source": "FreeToken enabled cache report omits details for zero cache hits",
+      "decode_visible_span_tok_s": null,
+      "generation_end_s": 64.05646679799975,
+      "suppressed_output_tail_s": null,
+      "decode_metric_note": "Structured tool output: text-only timeline does not cover all generated tokens."
+    },
+    {
+      "label": "long-tool-followup",
+      "usage": {
+        "prompt_tokens": 56401,
+        "completion_tokens": 11,
+        "total_tokens": 56412,
+        "prompt_tokens_details": {
+          "cached_tokens": 56366
+        }
+      },
+      "finish_reason": "stop",
+      "forced_ignore_eos": false,
+      "requested_max_tokens": 1024,
+      "elapsed_s": 1.9098527959995408,
+      "ttft_s": 1.6709962229997473,
+      "prefill_effective_tok_s": 20.945588935664095,
+      "prefill_including_cached_tok_s": 33752.91890172545,
+      "decode_http_tok_s": 41.904892312794225,
+      "api_output_tok_s": 5.759606197420592,
+      "text_events": 6,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "BLUEPRINT-742"
+      },
+      "forced_length_passed": null,
+      "cached_tokens": 56366,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "decode_visible_span_tok_s": 56.96742189796135,
+      "generation_end_s": 1.9096318439997049,
+      "suppressed_output_tail_s": 0.06309669599977497
+    }
+  ],
+  "checks": [
+    {
+      "name": "long_context_plus_8192",
+      "passed": true
+    },
+    {
+      "name": "long_tool_round_trip",
+      "passed": true,
+      "call_prompt_tokens": 56370,
+      "followup_prompt_tokens": 56401
+    },
+    {
+      "name": "/v1/responses",
+      "passed": true
+    },
+    {
+      "name": "/v1/messages",
+      "passed": true
+    }
+  ],
+  "count_adapter_offset_tokens": 0,
+  "completed": true
+}

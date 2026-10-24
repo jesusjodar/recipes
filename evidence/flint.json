@@ -526,5 +526,53 @@
     "min_free_mib": 1094.0,
     "max_temperature_c": 77.0,
     "samples": 621
-  }
+  },
+  "full_context_validation_2026_10_24": {
+    "complete": true,
+    "error": null,
+    "context_capacity": 73728,
+    "configuration_sha256": "ace3b92f715de2b4527489e36e3dd5077c059aca329c70de59a031fa93ba20a7",
+    "prompt_tokens": 65536,
+    "output_tokens": 8192,
+    "prefill_effective_tok_s": 1521.2903182615235,
+    "decode_http_tok_s": 50.32946914205419,
+    "ttft_s": 43.07921979999992,
+    "elapsed_s": 205.82711599999948,
+    "cached_tokens_cold": 0,
+    "native_timings": {},
+    "engine_allocated_tokens": 73728,
+    "reserved_engine_tokens": 0,
+    "prefix_reuse": {
+      "cached_tokens": 65535,
+      "ttft_s": 0.8063215160000254,
+      "decode_http_tok_s": 51.31905021701588
+    },
+    "gpu_peak_mib": 10935.0,
+    "gpu_peak_temperature_c": 74.0,
+    "checks": [
+      {
+        "name": "long_context_plus_8192",
+        "passed": true
+      },
+      {
+        "name": "long_tool_round_trip",
+        "passed": true,
+        "call_prompt_tokens": 63611,
+        "followup_prompt_tokens": 63658
+      },
+      {
+        "name": "/v1/responses",
+        "passed": true
+      },
+      {
+        "name": "/v1/messages",
+        "passed": true
+      }
+    ],
+    "evidence": "evidence/logs/validation-2026-10-24/flint/results.json"
+  },
+  "full_context_and_output_generation_validated": true,
+  "full_context_generation_validated": true,
+  "record_scope_note": "Root throughput fields retain the dated short or historical series; current full-context data are in full_context_validation_2026_10_24.",
+  "validation_summary": "evidence/validation-2026-10-24.json"
 }

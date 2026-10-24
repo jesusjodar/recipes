@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "flint",
   "name": "Flint 39.8B A2.5B",
-  "status": "Medido a 65536 + 8192, con ciclo de herramienta >64k",
+  "status": "Validated full budget: 65536 input + 8192 output; see evidence/validation-2026-10-24.json",
   "hardware": "ryzen-5600x-rtx3060",
   "engine": "flint-overlay",
   "model": {
@@ -16,7 +16,8 @@
       "README.md"
     ],
     "filename": "flint-nvfp4.gguf",
-    "file_bytes": 22863084160
+    "file_bytes": 22863084160,
+    "validation_weight_revision_verified": true
   },
   "quantization": "NVFP4 GGUF oficial",
   "modalities": [
@@ -30,7 +31,7 @@
     "total_tokens": 73728,
     "input_budget_with_reserved_output": 65536,
     "output_tokens": 8192,
-    "output_status": "measured_full_budget"
+    "output_status": "Validated 8192 actual tokens in fixed-length throughput test; normal use respects EOS"
   },
   "server_arguments": [
     "--moe-strategy",
@@ -81,5 +82,6 @@
   "environment": {
     "FLASHINFER_USE_CUDA_NORM": "1"
   },
-  "evidence": "evidence/flint.json"
+  "evidence": "evidence/flint.json",
+  "validation": "evidence/validation-2026-10-24.json"
 }

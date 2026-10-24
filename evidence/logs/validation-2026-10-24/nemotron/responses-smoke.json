@@ -1,0 +1,39 @@
+{
+  "request": {
+    "model": "nemotron",
+    "input": "Reply with READY.",
+    "max_output_tokens": 256
+  },
+  "response": {
+    "completed_at": 1792835738,
+    "created_at": 1792835738,
+    "id": "resp_1RX5GKWMQn18BDBu8FjLx9Ith8pGPNun",
+    "model": "nemotron",
+    "object": "response",
+    "output": [
+      {
+        "content": [
+          {
+            "type": "output_text",
+            "annotations": [],
+            "logprobs": [],
+            "text": "READY."
+          }
+        ],
+        "id": "msg_CdJJ9GPw1lCMtIAMgHoxsxpvd8iDoBzx",
+        "role": "assistant",
+        "status": "completed",
+        "type": "message"
+      }
+    ],
+    "status": "completed",
+    "usage": {
+      "input_tokens": 20,
+      "output_tokens": 3,
+      "total_tokens": 23,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      }
+    }
+  }
+}

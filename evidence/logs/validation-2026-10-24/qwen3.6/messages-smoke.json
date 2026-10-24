@@ -1,0 +1,34 @@
+{
+  "request": {
+    "model": "qwen3.6",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Reply with READY."
+      }
+    ],
+    "max_tokens": 256
+  },
+  "response": {
+    "id": "msg_6",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "thinking",
+        "thinking": "Thinking Process:\n1.  **Analyze the Request**: The user wants me to reply with exactly the word \"READY\".\n2.  **Formulate the Output**: The output should be \"READY\".\n3.  **Final Verification**: Ensure no extra text, punctuation (unless specified, but usually \"READY.\" implies just the word), or conversational filler is added.\n4.  **Execute**: Output \"READY\". \n(Self-Correction/Refinement: The prompt says \"Reply with READY.\" - sometimes the period is part of the instruction, sometimes it's just punctuation for the sentence. I will output just the word \"READY\" to be safe and accurate.) -> Actually, \"Reply with READY.\" usually means the output should be the string \"READY\". I'll output exactly \"READY\".)\n*Wait*, let's just output \"READY\".\nDone. \nOutput: READY. (or just READY) I'll go with just READY.\nLet's double check. User: \"Reply with READY.\" -> Output: READY.\nPerfect. \nProceed. \n[Output Generation] -> READY",
+        "signature": ""
+      },
+      {
+        "type": "text",
+        "text": "READY"
+      }
+    ],
+    "model": "qwen3.6",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 14,
+      "output_tokens": 234
+    }
+  }
+}

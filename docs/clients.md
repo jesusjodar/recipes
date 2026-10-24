@@ -62,3 +62,7 @@ Son comandos para que el usuario los ejecute, no resultados de pruebas nuevas. P
 Los ejemplos de `clients/nemotron/` usan el endpoint portable `http://127.0.0.1:1919`, contexto total 65536, entrada presupuestada 57344 y salida 8192. El servicio previo de Desktop/AI escucha en 8000; para usarlo directamente cambia las URLs y el modelo a su alias `nemotron-e4b`.
 
 La versión fijada de [llama.cpp](https://github.com/ggml-org/llama.cpp/blob/b11828/tools/server/README.md) implementa `/v1/chat/completions`, `/v1/responses` y `/v1/messages` (herramientas con `--jinja`). El modelo original y el drafter BF16 están en GPU; no se usa FreeToken ni proyector visual en esta receta. Los wrappers Codex/Claude apuntan a esos adaptadores del engine. Las comprobaciones breves de endpoints no equivalen a validación completa del comportamiento de un agente.
+
+## Cobertura de las pruebas de contexto completo
+
+La batería nueva comprueba Chat Completions mediante generación larga y un ciclo natural de herramienta, y realiza peticiones breves separadas a Responses y Messages en cada modelo. Las peticiones, respuestas y resultados están en [el informe de validación](validation.md). Esto valida esos endpoints y el ciclo registrado; no evalúa sesiones completas de programación de cada cliente externo.

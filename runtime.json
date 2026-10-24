@@ -18,10 +18,11 @@
     "repository": "https://github.com/jesusjodar/FreeToken.git",
     "commit": "6ee048e3cca92da2a85cdc9ca6fd21cceed527ad",
     "pull_request": "https://github.com/FlashML-org/FreeToken/pull/797",
-    "performance_snapshot_tree": "edfba5e13d4ff2fae6f50208d4d58c1433b20cf8",
-    "performance_rerun_on_install_commit": false
+    "performance_rerun_on_install_commit": true,
+    "performance_validation": "evidence/validation-2026-10-24.json",
+    "historical_performance_snapshot_tree": "edfba5e13d4ff2fae6f50208d4d58c1433b20cf8"
   },
-  "note": "Versiones de dependencias clave fijadas en constraints.txt. Los transitivos pueden cambiar; install guarda uv pip freeze. Overlay Python reutiliza ABI nativa; no es una compilación limpia.",
+  "note": "Validated Python package versions are pinned in constraints-validated.txt; official engine and FlashInfer binary-cache wheel SHA-256 values are recorded here. Flint uses the reviewed Python overlay with the pinned native wheel ABI. This is not a clean CUDA source build or an OS/driver lock.",
   "llama_cpp": {
     "version": "b11828",
     "platform": "Linux x86_64, CUDA 13.4",
@@ -40,5 +41,17 @@
         "sha256": "c4960f01d02fc60da1b91ce227a512ec3fa5e738aa587a53c5ea4b20c8468669"
       }
     ]
-  }
+  },
+  "flashinfer_wheels": [
+    {
+      "filename": "flashinfer_cubin-0.6.18.post1-py3-none-any.whl",
+      "url": "https://github.com/flashinfer-ai/flashinfer/releases/download/v0.6.18.post1/flashinfer_cubin-0.6.18.post1-py3-none-any.whl",
+      "sha256": "bbacb5b8bbf429e43bf2740bb45551d981f41d0462842e36ee6fb3e3452763ab"
+    },
+    {
+      "filename": "flashinfer_jit_cache-0.6.18.post1+cu130-cp39-abi3-manylinux_2_28_x86_64.whl",
+      "url": "https://github.com/flashinfer-ai/flashinfer/releases/download/v0.6.18.post1/flashinfer_jit_cache-0.6.18.post1%2Bcu130-cp39-abi3-manylinux_2_28_x86_64.whl",
+      "sha256": "d1729490636a98f22f158518e10c257eec5a188d3dadf30b4c9de298675d8d4b"
+    }
+  ]
 }

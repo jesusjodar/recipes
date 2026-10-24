@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-24",
+  "checks": [
+    {
+      "model": "qwen3.6",
+      "url": "https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4/resolve/1355db6a052410cfd62085d94b58866fd0f2c3c5/model-00001-of-00003.safetensors",
+      "range_requested": "bytes=0-1023",
+      "scope": "Anonymous range probe, not a complete fresh download; full local blob hashes are checked separately.",
+      "http_status": 206,
+      "content_range": "bytes 0-1023/10006877608",
+      "sha256_sample": "13115434c149eec17861f4fce27f993f5561f91652cc02b2a0a27d6edeba721f",
+      "matches_local_sample": true
+    },
+    {
+      "model": "gemma4",
+      "url": "https://huggingface.co/nvidia/Gemma-4-26B-A4B-NVFP4/resolve/a19cfe00be84568a6867111c9a68c9c44fdcffe6/model-00001-of-00002.safetensors",
+      "range_requested": "bytes=0-1023",
+      "scope": "Anonymous range probe, not a complete fresh download; full local blob hashes are checked separately.",
+      "http_status": 206,
+      "content_range": "bytes 0-1023/10001865236",
+      "sha256_sample": "e6c0f1628cb7187f9981224f9b56832c0bc171a1a0b35161c2232963858d9e9d",
+      "matches_local_sample": true
+    },
+    {
+      "model": "gpt-oss",
+      "url": "https://huggingface.co/openai/gpt-oss-20b/resolve/6cee5e81ee83917806bbde320786a8fb61efebee/model-00000-of-00002.safetensors",
+      "range_requested": "bytes=0-1023",
+      "scope": "Anonymous range probe, not a complete fresh download; full local blob hashes are checked separately.",
+      "http_status": 206,
+      "content_range": "bytes 0-1023/4792272488",
+      "sha256_sample": "7df2f140aa74afe52c29fbfb1f47eba2f6963d61e3e32870b09ea62089d63f5b",
+      "matches_local_sample": true
+    },
+    {
+      "model": "flint",
+      "url": "https://huggingface.co/RecursiveSI/flint-nvfp4-gguf/resolve/6ec43e19b565fc8d560e2d04985d7724f20673bf/flint-nvfp4.gguf",
+      "range_requested": "bytes=0-1023",
+      "scope": "Anonymous range probe, not a complete fresh download; full local blob hashes are checked separately.",
+      "http_status": 206,
+      "content_range": "bytes 0-1023/22863084160",
+      "sha256_sample": "c4c6b9fdecd001e5ef991d517d6c27313218ef2603e38050389d6afe69ef13b6",
+      "matches_local_sample": true
+    },
+    {
+      "model": "nemotron",
+      "url": "https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF/resolve/b738967d6da3441a7d1c71fcec15e49e32e16ecd/NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf",
+      "range_requested": "bytes=0-1023",
+      "scope": "Anonymous range probe, not a complete fresh download; full local blob hashes are checked separately.",
+      "http_status": 206,
+      "content_range": "bytes 0-1023/8192955584",
+      "sha256_sample": "e030f961fddbd7b5df7d2d0e38c386e38ece099759f3fe1a3a085a83854827aa",
+      "matches_local_sample": true
+    }
+  ]
+}

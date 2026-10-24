@@ -1,0 +1,21 @@
++ <recipes-checkout>/.runtime/llama-cpp/llama-b11828/llama-server -m <HOME>/Desktop/AI/models/NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf -md <HOME>/Desktop/AI/models/dflash-nvidia-BF16.gguf --host 127.0.0.1 --port 22708 --alias nemotron --device CUDA0 --spec-draft-device CUDA0 --spec-type draft-dflash --spec-draft-n-max 7 --spec-draft-ngl 99 -ngl 99 -fa on --jinja -c 65536 -np 1 --fit off --temp 1.0 --top-p 0.95 -n 8192 --no-context-shift
+0.00.469.465 I srv  llama_server: initializing ...
+0.00.469.476 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.469.787 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.471.253 I srv    load_model: loading model '<HOME>/Desktop/AI/models/NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf'
+0.00.798.300 W load: control-looking token:    212 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.00.798.328 W load: control-looking token:     50 '<|tool_response>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.00.801.159 W load: '</s>' is a normal token here, removing it from EOG list
+0.01.546.850 I cmn          init: llama threadpool init, n_threads = 6
+0.01.643.561 I common_speculative_init_result: loading draft model '<HOME>/Desktop/AI/models/dflash-nvidia-BF16.gguf'
+0.01.856.253 W load: control-looking token:    212 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.01.856.281 W load: control-looking token:     50 '<|tool_response>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.01.859.193 W load: '</s>' is a normal token here, removing it from EOG list
+0.01.992.424 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 65536, kv_unified = 'false'
+0.01.992.450 I common_speculative_impl_draft_dflash: adding speculative implementation 'draft-dflash'
+0.01.992.451 I common_speculative_impl_draft_dflash: - n_max=7, n_min=0, p_min=0.00
+0.01.992.452 I common_speculative_impl_draft_dflash: - block_size=8, mask_token_id=4, n_extract=5, sample_from_anchor=true
+0.02.021.556 I srv  llama_server: model loaded
+0.02.021.562 I srv  llama_server: listening on http://127.0.0.1:22708
+LISTO: nemotron en http://127.0.0.1:22708/v1 (una generación simultánea)
+0.03.294.452 I srv    operator(): operator(): cleaning up before exit...

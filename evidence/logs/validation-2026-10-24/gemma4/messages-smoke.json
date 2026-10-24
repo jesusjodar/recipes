@@ -1,0 +1,30 @@
+{
+  "request": {
+    "model": "gemma4",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Reply with READY."
+      }
+    ],
+    "max_tokens": 256
+  },
+  "response": {
+    "id": "msg_6",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "READY."
+      }
+    ],
+    "model": "gemma4",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 1,
+      "output_tokens": 3,
+      "cache_read_input_tokens": 16
+    }
+  }
+}

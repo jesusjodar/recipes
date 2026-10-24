@@ -1,0 +1,83 @@
+{
+  "request": {
+    "model": "flint",
+    "input": "Reply with READY.",
+    "max_output_tokens": 256
+  },
+  "response": {
+    "id": "resp_2b2b63feab984df1bac6cdd4a1fdaaaa",
+    "created_at": 1792835396.0,
+    "error": null,
+    "incomplete_details": null,
+    "instructions": null,
+    "metadata": null,
+    "model": "flint",
+    "object": "response",
+    "output": [
+      {
+        "id": "rs_260e87013f704c8a866a6276de32d1a9",
+        "summary": [],
+        "type": "reasoning",
+        "content": [
+          {
+            "text": "We are being asked to reply with \"READY.\" The instruction is very simple and direct. There's no need for analysis or additional content. Just respond exactly as requested.",
+            "type": "reasoning_text"
+          }
+        ],
+        "encrypted_content": null,
+        "status": "completed"
+      },
+      {
+        "id": "msg_88af52dc1d5d46578a60ac65affb4a08",
+        "content": [
+          {
+            "annotations": [],
+            "text": "READY.",
+            "type": "output_text",
+            "logprobs": null
+          }
+        ],
+        "role": "assistant",
+        "status": "completed",
+        "type": "message",
+        "phase": null
+      }
+    ],
+    "parallel_tool_calls": true,
+    "temperature": null,
+    "tool_choice": "auto",
+    "tools": [],
+    "top_p": null,
+    "background": null,
+    "completed_at": null,
+    "conversation": null,
+    "max_output_tokens": null,
+    "max_tool_calls": null,
+    "moderation": null,
+    "previous_response_id": null,
+    "prompt": null,
+    "prompt_cache_key": null,
+    "prompt_cache_options": null,
+    "prompt_cache_retention": null,
+    "reasoning": null,
+    "safety_identifier": null,
+    "service_tier": null,
+    "status": "completed",
+    "text": null,
+    "top_logprobs": null,
+    "truncation": null,
+    "usage": {
+      "input_tokens": 6,
+      "input_tokens_details": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0
+      },
+      "output_tokens": 38,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 44
+    },
+    "user": null
+  }
+}

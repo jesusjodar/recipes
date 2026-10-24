@@ -1,0 +1,274 @@
+{
+  "model": "gpt-oss",
+  "date": "2026-10-24T09:34:48.778055+00:00",
+  "profile_sha256": "198836325137ad4edec676ac42b22abf8752eaf505412bb4ea5c9948e990d2cb",
+  "profile": {
+    "schema_version": 1,
+    "id": "gpt-oss",
+    "name": "GPT-OSS 20B",
+    "status": "Measured 2026-10-24: three ~4K input + 200 output requests; complete logs",
+    "hardware": "ryzen-5600x-rtx3060",
+    "engine": "desktop-wheel",
+    "model": {
+      "repository": "openai/gpt-oss-20b",
+      "original_url": "https://huggingface.co/openai/gpt-oss-20b",
+      "local_directory": "gpt-oss-20b",
+      "download_revision": "6cee5e81ee83917806bbde320786a8fb61efebee",
+      "historical_weight_revision_verified": false,
+      "download_patterns": [
+        "*.json",
+        "*.safetensors",
+        "*.jinja",
+        "*.txt",
+        "*.model",
+        "*.tiktoken",
+        "README.md",
+        "LICENSE*"
+      ],
+      "validation_weight_revision_verified": true
+    },
+    "quantization": "MXFP4",
+    "modalities": [
+      "text"
+    ],
+    "drafter": {
+      "enabled": false,
+      "model": null
+    },
+    "context": {
+      "total_tokens": 66560,
+      "input_budget_with_reserved_output": 58368,
+      "output_tokens": 8192,
+      "output_status": "new_explicit_agent_default; historical_measurement_used_200_tokens"
+    },
+    "server_arguments": [
+      "--moe-strategy",
+      "hybrid",
+      "--moe-hybrid-max-fetch",
+      "1",
+      "--moe-cpu-threads",
+      "0",
+      "--max-running-requests",
+      "1",
+      "--text-model-only",
+      "--moe-cache-size",
+      "256",
+      "--num-tokens",
+      "66560",
+      "--max-seq-len-override",
+      "66560",
+      "--max-output-tokens",
+      "8192",
+      "--memory-ratio",
+      "0.95",
+      "--max-prefill-length",
+      "8192",
+      "--enable-cache-report"
+    ],
+    "cache_rebuild": null,
+    "desktop_cache": {
+      "kvSize": 66560,
+      "moeExperts": 256,
+      "swaTokens": 512,
+      "mambaSlots": 4
+    },
+    "sampling": {
+      "source": "checkpoint defaults; no temperature/top_p/top_k override"
+    },
+    "environment": {},
+    "evidence": "evidence/gpt-oss.json",
+    "cache_report_note": "Enabled for validation to report actual reused prompt tokens in HTTP usage."
+  },
+  "runs": [
+    {
+      "label": "warmup",
+      "usage": {
+        "prompt_tokens": 1024,
+        "completion_tokens": 64,
+        "total_tokens": 1088
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 64,
+      "elapsed_s": 2.2122754570000325,
+      "ttft_s": 0.6635508560002563,
+      "prefill_effective_tok_s": 1543.212537125571,
+      "prefill_including_cached_tok_s": 1543.212537125571,
+      "decode_http_tok_s": 40.68408624917891,
+      "api_output_tok_s": 28.929489678824865,
+      "text_events": 61,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "We need to propose a detailed implementation plan and Python code for persistent prefix caching, including invalidation and concurrent access. The context: synthetic repository background, but the question is about persistent prefix caching. Likely for some inference recipes, maybe caching prefixes of models or tokenization? We need to design a caching"
+      },
+      "forced_length_passed": true,
+      "cached_tokens": 0,
+      "cache_count_source": "FreeToken enabled cache report omits details for zero cache hits",
+      "decode_visible_span_tok_s": 40.69499149352884,
+      "generation_end_s": 2.2120678760002193,
+      "suppressed_output_tail_s": 0.00041496400081086904
+    },
+    {
+      "label": "long-cold",
+      "usage": {
+        "prompt_tokens": 58368,
+        "completion_tokens": 8192,
+        "total_tokens": 66560
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 8192,
+      "elapsed_s": 274.86370972700024,
+      "ttft_s": 40.39626532500006,
+      "prefill_effective_tok_s": 1444.8860440541212,
+      "prefill_including_cached_tok_s": 1444.8860440541212,
+      "decode_http_tok_s": 34.93451718150218,
+      "api_output_tok_s": 29.803861732552644,
+      "text_events": 6129,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "## 1.  Why a *persistent* prefix cache?\n\n* **Speed‑up** – The first few tokens of a request (the “prefix”) are usually the same for many\n  consecutive calls (e.g. “Hello, my name is …”).  If we can reuse the already‑computed\n  hidden‑state for that prefix we avoid a full forward pass for the rest of the prompt.\n* **Memory‑efficiency** – The cache can be stored on disk (or a fast key‑value store) so that\n  a single machine can keep a large number of prefixes without blowing up RAM.\n* **Fault‑tolerance** – If the server crashes or is restarted the cache survives.\n* **Multi‑process safety** – In a production deployment we may run several worker\n  processes or even several machines.  The cache must be safe to read/write from\n  multiple processes at the same time.\n\nThe design below satisfies all of the above while keeping the API simple and\nwell‑documented.\n\n---\n\n## 2.  High‑level architecture\n\n```\n┌───────────────────────┐\n│  PrefixCache (Python) │\n│  ├───────────────────┤\n│  │  In‑memory LRU    │\n│  │  (optional)       │\n│  ├───────────────────┤\n│  │  Persistent store │\n│  │  (SQLite + WAL)   │\n│  └───────────────────┘\n└───────────────────────┘\n```\n\n* **In‑memory LRU** – Keeps the most recently used prefixes in RAM for O(1) lookup.\n  The size is configurable (e.g. 1 GB or 10 k entries).  When the limit is hit\n  the least‑recently used entry is evicted from memory *but remains on disk*.\n* **Persistent store** – A single SQLite database (`prefix_cache.db`) in the\n  `MODEL_ROOT` directory.  The table stores:\n\n  | column | type | description |\n  |--------|------|-------------|\n  | `key`  | TEXT | A deterministic hash of the token‑ids that form the prefix. |\n  | `embedding` | BLOB | The raw bytes of the hidden‑state (e.g. `np.ndarray.tobytes()`). |\n  | `created_at` | INTEGER | Unix epoch (seconds). |\n  | `last_used` | INTEGER | Unix epoch (seconds). |\n  | `size` | INTEGER | Number of bytes in the embedding. |\n\n  SQLite is chosen because it is:\n\n  * ACID‑compliant – no data corruption even on crash.\n  * WAL mode – allows many concurrent readers and a single writer.\n  * Zero‑dependency – part of the Python stdlib (`sqlite3`).\n\n* **Concurrency** – Each worker process opens its own SQLite connection in\n  *WAL* mode.  SQLite guarantees that readers never block writers and vice‑versa\n  (except for the occasional page‑flush).  For the in‑memory LRU we use a\n  `threading.RLock` so that multiple threads inside the same process can safely\n  touch the cache.\n\n* **Invalidation** – Three strategies are supported:\n\n  1. **TTL (time‑to‑live)** – Every entry has a `created_at` timestamp.  A\n     background thread (or a periodic cron job) deletes entries older than\n     `max_age_seconds`.\n  2. **LRU eviction** – When the in‑memory LRU is full, the least‑recently used\n     entry is removed from RAM but stays on disk.  When the cache is full on\n     disk (e.g. > 10 GB) we evict the oldest entries by `created_at`.\n  3. **Manual purge** – A CLI command `prefix_cache purge <prefix>` or\n     `prefix_cache purge all` can be used to delete specific entries or the\n     whole cache.\n\n---\n\n## 3.  Design details\n\n### 3.1  Key generation\n\nThe key is a deterministic hash of the token‑ids that form the prefix.  \nWe use SHA‑256 on the concatenated 32‑bit integers:\n\n```python\nimport hashlib\nimport struct\n\ndef prefix_key(token_ids: list[int]) -> str:\n    \"\"\"Return a hex string that uniquely identifies a prefix.\"\"\"\n    # Pack the ints into a binary string\n    data = struct.pack(f\">{len(token_ids)}I\", *token_ids)\n    return hashlib.sha256(data).hexdigest()\n```\n\nThe hash is 64 characters, so it fits comfortably in a TEXT column.\n\n### 3.2  Embedding format\n\nThe embedding is a NumPy array of shape `(hidden_dim,)` and dtype `float32`.\nWe store it as a binary blob:\n\n```python\nimport numpy as np\n\ndef embedding_to_blob(emb: np.ndarray) -> bytes:\n    return emb.astype(np.float32).tobytes()\n\ndef blob_to_embedding(blob: bytes, hidden_dim: int) -> np.ndarray:\n    return np.frombuffer(blob, dtype=np.float32, count=hidden_dim)\n```\n\nThe `hidden_dim` is known from the model configuration and can be passed to\n`blob_to_embedding` when the cache is used.\n\n### 3.3  In‑memory LRU\n\nWe use `collections.OrderedDict` (Python 3.7+ preserves insertion order) as a\nsimple LRU cache:\n\n```python\nfrom collections import OrderedDict\nfrom typing import Optional\n\nclass LRUCache:\n    def __init__(self, max_bytes: int):\n        self.max_bytes = max_bytes\n        self.cache: OrderedDict[str, np.ndarray] = OrderedDict()\n        self.current_bytes = 0\n        self.lock = threading.RLock()\n\n    def get(self, key: str) -> Optional[np.ndarray]:\n        with self.lock:\n            if key not in self.cache:\n                return None\n            value = self.cache.pop(key)\n            self.cache[key] = value  # re‑insert to mark as most recent\n            return value\n\n    def put(self, key: str, value: np.ndarray):\n        with self.lock:\n            if key in self.cache:\n                # replace existing entry\n                old = self.cache.pop(key)\n                self.current_bytes -= old.nbytes\n            self.cache[key] = value\n            self.current_bytes += value.nbytes\n            # evict if over limit\n            while self.current_bytes > self.max_bytes:\n                old_key, old_val = self.cache.popitem(last=False)  # LRU\n                self.current_bytes -= old_val.nbytes\n```\n\nThe `max_bytes` can be set to e.g. `1 << 30` (1 GB).  The LRU is *optional* –\nif you want to keep everything in RAM you can set `max_bytes=0` and skip the\nin‑memory layer.\n\n### 3.4  Persistent store\n\n```python\nimport sqlite3\nimport os\nimport time\n\nclass PersistentStore:\n    def __init__(self, db_path: str):\n        self.db_path = db_path\n        self.conn = sqlite3.connect(\n            db_path,\n            detect_types=sqlite3.PARSE_DECLTYPES,\n            isolation_level=None,  # autocommit\n            check_same_thread=False,\n        )\n        self.conn.execute(\"PRAGMA journal_mode=WAL;\")\n        self.conn.execute(\"PRAGMA synchronous=NORMAL;\")\n        self._ensure_schema()\n\n    def _ensure_schema(self):\n        self.conn.execute(\"\"\"\n            CREATE TABLE IF NOT EXISTS prefixes (\n                key TEXT PRIMARY KEY,\n                embedding BLOB NOT NULL,\n                created_at INTEGER NOT NULL,\n                last_used INTEGER NOT NULL,\n                size INTEGER NOT NULL\n            );\n        \"\"\")\n        self.conn.execute(\"\"\"\n            CREATE INDEX IF NOT EXISTS idx_last_used\n            ON prefixes(last_used);\n        \"\"\")\n\n    def get(self, key: str) -> Optional[bytes]:\n        cur = self.conn.execute(\n            \"SELECT embedding, last_used FROM prefixes WHERE key = ?\",\n            (key,),\n        )\n        row = cur.fetchone()\n        if row is None:\n            return None\n        embedding_blob, _ = row\n        # Update last_used\n        now = int(time.time())\n        self.conn.execute(\n            \"UPDATE prefixes SET last_used = ? WHERE key = ?\",\n            (now, key),\n        )\n        return embedding_blob\n\n    def put(self, key: str, embedding_blob: bytes):\n        now = int(time.time())\n        size = len(embedding_blob)\n        self.conn.execute(\n            \"\"\"\n            INSERT OR REPLACE INTO prefixes\n            (key, embedding, created_at, last_used, size)\n            VALUES (?, ?, ?, ?, ?)\n            \"\"\",\n            (key, embedding_blob, now, now, size),\n        )\n\n    def delete(self, key: str):\n        self.conn.execute(\"DELETE FROM prefixes WHERE key = ?\", (key,))\n\n    def purge_older_than(self, max_age_seconds: int):\n        cutoff = int(time.time()) - max_age_seconds\n        self.conn.execute(\n            \"DELETE FROM prefixes WHERE created_at < ?\",\n            (cutoff,),\n        )\n\n    def purge_all(self):\n        self.conn.execute(\"DELETE FROM prefixes;\")\n```\n\n*All operations are atomic because SQLite is ACID‑compliant.*  \nThe `PRAGMA journal_mode=WAL` allows many concurrent readers and a single writer\nwithout blocking each other.\n\n### 3.5  The `PrefixCache` façade\n\n```python\nimport threading\nfrom typing import List\n\nclass PrefixCache:\n    \"\"\"\n    A thread‑safe, multi‑process prefix cache.\n\n    Parameters\n    ----------\n    db_path : str\n        Path to the SQLite database file.\n    max_in_memory_bytes : int\n        Maximum size of the in‑memory LRU cache.  Set to 0 to disable.\n    ttl_seconds : int | None\n        If set, a background thread will delete entries older than this.\n    \"\"\"\n    def __init__(self, db_path: str, max_in_memory_bytes: int = 1 << 30,\n                 ttl_seconds: Optional[int] = None):\n        self.store = PersistentStore(db_path)\n        self.lru = LRUCache(max_in_memory_bytes) if max_in_memory_bytes > 0 else None\n        self.ttl_seconds = ttl_seconds\n        self._stop_event = threading.Event()\n        if ttl_seconds is not None:\n            self._purge_thread = threading.Thread(\n                target=self._purge_loop, daemon=True\n            )\n            self._purge_thread.start()\n\n    def _purge_loop(self):\n        while not self._stop_event.is_set():\n            time.sleep(self.ttl_seconds)\n            self.store.purge_older_than(self.ttl_seconds)\n\n    def stop(self):\n        \"\"\"Stop the background purge thread.\"\"\"\n        if self.ttl_seconds is not None:\n            self._stop_event.set()\n            self._purge_thread.join()\n\n    # ------------------------------------------------------------------\n    # public API\n    # ------------------------------------------------------------------\n    def get(self, token_ids: List[int]) -> Optional[np.ndarray]:\n        key = prefix_key(token_ids)\n        # 1. try in‑memory\n        if self.lru is not None:\n            emb = self.lru.get(key)\n            if emb is not None:\n                return emb\n        # 2. try disk\n        blob = self.store.get(key)\n        if blob is None:\n            return None\n        emb = blob_to_embedding(blob, hidden_dim=768)  # hidden_dim from model\n        # 3. put into LRU\n        if self.lru is not None:\n            self.lru.put(key, emb)\n        return emb\n\n    def put(self, token_ids: List[int], embedding: np.ndarray):\n        key = prefix_key(token_ids)\n        blob = embedding_to_blob(embedding)\n        self.store.put(key, blob)\n        if self.lru is not None:\n            self.lru.put(key, embedding)\n\n    def delete(self, token_ids: List[int]):\n        key = prefix_key(token_ids)\n        self.store.delete(key)\n        if self.lru is not None:\n            with self.lru.lock:\n                self.lru.cache.pop(key, None)\n\n    def purge_all(self):\n        self.store.purge_all()\n        if self.lru is not None:\n            with self.lru.lock:\n                self.lru.cache.clear()\n                self.lru.current_bytes = 0\n```\n\n*The `hidden_dim` is hard‑coded in the example above; in a real system you\nwould pass it in or read it from the model config.*\n\n### 3.6  Integration with the existing `serve` flow\n\nThe `serve` function in the synthetic repository already computes the\nprefix tokens (`prompt_tokens`) and the completion tokens.  We can hook the\ncache just before the model forward pass:\n\n```python\n# inside serve(p, args) after env is set up\nprefix_token_ids = tokenizer.encode(user_prompt, add_special_tokens=False)\n\n# 1. Try to fetch the prefix embedding\ncached_prefix = cache.get(prefix_token_ids)\n\nif cached_prefix is not None:\n    # We have a cached hidden state – feed it directly to the model\n    # (the exact API depends on the model library; pseudo‑code below)\n    model.set_hidden_state(cached_prefix)\nelse:\n    # No cache – run the normal forward pass for the prefix\n    hidden = model.forward(prefix_token_ids)\n    # Store the result for future reuse\n    cache.put(prefix_token_ids, hidden)\n```\n\nBecause the cache is thread‑safe and process‑safe, multiple workers can read\nthe same prefix concurrently.  The first worker that writes the entry will\noverwrite any stale entry, but the `last_used` timestamp will be updated\natomically by SQLite.\n\n### 3.7  Manual CLI for cache management\n\nAdd a new sub‑command to `scripts/recipes.py`:\n\n```python\n# inside main()\nelif args.command == 'cache':\n    if args.subcommand == 'purge':\n        cache = PrefixCache(db_path=MODEL_ROOT / 'prefix_cache.db')\n        if args.all:\n            cache.purge_all()\n        else:\n            cache.delete(args.prefix)\n        cache.stop()\n```\n\nThe CLI can be invoked as:\n\n```\npython3 scripts/recipes.py cache purge --prefix \"Hello, my name is\"\npython3 scripts/recipes.py cache purge --all\n```\n\n---\n\n## 4.  Full example code\n\nBelow is a minimal, self‑contained example that demonstrates the cache\nin action.  It uses a toy model that simply returns a random embedding for\nany prefix.  Replace the toy model with your real inference engine.\n\n```python\n#!/usr/bin/env python3\n\"\"\"\nExample of a persistent prefix cache integrated with a toy inference engine.\n\"\"\"\n\nimport argparse\nimport os\nimport struct\nimport hashlib\nimport sqlite3\nimport time\nimport threading\nfrom collections import OrderedDict\nfrom pathlib import Path\nfrom typing import List, Optional\n\nimport numpy as np\n\n# ----------------------------------------------------------------------\n# 1.  Utility helpers\n# ----------------------------------------------------------------------\ndef prefix_key(token_ids: List[int]) -> str:\n    data = struct.pack(f\">{len(token_ids)}I\", *token_ids)\n    return hashlib.sha256(data).hexdigest()\n\ndef embedding_to_blob(emb: np.ndarray) -> bytes:\n    return emb.astype(np.float32).tobytes()\n\ndef blob_to_embedding(blob: bytes, hidden_dim: int) -> np.ndarray:\n    return np.frombuffer(blob, dtype=np.float32, count=hidden_dim)\n\n# ----------------------------------------------------------------------\n# 2.  In‑memory LRU\n# ----------------------------------------------------------------------\nclass LRUCache:\n    def __init__(self, max_bytes: int):\n        self.max_bytes = max_bytes\n        self.cache: OrderedDict[str, np.ndarray] = OrderedDict()\n        self.current_bytes = 0\n        self.lock = threading.RLock()\n\n    def get(self, key: str) -> Optional[np.ndarray]:\n        with self.lock:\n            if key not in self.cache:\n                return None\n            val = self.cache.pop(key)\n            self.cache[key] = val\n            return val\n\n    def put(self, key: str, val: np.ndarray):\n        with self.lock:\n            if key in self.cache:\n                old = self.cache.pop(key)\n                self.current_bytes -= old.nbytes\n            self.cache[key] = val\n            self.current_bytes += val.nbytes\n            while self.current_bytes > self.max_bytes:\n                old_key, old_val = self.cache.popitem(last=False)\n                self.current_bytes -= old_val.nbytes\n\n# ----------------------------------------------------------------------\n# 3.  Persistent store (SQLite + WAL)\n# ----------------------------------------------------------------------\nclass PersistentStore:\n    def __init__(self, db_path: str):\n        self.db_path = db_path\n        self.conn = sqlite3.connect(\n            db_path,\n            detect_types=sqlite3.PARSE_DECLTYPES,\n            isolation_level=None,\n            check_same_thread=False,\n        )\n        self.conn.execute(\"PRAGMA journal_mode=WAL;\")\n        self.conn.execute(\"PRAGMA synchronous=NORMAL;\")\n        self._ensure_schema()\n\n    def _ensure_schema(self):\n        self.conn.execute(\"\"\"\n            CREATE TABLE IF NOT EXISTS prefixes (\n                key TEXT PRIMARY KEY,\n                embedding BLOB NOT NULL,\n                created_at INTEGER NOT NULL,\n                last_used INTEGER NOT NULL,\n                size INTEGER NOT NULL\n            );\n        \"\"\")\n        self.conn.execute(\"\"\"\n            CREATE INDEX IF NOT EXISTS idx_last_used\n            ON prefixes(last_used);\n        \"\"\")\n\n    def get(self, key: str) -> Optional[bytes]:\n        cur = self.conn.execute(\n            \"SELECT embedding, last_used FROM prefixes WHERE key = ?\",\n            (key,),\n        )\n        row = cur.fetchone()\n        if row is None:\n            return None\n        embedding_blob, _ = row\n        now = int(time.time())\n        self.conn.execute(\n            \"UPDATE prefixes SET last_used = ? WHERE key = ?\",\n            (now, key),\n        )\n        return embedding_blob\n\n    def put(self, key: str, embedding_blob: bytes):\n        now = int(time.time())\n        size = len(embedding_blob)\n        self.conn.execute(\n            \"\"\"\n            INSERT OR REPLACE INTO prefixes\n            (key, embedding, created_at, last_used, size)\n            VALUES (?, ?, ?, ?, ?)\n            \"\"\",\n            (key, embedding_blob, now, now, size),\n        )\n\n    def delete(self, key: str):\n        self.conn.execute(\"DELETE FROM prefixes WHERE key = ?\", (key,))\n\n    def purge_older_than(self, max_age_seconds: int):\n        cutoff = int(time.time()) - max_age_seconds\n        self.conn.execute(\n            \"DELETE FROM prefixes WHERE created_at < ?\",\n            (cutoff,),\n        )\n\n    def purge_all(self):\n        self.conn.execute(\"DELETE FROM prefixes;\")\n\n# ----------------------------------------------------------------------\n# 4.  The façade\n# ----------------------------------------------------------------------\nclass PrefixCache:\n    def __init__(self, db_path: str, max_in_memory_bytes: int = 1 << 30,\n                 ttl_seconds: Optional[int] = None):\n        self.store = PersistentStore(db_path)\n        self.lru = LRUCache(max_in_memory_bytes) if max_in_memory_bytes > 0 else None\n        self.ttl_seconds = ttl_seconds\n        self._stop_event = threading.Event()\n        if ttl_seconds is not None:\n            self._purge_thread = threading.Thread(target=self._purge_loop, daemon=True)\n            self._purge_thread.start()\n\n    def _purge_loop(self):\n        while not self._stop_event.is_set():\n            time.sleep(self.ttl_seconds)\n            self.store.purge_older_than(self.ttl_seconds)\n\n    def stop(self):\n        if self.ttl_seconds is not None:\n            self._stop_event.set()\n            self._purge_thread.join()\n\n    def get(self, token_ids: List[int]) -> Optional[np.ndarray]:\n        key = prefix_key(token_ids)\n        if self.lru is not None:\n            emb = self.lru.get(key)\n            if emb is not None:\n                return emb\n        blob = self.store.get(key)\n        if blob is None:\n            return None\n        emb = blob_to_embedding(blob, hidden_dim=768)\n        if self.lru is not None:\n            self.lru.put(key, emb)\n        return emb\n\n    def put(self, token_ids: List[int], embedding: np.ndarray):\n        key = prefix_key(token_ids)\n        blob = embedding_to_blob(embedding)\n        self.store.put(key, blob)\n        if self.lru is not None:\n            self.lru.put(key, embedding)\n\n    def delete(self, token_ids: List[int]):\n        key = prefix_key(token_ids)\n        self.store.delete(key)\n        if self.lru is not None:\n            with self.lru.lock:\n                self.lru.cache.pop(key, None)\n\n    def purge_all(self):\n        self.store.purge_all()\n        if self.lru is not None:\n            with self.lru.lock:\n                self.lru.cache.clear()\n                self.lru.current_bytes = 0\n\n# ----------------------------------------------------------------------\n# 5.  Toy model (replace with your real inference engine)\n# ----------------------------------------------------------------------\nclass ToyModel:\n    def __init__(self, hidden_dim=768):\n        self.hidden_dim = hidden_dim\n\n    def forward(self, token_ids: List[int]) -> np.ndarray:\n        # In a real model you would run the transformer forward pass.\n        # Here we just return a deterministic random vector.\n        rng = np.random.RandomState(seed=int(prefix_key(token_ids), 16))\n        return rng.randn(self.hidden_dim).astype(np.float32)\n\n# ----------------------------------------------------------------------\n# 6.  Demo CLI\n# ----------------------------------------------------------------------\ndef main():\n    parser = argparse.ArgumentParser(description=\"Prefix cache demo\")\n    parser.add_argument(\"--db\", default=\"prefix_cache.db\", help=\"SQLite DB path\")\n    parser.add_argument(\"--max-mem\", type=int, default=1 << 30,\n                        help=\"Max in‑memory cache size (bytes)\")\n    parser.add_argument(\"--ttl\", type=int, default=3600,\n                        help=\"TTL for entries (seconds)\")\n    parser.add_argument(\"--purge-all\", action=\"store_true\",\n                        help=\"Purge the whole cache\")\n    parser.add_argument(\"--purge-key\", help=\"Purge a single key (token list, comma separated)\")\n    parser.add_argument(\"--query\", help=\"Query a key (token list, comma separated)\")\n    parser.add_argument(\"--put\", help=\"Put a key (token list, comma separated)\")\n    args = parser.parse_args()\n\n    cache = PrefixCache(args.db, args.max_mem, ttl_seconds=args.ttl)\n    model = ToyModel()\n\n    if args.purge_all:\n        cache.purge_all()\n        print(\"All entries purged.\")\n    elif args.purge_key:\n        token_ids = [int(x) for x in args.purge_key.split(\",\")]\n        cache.delete(token_ids)\n        print(f\"Entry {args.purge_key} deleted.\")\n    elif args.query:\n        token_ids = [int(x) for x in args.query.split(\",\")]\n        emb = cache.get(token_ids)\n        if emb is None:\n            print(\"Cache miss – computing...\")\n            emb = model.forward(token_ids)\n            cache.put(token_ids, emb)\n        else:\n            print(\"Cache hit.\")\n        print(f\"Embedding shape: {emb.shape}\")\n    elif args.put:\n        token_ids = [int(x) for x in args.put.split(\",\")]\n        emb = model.forward(token_ids)\n        cache.put(token_ids, emb)\n        print(\"Entry stored.\")\n    else:\n        print(\"No action specified. Use --help for options.\")\n\n    cache.stop()\n\nif __name__ == \"__main__\":\n    main()\n```\n\n**How to use**\n\n```bash\n# 1. Warm‑up: store a prefix\npython3 demo_cache.py --put 101,102,103\n\n# 2. Query the same prefix – should hit the cache\npython3 demo_cache.py --query 101,102,103\n\n# 3. Purge a single entry\npython3 demo_cache.py --purge-key 101,102,103\n\n# 4. Purge everything\npython3 demo_cache.py --purge-all\n```\n\n---\n\n## 5.  Concurrency & safety\n\n| Scenario | What happens? | Why it works |\n|----------|---------------|--------------|\n| **Two workers read the same key** | Both hit the SQLite `SELECT`.  SQLite allows concurrent readers. | WAL mode keeps readers non‑blocking. |\n| **One worker writes while another reads** | The writer gets a lock on the page; the reader sees the old value until the write commits. | SQLite guarantees readers never see a half‑written row. |\n| **Multiple writers** | SQLite serialises writes.  The first writer gets the lock, others wait. | WAL mode serialises writes but still allows many readers. |\n| **In‑memory LRU** | Each process has its own LRU; no cross‑process sharing.  The LRU is only a speed‑up. | The persistent store is the single source of truth. |\n| **TTL purge thread** | The thread sleeps `ttl_seconds` and then deletes old rows.  It never blocks normal reads/writes because it uses a separate connection. | SQLite’s WAL mode allows the purge to run concurrently. |\n\nIf you need *stronger* guarantees (e.g. no stale data after a crash), you can\nswitch SQLite to `PRAGMA synchronous=FULL` – the trade‑off is a bit slower writes.\n\n---\n\n## 6.  Extending the design\n\n| Feature | How to add |\n|---------|------------|\n| **Per‑model cache** | Add a `model_id` column to the table and filter by it in `get/put`. |\n| **Compression** | Store the blob as `zlib.compress(embedding.tobytes())` and decompress on read. |\n| **Metrics** | Wrap `get/put` with counters (`cache_hits`, `cache_misses`) and expose via Prometheus. |\n| **Distributed cache** | Replace SQLite with a key‑value store that supports clustering (e.g. Redis, RocksDB).  The API stays the same. |\n| **Cache‑warm‑up** | On startup, pre‑load the most recent N entries into the in‑memory LRU. |\n\n---\n\n## 7.  Summary\n\n* A **two‑tier** cache (in‑memory LRU + SQLite) gives you fast lookups, persistence, and safe concurrent access.\n* The **key** is a SHA‑256 hash of the token IDs, guaranteeing uniqueness and constant‑time lookup.\n* **Embeddings** are stored as binary blobs; the hidden dimension is known from the model.\n* **Invalidation** is handled by TTL, LRU eviction, and a manual CLI.\n* **Concurrency** is achieved by SQLite’s WAL mode and a per‑process in‑memory lock.\n* The design is **drop‑in** – you only need to replace the toy model with your real inference engine and call `cache.get/put` around the prefix forward pass.\n\nFeel free to copy the code into your project, tweak the parameters, and start\nbenefiting from persistent prefix caching!",
+        "reasoning_content": "We need to propose a detailed implementation plan and Python code for persistent prefix caching, including invalidation and concurrent access. The context: FreeToken recipes, local inference, caching. The user wants a design for persistent prefix caching. We need to explain design thoroughly, propose code. Should include invalidation, concurrency. Use Python, maybe with file-based persistence or database. Use lock files or threading locks. Use LRU or TTL. Use a persistent store like SQLite or LMDB. Provide code for caching prefix embeddings or token embeddings. Provide API for get, set, invalidate. Use thread-safe. Use multiprocessing? Use file locks. Provide example usage. Also mention integration with existing code. Provide explanation of design choices: why persistent, how to store embeddings, how to handle concurrency, invalidation strategies: TTL, LRU, manual. Provide code skeleton. Provide tests. Provide explanation of how to integrate with serve. Provide concurrency: use file-based lock or SQLite's concurrency. Use context manager. Provide code for caching class. Provide usage in serve. Provide invalidation: manual via API, TTL expiration, LRU eviction. Provide concurrency: use threading.Lock for in-memory, use SQLite for persistence. Provide code for persistent cache: use SQLite with table prefix, embedding blob, timestamp. Provide code for retrieving, storing, invalidating. Provide code for cleaning up expired entries. Provide code for concurrency: use SQLite's WAL mode. Provide code for thread safety: use connection per thread. Provide code for integration: modify serve to use cache. Provide code for caching prefix embeddings: compute embeddings via model, store. Provide code for retrieving from cache. Provide code for invalidation: manual via CLI. Provide code for concurrency: use file lock for file-based. Provide code for LRU: maintain usage timestamp. Provide code for TTL: store timestamp, check expiration. Provide code for cleaning: background thread. Provide code for persistent storage: use SQLite. Provide code for concurrency: use SQLite's built-in concurrency. Provide code for integration: use context manager. Provide code for tests. Provide explanation. Provide final answer."
+      },
+      "forced_length_passed": true,
+      "expected_input_tokens": 58368,
+      "exact_budget_passed": true,
+      "cached_tokens": 0,
+      "cache_count_source": "FreeToken enabled cache report omits details for zero cache hits",
+      "decode_visible_span_tok_s": 45.08292567904634,
+      "generation_end_s": 274.86351035499956,
+      "suppressed_output_tail_s": 52.77983507099998
+    },
+    {
+      "label": "long-prefix-reuse",
+      "usage": {
+        "prompt_tokens": 58368,
+        "completion_tokens": 256,
+        "total_tokens": 58624,
+        "prompt_tokens_details": {
+          "cached_tokens": 58367
+        }
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 256,
+      "elapsed_s": 8.159036244999697,
+      "ttft_s": 1.1400836020002316,
+      "prefill_effective_tok_s": 0.8771286581488756,
+      "prefill_including_cached_tok_s": 51196.24551883357,
+      "decode_http_tok_s": 36.33124691065548,
+      "api_output_tok_s": 31.376254782161407,
+      "text_events": 253,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "We need to propose a detailed implementation plan and Python code for persistent prefix caching, including invalidation and concurrent access. The context: FreeToken recipes, local inference, caching. The user wants a design for persistent prefix caching. We need to explain design thoroughly, propose code. Should include invalidation, concurrency. Use Python, maybe with file-based persistence or database. Use lock files or threading locks. Use caching of prefixes for LLM inference. Provide code skeleton. Also mention integration with existing scripts. Provide explanation of design choices: LRU, TTL, versioning, concurrency with file locks or SQLite. Provide invalidation strategies: manual, TTL, size limit, content hash. Provide concurrency: use file locks (fcntl) or SQLite's concurrency. Provide code for caching class, methods: get, set, invalidate, cleanup. Use persistent storage: SQLite or simple file system with JSON. Provide example usage. Also mention integration with serve function: before generating, check cache. Provide thread safety. Provide tests. Provide explanation of how to handle multiple processes. Use file-based lock with portalocker or fcntl. Provide code for persistent prefix cache using SQLite with a table: prefix, token_ids, timestamp, size. Provide LRU eviction. Provide invalidation:"
+      },
+      "forced_length_passed": true,
+      "cached_tokens": 58367,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "decode_visible_span_tok_s": 36.33337140876243,
+      "generation_end_s": 8.158835274000012,
+      "suppressed_output_tail_s": 0.00041040300038730493
+    },
+    {
+      "label": "long-tool-call",
+      "usage": {
+        "prompt_tokens": 56375,
+        "completion_tokens": 32,
+        "total_tokens": 56407
+      },
+      "finish_reason": "tool_calls",
+      "forced_ignore_eos": false,
+      "requested_max_tokens": 1024,
+      "elapsed_s": 39.98266323000007,
+      "ttft_s": 39.127422203000606,
+      "prefill_effective_tok_s": 1440.805369377917,
+      "prefill_including_cached_tok_s": 1440.805369377917,
+      "decode_http_tok_s": null,
+      "api_output_tok_s": 0.8003468857469589,
+      "text_events": 7,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "We need to call the function.",
+        "tool_calls": [
+          {
+            "id": "call_lookup-codeword_0_48d58bfd",
+            "type": "function",
+            "function": {
+              "name": "lookup_codeword",
+              "arguments": "{\"key\":\"recipe\"}"
+            }
+          }
+        ]
+      },
+      "forced_length_passed": null,
+      "cached_tokens": 0,
+      "cache_count_source": "FreeToken enabled cache report omits details for zero cache hits",
+      "decode_visible_span_tok_s": 173.47204687998908,
+      "generation_end_s": 39.98243044800074,
+      "suppressed_output_tail_s": 0.6763051020006969,
+      "decode_metric_note": "Structured tool output: text-only timeline does not cover all generated tokens."
+    },
+    {
+      "label": "long-tool-followup",
+      "usage": {
+        "prompt_tokens": 56427,
+        "completion_tokens": 8,
+        "total_tokens": 56435,
+        "prompt_tokens_details": {
+          "cached_tokens": 56388
+        }
+      },
+      "finish_reason": "stop",
+      "forced_ignore_eos": false,
+      "requested_max_tokens": 1024,
+      "elapsed_s": 0.7592874970005141,
+      "ttft_s": 0.6156128370002989,
+      "prefill_effective_tok_s": 63.35150545273809,
+      "prefill_including_cached_tok_s": 91659.88200465775,
+      "decode_http_tok_s": 48.79630698965934,
+      "api_output_tok_s": 10.536193512474739,
+      "text_events": 4,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "BLUEPRINT-742"
+      },
+      "forced_length_passed": null,
+      "cached_tokens": 56388,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "decode_visible_span_tok_s": 79.0335194138247,
+      "generation_end_s": 0.7590663159999167,
+      "suppressed_output_tail_s": 0.054883463999431115
+    }
+  ],
+  "checks": [
+    {
+      "name": "long_context_plus_8192",
+      "passed": true
+    },
+    {
+      "name": "long_tool_round_trip",
+      "passed": true,
+      "call_prompt_tokens": 56375,
+      "followup_prompt_tokens": 56427
+    },
+    {
+      "name": "/v1/responses",
+      "passed": true
+    },
+    {
+      "name": "/v1/messages",
+      "passed": true
+    }
+  ],
+  "count_adapter_offset_tokens": 0,
+  "completed": true
+}

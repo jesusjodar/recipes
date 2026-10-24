@@ -15,7 +15,7 @@
     0
   ],
   "method": "HTTP stream: prompt_tokens / TTFT to first nonempty content OR reasoning event; decode (completion_tokens - 1) / (last - first content or reasoning event). API special tokens/chunking may affect rates. Distinct synthetic prefixes; no cached tokens in server log.",
-  "full_context_generation_validated": false,
+  "full_context_generation_validated": true,
   "output_default_8192": "Catalog default; measured requests used 200 tokens with ignore_eos only for benchmarking.",
   "cache_rebuild": {
     "moe_cache_size": 3328,
@@ -24,5 +24,52 @@
   },
   "raw_logs": "evidence/logs/qwen3.6",
   "status": "measured_short_context_with_66560_capacity",
-  "environment": "evidence/environment-2026-10-24.json"
+  "environment": "evidence/environment-2026-10-24.json",
+  "full_context_validation_2026_10_24": {
+    "complete": true,
+    "error": null,
+    "context_capacity": 66560,
+    "configuration_sha256": "1328148a05125ffb875bf5f9f5709bf9ab228675262d67cc0c7d037eda1123bd",
+    "prompt_tokens": 58368,
+    "output_tokens": 8192,
+    "prefill_effective_tok_s": 1739.2042306334808,
+    "decode_http_tok_s": 60.3900040764865,
+    "ttft_s": 33.56017595399953,
+    "elapsed_s": 169.1954263839998,
+    "cached_tokens_cold": 0,
+    "native_timings": {},
+    "engine_allocated_tokens": 66560,
+    "reserved_engine_tokens": 0,
+    "prefix_reuse": {
+      "cached_tokens": 58304,
+      "ttft_s": 2.9076707029998943,
+      "decode_http_tok_s": 62.1328984145386
+    },
+    "gpu_peak_mib": 11292.0,
+    "gpu_peak_temperature_c": 78.0,
+    "checks": [
+      {
+        "name": "long_context_plus_8192",
+        "passed": true
+      },
+      {
+        "name": "long_tool_round_trip",
+        "passed": true,
+        "call_prompt_tokens": 56582,
+        "followup_prompt_tokens": 56667
+      },
+      {
+        "name": "/v1/responses",
+        "passed": true
+      },
+      {
+        "name": "/v1/messages",
+        "passed": true
+      }
+    ],
+    "evidence": "evidence/logs/validation-2026-10-24/qwen3.6/results.json"
+  },
+  "full_context_and_output_generation_validated": true,
+  "record_scope_note": "Root throughput fields retain the dated short or historical series; current full-context data are in full_context_validation_2026_10_24.",
+  "validation_summary": "evidence/validation-2026-10-24.json"
 }

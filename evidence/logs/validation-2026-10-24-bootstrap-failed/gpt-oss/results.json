@@ -1,0 +1,84 @@
+{
+  "model": "gpt-oss",
+  "date": "2026-10-24T09:16:05.945263+00:00",
+  "profile_sha256": "e62e296513de3dccd2c5a784b7ab0656bd020b8e0be19a120202e32c68382e87",
+  "profile": {
+    "schema_version": 1,
+    "id": "gpt-oss",
+    "name": "GPT-OSS 20B",
+    "status": "Measured 2026-10-24: three ~4K input + 200 output requests; complete logs",
+    "hardware": "ryzen-5600x-rtx3060",
+    "engine": "desktop-wheel",
+    "model": {
+      "repository": "openai/gpt-oss-20b",
+      "original_url": "https://huggingface.co/openai/gpt-oss-20b",
+      "local_directory": "gpt-oss-20b",
+      "download_revision": "6cee5e81ee83917806bbde320786a8fb61efebee",
+      "historical_weight_revision_verified": false,
+      "download_patterns": [
+        "*.json",
+        "*.safetensors",
+        "*.jinja",
+        "*.txt",
+        "*.model",
+        "*.tiktoken",
+        "README.md",
+        "LICENSE*"
+      ]
+    },
+    "quantization": "MXFP4",
+    "modalities": [
+      "text"
+    ],
+    "drafter": {
+      "enabled": false,
+      "model": null
+    },
+    "context": {
+      "total_tokens": 66560,
+      "input_budget_with_reserved_output": 58368,
+      "output_tokens": 8192,
+      "output_status": "new_explicit_agent_default; historical_measurement_used_200_tokens"
+    },
+    "server_arguments": [
+      "--moe-strategy",
+      "hybrid",
+      "--moe-hybrid-max-fetch",
+      "1",
+      "--moe-cpu-threads",
+      "0",
+      "--max-running-requests",
+      "1",
+      "--text-model-only",
+      "--moe-cache-size",
+      "256",
+      "--num-tokens",
+      "66560",
+      "--max-seq-len-override",
+      "66560",
+      "--max-output-tokens",
+      "8192",
+      "--memory-ratio",
+      "0.95",
+      "--max-prefill-length",
+      "8192",
+      "--enable-cache-report"
+    ],
+    "cache_rebuild": null,
+    "desktop_cache": {
+      "kvSize": 66560,
+      "moeExperts": 256,
+      "swaTokens": 512,
+      "mambaSlots": 4
+    },
+    "sampling": {
+      "source": "checkpoint defaults; no temperature/top_p/top_k override"
+    },
+    "environment": {},
+    "evidence": "evidence/gpt-oss.json",
+    "cache_report_note": "Enabled for validation to report actual reused prompt tokens in HTTP usage."
+  },
+  "runs": [],
+  "checks": [],
+  "error": "RuntimeError('gpt-oss exited during startup; see server.log')"
+}

@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-24",
+  "method": "Streamed complete local weight files through SHA-256 and compared with LFS blob digests at pinned HF revisions.",
+  "models": {
+    "qwen3.6": {
+      "repository": "nvidia/Qwen3.6-35B-A3B-NVFP4",
+      "revision": "1355db6a052410cfd62085d94b58866fd0f2c3c5",
+      "files": [
+        {
+          "filename": "model-00001-of-00003.safetensors",
+          "bytes": 10006877608,
+          "sha256": "07141c2db92e47bc08777132cd1a0323faf300eab3a7d7c111bc2bf075fda050",
+          "upstream_sha256": "07141c2db92e47bc08777132cd1a0323faf300eab3a7d7c111bc2bf075fda050",
+          "matches": true
+        },
+        {
+          "filename": "model-00002-of-00003.safetensors",
+          "bytes": 10003595752,
+          "sha256": "6dea9c759a0f941cf9e1cc1501216b0e107966a66c90425050e212efbd053f02",
+          "upstream_sha256": "6dea9c759a0f941cf9e1cc1501216b0e107966a66c90425050e212efbd053f02",
+          "matches": true
+        },
+        {
+          "filename": "model-00003-of-00003.safetensors",
+          "bytes": 3413864960,
+          "sha256": "9758875fc55e49561165f4a44342b654c123c3e25c6811b34abb83553fb1a164",
+          "upstream_sha256": "9758875fc55e49561165f4a44342b654c123c3e25c6811b34abb83553fb1a164",
+          "matches": true
+        }
+      ],
+      "all_weight_files_match": true
+    },
+    "gemma4": {
+      "repository": "nvidia/Gemma-4-26B-A4B-NVFP4",
+      "revision": "a19cfe00be84568a6867111c9a68c9c44fdcffe6",
+      "files": [
+        {
+          "filename": "model-00001-of-00002.safetensors",
+          "bytes": 10001865236,
+          "sha256": "b5df31122600666617b05f9be2015552cd2edff401e86b1d99b9127efdc6d819",
+          "upstream_sha256": "b5df31122600666617b05f9be2015552cd2edff401e86b1d99b9127efdc6d819",
+          "matches": true
+        },
+        {
+          "filename": "model-00002-of-00002.safetensors",
+          "bytes": 8786620352,
+          "sha256": "ff11061ebf57327af4f1993ff758b0859d7746b0c03ca1b17ded7dec30410962",
+          "upstream_sha256": "ff11061ebf57327af4f1993ff758b0859d7746b0c03ca1b17ded7dec30410962",
+          "matches": true
+        }
+      ],
+      "all_weight_files_match": true
+    },
+    "gpt-oss": {
+      "repository": "openai/gpt-oss-20b",
+      "revision": "6cee5e81ee83917806bbde320786a8fb61efebee",
+      "files": [
+        {
+          "filename": "model-00000-of-00002.safetensors",
+          "bytes": 4792272488,
+          "sha256": "16d0f997dcfc4462089d536bffe51b4bcea2f872f5c430be09ef8ed392312427",
+          "upstream_sha256": "16d0f997dcfc4462089d536bffe51b4bcea2f872f5c430be09ef8ed392312427",
+          "matches": true
+        },
+        {
+          "filename": "model-00001-of-00002.safetensors",
+          "bytes": 4798702184,
+          "sha256": "4fbe328ab445455d6f58dc73852b85873bd626986310abd91cd4d2ce3245eaea",
+          "upstream_sha256": "4fbe328ab445455d6f58dc73852b85873bd626986310abd91cd4d2ce3245eaea",
+          "matches": true
+        },
+        {
+          "filename": "model-00002-of-00002.safetensors",
+          "bytes": 4170342232,
+          "sha256": "a18106b209e9ab35c3406db4f6f12a927364a058b21e9d1373d682e20674b303",
+          "upstream_sha256": "a18106b209e9ab35c3406db4f6f12a927364a058b21e9d1373d682e20674b303",
+          "matches": true
+        }
+      ],
+      "all_weight_files_match": true
+    },
+    "flint": {
+      "repository": "RecursiveSI/flint-nvfp4-gguf",
+      "revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf",
+      "files": [
+        {
+          "filename": "flint-nvfp4.gguf",
+          "bytes": 22863084160,
+          "sha256": "97cc8009ff9b132d5cf3c488e6767962bb5a5dc158a90ed661bbbddf876b8bde",
+          "upstream_sha256": "97cc8009ff9b132d5cf3c488e6767962bb5a5dc158a90ed661bbbddf876b8bde",
+          "matches": true
+        }
+      ],
+      "all_weight_files_match": true
+    },
+    "nemotron": {
+      "repository": "unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF",
+      "revision": "b738967d6da3441a7d1c71fcec15e49e32e16ecd",
+      "files": [
+        {
+          "filename": "NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf",
+          "bytes": 8192955584,
+          "sha256": "6176bd788769bd58042c165d3dc8e8c86a8ca5c90d5de188a364b31dc9560810",
+          "upstream_sha256": "6176bd788769bd58042c165d3dc8e8c86a8ca5c90d5de188a364b31dc9560810",
+          "matches": true
+        }
+      ],
+      "all_weight_files_match": true
+    }
+  }
+}

@@ -62,9 +62,20 @@ def install(with_flint):
         if digest != item['sha256']:
             raise RuntimeError(f'Checksum incorrecto: {path}; retira ese archivo y repite')
         paths.append(path)
-    constraints = ROOT / 'constraints.txt'
+    constraints = ROOT / 'constraints-validated.txt'
+    if not constraints.exists():
+        constraints = ROOT / 'constraints.txt'
     run(['uv', 'pip', 'install', '--python', python_bin(), '--constraint', constraints,
          str(paths[0]) + '[accel]', paths[1]])
+    # FlashInfer's Python package alone falls back to nvcc JIT. The recorded
+    # machine used both official binary caches, so install them explicitly.
+    acceleration = []
+    for item in lock.get('flashinfer_wheels', []):
+        path = wheels / item['filename']
+        verified_download(item, path)
+        acceleration.append(path)
+    if acceleration:
+        run(['uv', 'pip', 'install', '--python', python_bin(), '--constraint', constraints, *acceleration])
     if with_flint:
         overlay = RUNTIME / 'FreeToken-flint'
         item = lock['flint_overlay']
@@ -237,6 +248,7 @@ def serve(p, args):
     # Check the API and the engine rendezvous before owning any child processes.
     for port in ([args.port] if is_llama else [args.port, args.port + 1]):
         with socket.socket() as sock:
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             sock.bind(('127.0.0.1', port))
     print('+ ' + shlex.join(command), flush=True)
     process = subprocess.Popen(command, env=env, start_new_session=True)

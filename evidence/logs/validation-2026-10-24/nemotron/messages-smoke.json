@@ -1,0 +1,31 @@
+{
+  "request": {
+    "model": "nemotron",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Reply with READY."
+      }
+    ],
+    "max_tokens": 256
+  },
+  "response": {
+    "id": "chatcmpl-jRFuAoKE1RTs8Crc6gqPA3Dt1exTXs9T",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "text",
+        "text": "READY."
+      }
+    ],
+    "model": "nemotron",
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "usage": {
+      "cache_read_input_tokens": 15,
+      "input_tokens": 5,
+      "output_tokens": 3
+    }
+  }
+}

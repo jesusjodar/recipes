@@ -7,7 +7,10 @@
       "local_config_sha256": "58aefa1c9eff7989f431d748f2ddec39446cb1fd2a69acc46e285c6a37b0cecc",
       "local_config_matches_current": true,
       "weight_revision_verified": false,
-      "local_weights_bytes": 23424338320
+      "local_weights_bytes": 23424338320,
+      "validation_weight_revision_verified": true,
+      "validation_revision": "1355db6a052410cfd62085d94b58866fd0f2c3c5",
+      "validation_integrity_evidence": "evidence/logs/validation-2026-10-24/checkpoint-integrity.json"
     },
     "gemma4": {
       "repo": "nvidia/Gemma-4-26B-A4B-NVFP4",
@@ -15,7 +18,10 @@
       "local_config_sha256": "4e379cc809c617a49179a49140f553a2d6a5ec538ed480832b0c54f6ace43d98",
       "local_config_matches_current": true,
       "weight_revision_verified": false,
-      "local_weights_bytes": 18788485588
+      "local_weights_bytes": 18788485588,
+      "validation_weight_revision_verified": true,
+      "validation_revision": "a19cfe00be84568a6867111c9a68c9c44fdcffe6",
+      "validation_integrity_evidence": "evidence/logs/validation-2026-10-24/checkpoint-integrity.json"
     },
     "gpt-oss": {
       "repo": "openai/gpt-oss-20b",
@@ -23,11 +29,17 @@
       "local_config_sha256": "3a2a26ded679375b7928ddeca59764df7cea83220c1961035f6d6e232659e9ce",
       "local_config_matches_current": true,
       "weight_revision_verified": false,
-      "local_weights_bytes": 13761316904
+      "local_weights_bytes": 13761316904,
+      "validation_weight_revision_verified": true,
+      "validation_revision": "6cee5e81ee83917806bbde320786a8fb61efebee",
+      "validation_integrity_evidence": "evidence/logs/validation-2026-10-24/checkpoint-integrity.json"
     },
     "flint": {
       "repo": "RecursiveSI/flint-nvfp4-gguf",
-      "current_revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf"
+      "current_revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf",
+      "validation_weight_revision_verified": true,
+      "validation_revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf",
+      "validation_integrity_evidence": "evidence/logs/validation-2026-10-24/checkpoint-integrity.json"
     },
     "nemotron": {
       "repo": "unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF",
@@ -56,7 +68,10 @@
         "sha256": "9a63662ae8395b8bfc1a1b00d7a9ef354120f172704bd6ba88d3870cf22d4d03",
         "selected": false,
         "reason": "Lower mean speed in four short agentic prompts"
-      }
+      },
+      "validation_weight_revision_verified": true,
+      "validation_revision": "b738967d6da3441a7d1c71fcec15e49e32e16ecd",
+      "validation_integrity_evidence": "evidence/logs/validation-2026-10-24/checkpoint-integrity.json"
     }
   },
   "desktop_cache_profiles": {

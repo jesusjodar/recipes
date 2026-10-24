@@ -4,9 +4,9 @@
 
 [English](README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md)
 
-我的本地推理配置，面向 **AMD Ryzen 5 5600X · RTX 3060 12 GiB · 32 GiB 内存**。包含模型权重来源、固定引擎版本、自动启动脚本、智能体客户端配置和实测性能。**仅文本，每次只运行一个生成请求。** 仓库在准备阶段保持私有。
+我的本地推理配置，面向 **AMD Ryzen 5 5600X · RTX 3060 12 GiB · 32 GiB 内存**。包含模型权重来源、固定引擎版本、自动启动脚本、智能体客户端配置和实测性能。**仅文本，每次只运行一个生成请求。** 现已公开，包含脱敏证据和可复现的验证命令。
 
-清点及日志恢复日期：**2026-10-24**。Flint 测量于 10 月 22 日，Nemotron 于 23 日；Qwen/Gemma/GPT 的新测量于 24 日。这些是在本机已尝试配置中选出的方案，不代表已证明的全局最优值。
+清点与满预算验证日期：**2026-10-24**。10 月 22–23 日的历史对比数据单独保留。这些是在本机已尝试配置中选出的方案，不代表已证明的全局最优值。
 
 ## 目录
 
@@ -28,21 +28,21 @@
 <a id="models"></a>
 ## 模型与性能
 
-**上下文包括输入、历史消息、模板、推理和输出。** 速度单位为 tokens/s，容量单位为 tokens。输出列是默认预算，并不表示每个模型都已实测生成该长度。
+**上下文包括输入、历史消息、模板、推理和输出。** 2026-10-24 已对五个公开配置逐一使用全部输入预算，并**实际生成 8192 个输出 token**。主表改为这些长请求的结果，所有引擎采用相同的 HTTP 计时方法。每个长测量为预热后的一次运行，不是统计平均值。
 
-| 模型 | 引擎 | 总上下文 | 输入预算¹ | 输出¹ | Drafter | Prefill | Decode | 实测负载 | 量化 | 来源 / 配置 |
+| 模型 | 引擎 | 总上下文 | 输入预算¹ | 输出¹ | Drafter | Prefill² | Decode² | 实测负载 | 量化 | 来源 / 配置 |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Qwen 3.6 35B A3B | FreeToken | 66560 | 58368 | 8192 | 无 | 2841.17² | 70.51² | 4106 + 200 × 3 | NVFP4 ModelOpt （混合） | [原模型](https://huggingface.co/Qwen/Qwen3.6-35B-A3B) · [权重](https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4) · [配置](profiles/qwen3.6.json) |
-| Gemma 4 26B A4B | FreeToken | 66560 | 58368 | 8192 | 无 | 1442.59² | 32.11² | 4109 + 200 × 3 | NVFP4 ModelOpt （混合） | [原模型](https://huggingface.co/google/gemma-4-26B-A4B-it) · [权重](https://huggingface.co/nvidia/Gemma-4-26B-A4B-NVFP4) · [配置](profiles/gemma4.json) |
-| GPT-OSS 20B | FreeToken | 66560 | 58368 | 8192 | 无 | 2272.64² | 42.31² | 4163 + 200 × 3 | MXFP4 | [原模型](https://huggingface.co/openai/gpt-oss-20b) · [权重](https://huggingface.co/openai/gpt-oss-20b) · [配置](profiles/gpt-oss.json) |
-| Flint 39.8B A2.5B | FreeToken | 73728 | 65536 | 8192 | 无 | 1543.59³ | 49.97³ | 65536 + 8192 | NVFP4 GGUF 官方 | [原模型](https://huggingface.co/RecursiveSI/flint) · [权重](https://huggingface.co/RecursiveSI/flint-nvfp4-gguf) · [配置](profiles/flint.json) |
-| NVIDIA Nemotron 3.5 Bolt E4B | llama.cpp | 65536 | 57344 | 8192 | BF16 DFlash | 1964.10³ | 108.04³ | 277–411 + 1242–1762 | Unsloth UD-Q8_K_XL GGUF （混合） | [原模型](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16) · [权重](https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF) · [配置](profiles/nemotron.json) |
+| Qwen 3.6 35B A3B | FreeToken | 66560 | 58368 | 8192 | 无 | 1739.20 | 60.39 | 58368 + 8192 | NVFP4 ModelOpt （混合） | [原模型](https://huggingface.co/Qwen/Qwen3.6-35B-A3B) · [权重](https://huggingface.co/nvidia/Qwen3.6-35B-A3B-NVFP4) · [配置](profiles/qwen3.6.json) |
+| Gemma 4 26B A4B | FreeToken | 66560 | 58368 | 8192 | 无 | 884.26 | 30.20 | 58368 + 8192 | NVFP4 ModelOpt （混合） | [原模型](https://huggingface.co/google/gemma-4-26B-A4B-it) · [权重](https://huggingface.co/nvidia/Gemma-4-26B-A4B-NVFP4) · [配置](profiles/gemma4.json) |
+| GPT-OSS 20B | FreeToken | 66560 | 58368 | 8192 | 无 | 1444.89 | 34.93 | 58368 + 8192 | MXFP4 | [原模型](https://huggingface.co/openai/gpt-oss-20b) · [权重](https://huggingface.co/openai/gpt-oss-20b) · [配置](profiles/gpt-oss.json) |
+| Flint 39.8B A2.5B | FreeToken | 73728 | 65536 | 8192 | 无 | 1521.29 | 50.33 | 65536 + 8192 | NVFP4 GGUF 官方 | [原模型](https://huggingface.co/RecursiveSI/flint) · [权重](https://huggingface.co/RecursiveSI/flint-nvfp4-gguf) · [配置](profiles/flint.json) |
+| NVIDIA Nemotron 3.5 Bolt E4B | llama.cpp | 65536 | 57344 | 8192 | BF16 DFlash | 1840.76 | 142.95 | 57344 + 8192 | Unsloth UD-Q8_K_XL GGUF （混合） | [原模型](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16) · [权重](https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF) · [配置](profiles/nemotron.json) |
 
-1. 本仓库为智能体使用预留 **8192 个输出 token**，推理同样消耗此预算。输入预算还包含系统指令、工具定义和对话模板。目前只有 Flint 保留了 65536 输入 + 8192 输出的完整测量。Nemotron 的 65536 是总容量，预留输出后输入预算为 57344。
-2. Qwen/Gemma/GPT 使用**新采集的 HTTP 流式测量**，排除一次预热后取三次请求的算术平均。Prefill = prompt token 数 / 到首个非空文本**或推理**事件的时间。Decode =（输出 token 数 − 1）/ 首个至最后一个此类事件的间隔。包含本地服务开销，并假定 token 计数与流式分块相对应。三次请求使用不同的合成前缀；缓存计数见原始日志。主表以这些新数据替代不完整的历史日志。
-3. Flint 使用历史 HTTP 方法，计时至首个**文本**事件。Nemotron 使用 llama.cpp 的请求级计时；其 prefill 仅统计未缓存 token，每次复用 38 个 token。**负载及计量方式不同，不能视为受控的引擎对比。** 在配置了 64K 容量的服务器上运行短提示词，不等同于实测 64K 活跃历史。
+¹ 输入包含系统指令、模板和工具开销。8192 也是日常默认输出预算；**仅在吞吐测试中**使用 `ignore_eos` 强制达到该长度，正常使用遵循 EOS。计数采用 API token usage，包含没有可见文本的特殊 token。Nemotron 物理分配 65792 槽位，内部预留 256，客户端可用 65536。
 
-Gemma/GPT 的历史引擎日志数字仍保留在[证据文件](evidence)中：分别为 328.21 / 41.24 和 307.26 / 65.15。这些数字来自引擎周期性统计，不能与新的 HTTP 数值混用。
+² 有效 prefill = **未缓存** prompt token 数 / 首个非空文本或推理事件前的时间；decode =（输出 token 数 − 1）/ 首个内容事件到最终 usage 事件的间隔，包含末尾未显示的 token。包含本地服务开销及 token/分块计数影响。提示词由本仓库源码和不同的合成前缀构成。相同计时方法不代表不同模型的 tokenizer 或负载完全相同。这些测试验证容量和服务行为，不是一般编程质量评估。
+
+[完整结果、缓存复用、工具循环和 API 检查](docs/validation.md) · [结构化摘要](evidence/validation-2026-10-24.json) · [完整请求、SSE 时间线、服务日志和 GPU 记录](evidence/logs/validation-2026-10-24)。此前短提示词与引擎周期性统计保留在各模型证据中，作为独立历史系列。
 
 <a id="hardware"></a>
 ## 硬件与适用范围
@@ -56,7 +56,7 @@ Ryzen 5 5600X，6 核 / 12 线程，标称 32 GiB 内存，RTX 3060 12 GiB（SM8
 
 ![从权重到工作流](assets/workflow-blueprint.png)
 
-要求：Linux x86_64、Python 3.12+、Git、兼容所选 CUDA 运行时的 NVIDIA 驱动，以及足够的磁盘和内存。FreeToken 还需要 [`uv`](https://docs.astral.sh/uv/getting-started/installation/)。FreeToken 使用固定的 CPython 3.12 wheel；未缓存的内核可能需要 CUDA 13 工具包。Nemotron 使用 llama.cpp b11828 的官方 CUDA 13.4 二进制及运行时压缩包，并验证 SHA-256。
+要求：Linux x86_64、Python 3.12+、用于 Triton 主机代码的 C/C++ 编译器、Git、兼容所选 CUDA 运行时的 NVIDIA 驱动，以及足够的磁盘和内存。FreeToken 还需要 [`uv`](https://docs.astral.sh/uv/getting-started/installation/)。FreeToken 使用固定的 CPython 3.12 wheel；未缓存的内核可能需要 CUDA 13 工具包。Nemotron 使用 llama.cpp b11828 的官方 CUDA 13.4 二进制及运行时压缩包，并验证 SHA-256。
 
 ```bash
 gh repo clone jesusjodar/recipes
@@ -82,7 +82,7 @@ cd recipes
 ./recipes serve nemotron --print-command
 ```
 
-默认权重目录为 `~/.freetoken/models`；可用 `RECIPES_MODEL_DIR` 指定其他目录。Nemotron 也会复用已存在且哈希正确的 `~/Desktop/AI/models` 文件，引擎压缩包可从 `~/Desktop/AI/bin` 复用。Qwen/Gemma/GPT 会复用完整的本地分片，但无法确认其历史权重版本；公布的固定版本用于**新下载**。Nemotron 的主模型和 drafters 已完整计算 SHA-256，并与 Hub blob 对照。[清单](evidence/inventory.json) · [固定运行时版本](runtime.json)。
+默认权重目录为 `~/.freetoken/models`；可用 `RECIPES_MODEL_DIR` 指定其他目录。Nemotron 也会复用已存在且哈希正确的 `~/Desktop/AI/models` 文件，引擎压缩包可从 `~/Desktop/AI/bin` 复用。五个当前主模型均已完整计算 SHA-256，并与固定 Hub 版本的 blob 对照；历史运行仍保留独立日期。经过记录的完整性核验后复用本地分片。Nemotron 的 drafters 也已验证哈希。[清单](evidence/inventory.json) · [固定运行时版本](runtime.json)。
 
 <a id="recipes"></a>
 ## 各模型配置
@@ -90,7 +90,7 @@ cd recipes
 <a id="qwen"></a>
 ### Qwen 3.6 35B A3B
 
-总上下文 66560，3328 个专家缓存槽，4 个 GDN/Mamba 状态槽，hybrid fetch 1。先以 1024 个专家启动，再重建缓存。Desktop 保存的 `swaTokens=2048` 对此循环状态模型不起作用；**CLI 重建请求不发送 `num_swa_pages`**，否则引擎会拒绝。采样：temperature 1、top-p 0.95、top-k 20。
+总上下文 66560，3328 个专家缓存槽，4 个 GDN/Mamba 状态槽，hybrid fetch 1。已完成 **58368 输入 + 8192 输出**。prefill 上限 8192 导致 GDN 工作区显存不足，因此验证后的配置改用 **2048**，保留上下文和专家缓存容量。先以 1024 个专家启动后重建。Desktop 的 `swaTokens=2048` 对该循环模型不起作用，不发送给 CLI 重建 API。采样：temperature 1、top-p 0.95、top-k 20。验证报告还记录长上下文工具循环及前缀复用。
 
 ```bash
 ./recipes install
@@ -98,12 +98,12 @@ cd recipes
 ./recipes serve qwen3.6
 ```
 
-新证据包含三次 4106 输入 + 200 输出请求、完整启动/重建日志和 SSE 事件。这些请求未验证接近满容量的活跃上下文，也未验证默认的 8192 输出。[配置](profiles/qwen3.6.json) · [测量](evidence/qwen3.6.json) · [客户端](clients/qwen3.6)。
+[配置](profiles/qwen3.6.json) · [证据](evidence/qwen3.6.json) · [客户端](clients/qwen3.6)
 
 <a id="gemma"></a>
 ### Gemma 4 26B A4B
 
-**禁用视觉和音频。** 总上下文 66560，448 个专家，hybrid fetch 1。CLI 保留初始的 13312-token SWA 池，而 Desktop 保存的是 1024；两者缓存几何不同。新测试在 prefill 上限 8192 时出现 CUDA 显存不足，因此本配置将 prefill 分块改为 **1024**，并保留失败日志及调整后的成功测量。常规采样：temperature 1、top-p 0.95、top-k 64。
+**禁用视觉和音频。** 总上下文 66560，448 个专家，hybrid fetch 1，prefill **1024**。CLI 保留初始 **13312** 的 SWA 池，Desktop 保存 **1024**，两者缓存几何不同。此前 prefill 上限 8192 的 OOM 日志保留。新测试已按公开 CLI 配置完成 **58368 输入 + 8192 输出**。常规采样：temperature 1、top-p 0.95、top-k 64。旧的 1425 专家配置无法容纳更大的上下文。
 
 ```bash
 ./recipes install
@@ -111,12 +111,12 @@ cd recipes
 ./recipes serve gemma4
 ```
 
-旧的 1425 专家配置无法容纳更大的上下文。针对本 CLI 配置，新的短请求日志替代旧摘要；这不证明已在 66560-token 满容量下完成生成。[配置](profiles/gemma4.json) · [新测量和历史摘录](evidence/gemma4.json) · [客户端](clients/gemma4)。
+[配置](profiles/gemma4.json) · [证据](evidence/gemma4.json) · [客户端](clients/gemma4)
 
 <a id="gpt-oss"></a>
 ### GPT-OSS 20B
 
-MXFP4 权重，总上下文 66560，256 个专家，hybrid fetch 1。此前 16K 上下文的 535 专家配置无法为更大上下文留出空间。CLI 的 SWA 池为 13312，Desktop 为 512。引擎使用 Harmony 协议及 checkpoint 默认采样设置；测量请求使用 temperature 0。
+MXFP4，总上下文 66560，256 个专家，hybrid fetch 1。新测试已完成 **58368 输入 + 8192 输出**。此前 16K 上下文的 535 专家配置无法为更大上下文留出空间。CLI SWA 池为 **13312**，Desktop 为 **512**。引擎使用 Harmony 与 checkpoint 默认采样；吞吐测试使用 temperature 0。验证报告保留实际长工具循环及 API 检查结果。
 
 ```bash
 ./recipes install
@@ -124,7 +124,7 @@ MXFP4 权重，总上下文 66560，256 个专家，hybrid fetch 1。此前 16K 
 ./recipes serve gpt-oss
 ```
 
-[配置](profiles/gpt-oss.json) · [新测量和历史摘录](evidence/gpt-oss.json) · [客户端](clients/gpt-oss)。上下文预留容量与实际测量的短输入需分别理解。
+[配置](profiles/gpt-oss.json) · [证据](evidence/gpt-oss.json) · [客户端](clients/gpt-oss)
 
 <a id="flint"></a>
 ### Flint 39.8B A2.5B
@@ -137,7 +137,7 @@ MXFP4 权重，总上下文 66560，256 个专家，hybrid fetch 1。此前 16K 
 ./recipes serve flint
 ```
 
-支持代码已在 [FreeToken #797](https://github.com/FlashML-org/FreeToken/pull/797) 提出。安装器固定到评审后的 Python 提交 `6ee048e…`，并复用 wheel 原生扩展；**性能数据来自更早的目录树 `edfba5e…`，尚未在安装器对应提交上重测**。这不是从源码完整编译 CUDA 的安装方式。
+支持代码已在 [FreeToken #797](https://github.com/FlashML-org/FreeToken/pull/797) 提出。安装器固定到评审后的 Python 提交 `6ee048e…`，并复用 wheel 原生扩展；**新的长上下文测试已在这个确切的安装提交上运行**。下表单独保留此前 `edfba5e…` 的历史测量以供对照。这不是从源码完整编译 CUDA 的安装方式。
 
 | 历史负载 | 有效 prefill | Decode | 首 token 时间 |
 |---|---:|---:|---:|
@@ -145,14 +145,18 @@ MXFP4 权重，总上下文 66560，256 个专家，hybrid fetch 1。此前 16K 
 | 65536 + 8192，冷前缀，一次 | 1543.59 | 49.97 | 42.46 秒 |
 | 65536 + 256，复用前缀 | 复用 65535 tokens | 50.38 | 0.88 秒 |
 
-仅吞吐基准强制使用 `ignore_eos`；日常服务正常遵循 EOS。另外完成过一次 >64K 的工具调用循环，但不能据此断言一般编程质量。观测峰值显存约 10.61 GiB，含桌面；主机专家约占 19.8 GiB。采样：temperature 1、top-p 0.95、top-k 20。[配置](profiles/flint.json) · [结果](evidence/flint.json) · [参数扫描日志](evidence/logs/flint) · [客户端](clients/flint)。
+仅吞吐基准强制使用 `ignore_eos`；日常服务正常遵循 EOS。另外完成过一次 >64K 的工具调用循环，但不能据此断言一般编程质量。历史观测峰值显存约 10.61 GiB，含桌面；主机专家约占 19.8 GiB。采样：temperature 1、top-p 0.95、top-k 20。[配置](profiles/flint.json) · [结果](evidence/flint.json) · [参数扫描日志](evidence/logs/flint) · [客户端](clients/flint)。
 
 研究目录还保存了 [FutureMLS-Lab Flint ModelOpt 导出](https://huggingface.co/FutureMLS-Lab/flint-nvfp4-coldgptq)，版本 `56f37fcf…`，本地重新整理成按层存放的 safetensors。该版本用于一致性、AIME 和缓存重建验证，服务容量为 8192；没有优化过的长上下文吞吐或输出目标。因此只记录在清单中，不作为另一份已优化配方宣传。[验证日志](evidence/logs/flint-validation)。
 
 <a id="nemotron"></a>
 ### NVIDIA Nemotron 3.5 Bolt E4B + DFlash
 
-**llama.cpp b11828 CUDA 13.4**，Unsloth **UD-Q8_K_XL** 主模型，NVIDIA 官方 **BF16 GGUF DFlash** drafter，最多草拟 7 个 token（块大小 8）。两者完整加载到 GPU，启用 Flash Attention、Jinja，单槽位，关闭自动 fitting，**总上下文 65536**。不加载视觉 projector。temperature 1、top-p 0.95。本仓库新增 8192 的默认输出预算；历史请求自行指定输出限制。
+**llama.cpp b11828 CUDA 13.4**，Unsloth **UD-Q8_K_XL** 主模型及 NVIDIA 官方 **BF16 GGUF DFlash** drafter。最多草拟 7 个 token（块大小 8），两者完整加载到 GPU，启用 Flash Attention、Jinja，单槽位，关闭 fitting，并**显式禁用 context shift**。物理分配 **65792**，包含 **256 个 DFlash 内部预留槽位**；客户端可用上下文 **65536**，已实测 **57344 输入 + 8192 实际输出**。不加载视觉 projector。常规 temperature 1、top-p 0.95；固定长度测试使用 temperature 0。
+
+历史短编程任务在 64K 容量下达到 **1964.10 引擎 prefill / 108.04 引擎 decode / 106.86 API 输出 tok/s**，输入 277–411，输出 1242–1762。这些短上下文数字与新的满预算结果分开。四项 8K 测试中，BF16 为 **117.63 API / 121.63 引擎 decode**，下载的 Unsloth Q8_0 drafter 为 **85.34 / 87.52**，因此选用 BF16。这些不是原生 NVFP4 drafter 的结果。历史生成补丁未经过正确性验证。
+
+新启动器端口为 **1919**。原 Desktop/AI 服务使用 **8000**；验证时仅在其空闲后暂时暂停，结束后恢复。
 
 ```bash
 ./recipes install --llama-cpp
@@ -160,11 +164,7 @@ MXFP4 权重，总上下文 66560，256 个专家，hybrid fetch 1。此前 16K 
 ./recipes serve nemotron
 ```
 
-在 64K 容量配置下，三项合成编程任务使用 277–411 个 prompt token，分别生成 **1242 / 1721 / 1762** 个 token，均正常结束。引擎平均 prefill **1964.10**、decode **108.04**，API 端到端输出速率 **106.86**，草拟接受率 **32.4%**。每次请求复用 38 个 prompt token，显存约 8.6 GiB。**尚未测量接近 64K 的活跃历史。** 生成补丁仅作为计时样本，不是经过正确性验证的解决方案。
-
-此前四项 8K 容量测试各生成 256 个 token。官方 BF16 drafter 的平均速率为 **117.63 API / 121.63 引擎 decode**；下载的 Unsloth Q8_0 drafter 为 **85.34 / 87.52**。因此选用 BF16。以上不是原生 NVFP4 drafter 的结果，该实验不列为已测配方。新启动器使用与客户端一致的 **1919** 端口；原 Desktop/AI 服务使用 **8000**，这些命令不会修改该服务。
-
-[配置](profiles/nemotron.json) · [证据](evidence/nemotron.json) · [原始 JSON 与脚本](evidence/logs/nemotron) · [客户端](clients/nemotron) · [主模型权重](https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF) · [官方 drafter](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash)。
+[配置](profiles/nemotron.json) · [证据](evidence/nemotron.json) · [客户端](clients/nemotron)
 
 <a id="api"></a>
 ## OpenAI 兼容 API
@@ -275,7 +275,18 @@ bash clients/nemotron/claude-code.sh
   --output /tmp/gemma4-new-measurement.json
 ```
 
-应记录引擎版本、硬件、权重哈希、实际 token 数、缓存状态、EOS 策略、预热和全部样本。新基准仅为固定长度测试启用 `ignore_eos`。在宣称满上下文性能前，必须实测接近上限的输入和输出。安装器保存本地 `uv pip freeze`，不提供完整的传递依赖锁；尚未验证全新 FreeToken 环境的完整引导安装。
+应记录引擎版本、硬件、权重哈希、实际 token 数、缓存状态、EOS 策略、预热和全部样本。新基准仅为固定长度测试启用 `ignore_eos`。在宣称满上下文性能前，必须实测接近上限的输入和输出。安装器保存本地 `uv pip freeze`，并在 [constraints-validated.txt](constraints-validated.txt) 中固定全部 103 个 Python 包版本；新的独立 FreeToken 环境已经安装并用于这些测试，包含两个固定版本的 FlashInfer 二进制缓存包。
+
+### 复现完整验证
+
+先关闭其他模型服务以释放显存，然后运行：
+
+```bash
+.venv/bin/python scripts/validate-profiles.py --output /tmp/recipes-validation
+python3 -m unittest discover -s tests -v
+```
+
+验证器依次启动各配置，通过服务器计数构建精确预算的合成提示词，生成 8192 个 token，重复前缀，执行自然工具调用循环，并检查 Responses/Messages。记录完整请求、带时间戳的 SSE、stdout/stderr 和 GPU 数据。`--models qwen3.6` 可只测试一个模型。本机可用 `--pause-user-service nemotron-e4b.service` 在服务空闲后暂停并于结束时恢复。包括失败检查在内的实际结果均见[验证报告](docs/validation.md)。
 
 <a id="layout"></a>
 ## 仓库结构与许可证

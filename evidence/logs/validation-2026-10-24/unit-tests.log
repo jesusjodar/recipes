@@ -1,0 +1,34 @@
+test_context_budgets_sum_to_capacity (test_validation.CatalogTests.test_context_budgets_sum_to_capacity) ... ok
+test_dflash_internal_reserve_matches_engine_allocation (test_validation.CatalogTests.test_dflash_internal_reserve_matches_engine_allocation) ... ok
+test_readme_languages_have_same_models_and_working_links (test_validation.CatalogTests.test_readme_languages_have_same_models_and_working_links) ... ok
+test_enabled_cache_reporting_interprets_omitted_details_as_zero (test_validation.MeasurementTests.test_enabled_cache_reporting_interprets_omitted_details_as_zero) ... test START cache-zero: 3 output tokens
+test {'label': 'cache-zero', 'usage': {'prompt_tokens': 100, 'completion_tokens': 3}, 'cached_tokens': 0, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 3, 'elapsed_s': 5, 'ttft_s': 1, 'prefill_effective_tok_s': 100.0, 'prefill_including_cached_tok_s': 100.0, 'decode_visible_span_tok_s': 2.0, 'generation_end_s': 3, 'decode_http_tok_s': 1.0, 'api_output_tok_s': 0.6, 'text_events': 2, 'forced_length_passed': True}
+ok
+test_exact_prompt_construction (test_validation.MeasurementTests.test_exact_prompt_construction) ... ok
+test_http_error_keeps_response_body (test_validation.MeasurementTests.test_http_error_keeps_response_body) ... ok
+test_padding_handles_token_counts_skipped_by_character_boundaries (test_validation.MeasurementTests.test_padding_handles_token_counts_skipped_by_character_boundaries) ... ok
+test_reasoning_is_first_event_and_cached_tokens_excluded (test_validation.MeasurementTests.test_reasoning_is_first_event_and_cached_tokens_excluded) ... test START measured: 3 output tokens
+test {'label': 'measured', 'usage': {'prompt_tokens': 100, 'completion_tokens': 3, 'prompt_tokens_details': {'cached_tokens': 20}}, 'cached_tokens': 20, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 3, 'elapsed_s': 5, 'ttft_s': 1, 'prefill_effective_tok_s': 80.0, 'prefill_including_cached_tok_s': 100.0, 'decode_visible_span_tok_s': 2.0, 'generation_end_s': 3, 'decode_http_tok_s': 1.0, 'api_output_tok_s': 0.6, 'text_events': 2, 'forced_length_passed': True}
+ok
+test_short_forced_output_is_failure_but_evidence_saved (test_validation.MeasurementTests.test_short_forced_output_is_failure_but_evidence_saved) ... test START short: 3 output tokens
+test {'label': 'short', 'usage': {'prompt_tokens': 100, 'completion_tokens': 2, 'prompt_tokens_details': {'cached_tokens': 20}}, 'cached_tokens': 20, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 3, 'elapsed_s': 0.0001249920005648164, 'ttft_s': 6.570100049430039e-05, 'prefill_effective_tok_s': 1217637.4697207245, 'prefill_including_cached_tok_s': 1522046.8371509057, 'decode_visible_span_tok_s': 39463.300049415644, 'generation_end_s': 0.00010286100041412283, 'decode_http_tok_s': 26910.65667808479, 'api_output_tok_s': 16001.02399323444, 'text_events': 2, 'forced_length_passed': False}
+ok
+test_tool_arguments_reassemble_across_chunks (test_validation.MeasurementTests.test_tool_arguments_reassemble_across_chunks) ... test START tool: 64 output tokens
+test {'label': 'tool', 'usage': {'prompt_tokens': 100, 'completion_tokens': 8}, 'cached_tokens': None, 'finish_reason': 'tool_calls', 'forced_ignore_eos': False, 'requested_max_tokens': 64, 'elapsed_s': 0.00012429200069163926, 'ttft_s': None, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': None, 'decode_visible_span_tok_s': None, 'generation_end_s': 0.00010306200056220405, 'decode_http_tok_s': None, 'api_output_tok_s': 64364.560514618344, 'text_events': 0, 'forced_length_passed': None}
+ok
+test_unknown_cache_count_does_not_infer_uncached_prefill (test_validation.MeasurementTests.test_unknown_cache_count_does_not_infer_uncached_prefill) ... test START cache-unknown: 3 output tokens
+test {'label': 'cache-unknown', 'usage': {'prompt_tokens': 100, 'completion_tokens': 3}, 'cached_tokens': None, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 3, 'elapsed_s': 0.00011273199925199151, 'ttft_s': 6.438099990191404e-05, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1553253.2913802573, 'decode_visible_span_tok_s': 118273.20873661347, 'generation_end_s': 9.221099935530219e-05, 'decode_http_tok_s': 71864.89541078704, 'api_output_tok_s': 26611.787424208236, 'text_events': 2, 'forced_length_passed': True}
+ok
+test_checksum_match_reuses_existing_file (test_validation.RecipeTests.test_checksum_match_reuses_existing_file) ... ok
+test_checksum_mismatch_does_not_overwrite_weights (test_validation.RecipeTests.test_checksum_mismatch_does_not_overwrite_weights) ... ok
+test_gpu_selection_excludes_3060_ti (test_validation.RecipeTests.test_gpu_selection_excludes_3060_ti) ... ok
+test_gpu_selection_requires_unique_match (test_validation.RecipeTests.test_gpu_selection_requires_unique_match) ... /usr/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 400: 'invalid'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+ok
+test_recomputes_rates_from_archived_events (test_validation.SummaryTests.test_recomputes_rates_from_archived_events) ... ok
+test_structured_tool_tokens_do_not_infer_text_decode_rate (test_validation.SummaryTests.test_structured_tool_tokens_do_not_infer_text_decode_rate) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.012s
+
+OK

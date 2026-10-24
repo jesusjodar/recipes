@@ -19,7 +19,7 @@ El script `scripts/benchmark-freetoken.py` permite repetir el protocolo sintéti
 
 No se han recuperado los archivos temporales completos originales de Gemma/GPT ni stdout completo de los benchmarks históricos de Nemotron. No se inventaron ni se reconstruyeron como si fueran originales. Los JSON originales de Nemotron sí conservan timings, tokens y resultados; sus informes complementan esos datos. Los nuevos logs de FreeToken son una serie fechada aparte.
 
-Tampoco hay mediciones completas del contexto activo máximo para Qwen/Gemma/GPT/Nemotron, ni sesiones de programación completas verificadas con todos los clientes. Ese dato no se deduce de la reserva KV. La salida de 8192 sigue siendo una política nueva de estos perfiles salvo Flint.
+Al terminar la primera publicación faltaban las mediciones de contexto activo máximo y salida de 8192 para varios modelos. La batería posterior genera esas evidencias con pruebas reales: consulta [el informe de validación](validation.md) y `evidence/logs/validation-2026-10-24/`. Los ciclos de herramienta y comprobaciones de los protocolos no constituyen un benchmark de calidad general de programación de los clientes.
 
 ## Integridad y privacidad
 

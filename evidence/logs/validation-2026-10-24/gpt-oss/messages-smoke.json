@@ -1,0 +1,35 @@
+{
+  "request": {
+    "model": "gpt-oss",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Reply with READY."
+      }
+    ],
+    "max_tokens": 256
+  },
+  "response": {
+    "id": "msg_6",
+    "type": "message",
+    "role": "assistant",
+    "content": [
+      {
+        "type": "thinking",
+        "thinking": "The user says: \"Reply with READY.\" So we should reply with \"READY\".",
+        "signature": ""
+      },
+      {
+        "type": "text",
+        "text": "READY"
+      }
+    ],
+    "model": "gpt-oss",
+    "stop_reason": "end_turn",
+    "usage": {
+      "input_tokens": 1,
+      "output_tokens": 28,
+      "cache_read_input_tokens": 70
+    }
+  }
+}

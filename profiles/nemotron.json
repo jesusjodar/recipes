@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "nemotron",
   "name": "NVIDIA Nemotron 3.5 Bolt E4B",
-  "status": "Measured: 64K capacity, short coding prompts; DFlash BF16",
+  "status": "Validated full budget: 57344 input + 8192 output; see evidence/validation-2026-10-24.json",
   "hardware": "ryzen-5600x-rtx3060",
   "engine": "llama-cpp",
   "model": {
@@ -14,7 +14,8 @@
     "file_bytes": 8192955584,
     "sha256": "6176bd788769bd58042c165d3dc8e8c86a8ca5c90d5de188a364b31dc9560810",
     "historical_weight_revision_verified": true,
-    "local_sha256_matches_pinned_hub_blob": true
+    "local_sha256_matches_pinned_hub_blob": true,
+    "validation_weight_revision_verified": true
   },
   "quantization": "Unsloth UD-Q8_K_XL GGUF (mixed)",
   "modalities": [
@@ -36,7 +37,10 @@
     "total_tokens": 65536,
     "input_budget_with_reserved_output": 57344,
     "output_tokens": 8192,
-    "output_status": "new_explicit_agent_default; measured natural completions 1242–1762 tokens"
+    "output_status": "Validated 8192 actual tokens in fixed-length throughput test; normal use respects EOS",
+    "engine_allocated_tokens": 65792,
+    "reserved_engine_tokens": 256,
+    "allocation_note": "65536 usable client tokens plus 256 internal slots for DFlash/decoder lookahead. At physical 65536, the 57344+8192 test stopped six tokens early with context shifting disabled."
   },
   "server_arguments": [
     "--device",
@@ -55,7 +59,7 @@
     "on",
     "--jinja",
     "-c",
-    "65536",
+    "65792",
     "-np",
     "1",
     "--fit",
@@ -65,7 +69,8 @@
     "--top-p",
     "0.95",
     "-n",
-    "8192"
+    "8192",
+    "--no-context-shift"
   ],
   "sampling": {
     "temperature": 1.0,
@@ -77,6 +82,9 @@
     "All target and drafter layers on the RTX 3060; no CPU expert offload.",
     "No vision projector loaded.",
     "Historical measured launcher had unlimited server default output; requests had explicit limits. Catalog adds default 8192.",
-    "64K is total slot capacity, not 64K input plus output."
-  ]
+    "64K is total slot capacity, not 64K input plus output.",
+    "Context shift explicitly disabled so capacity tests cannot silently roll the context window.",
+    "Allocate 65792 physical tokens to preserve the advertised 65536-token client budget with DFlash."
+  ],
+  "validation": "evidence/validation-2026-10-24.json"
 }

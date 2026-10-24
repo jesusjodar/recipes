@@ -1,0 +1,1 @@
+{"elapsed_s": 0.014181788999849232, "event": {"id": "chatcmpl-1", "object": "chat.completion.chunk", "created": 1792833658, "model": "qwen3.6", "choices": [{"delta": {"role": "assistant", "content": ""}, "index": 0, "finish_reason": null}]}}

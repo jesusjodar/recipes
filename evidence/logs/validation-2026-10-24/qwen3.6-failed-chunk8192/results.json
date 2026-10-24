@@ -1,0 +1,118 @@
+{
+  "model": "qwen3.6",
+  "date": "2026-10-24T09:19:54.770274+00:00",
+  "profile_sha256": "59610a4a53da429b5f6db1995e629f7c90995c226258ca20681fd5f1b5d30e53",
+  "profile": {
+    "schema_version": 1,
+    "id": "qwen3.6",
+    "name": "Qwen 3.6 35B A3B",
+    "status": "Measured: 66560 capacity; 4106 input + 200 output, three runs",
+    "hardware": "ryzen-5600x-rtx3060",
+    "engine": "desktop-wheel",
+    "model": {
+      "repository": "nvidia/Qwen3.6-35B-A3B-NVFP4",
+      "original_url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B",
+      "local_directory": "Qwen3.6-35B-A3B-NVFP4",
+      "download_revision": "1355db6a052410cfd62085d94b58866fd0f2c3c5",
+      "historical_weight_revision_verified": false,
+      "download_patterns": [
+        "*.json",
+        "*.safetensors",
+        "*.jinja",
+        "*.txt",
+        "*.model",
+        "*.tiktoken",
+        "README.md",
+        "LICENSE*"
+      ]
+    },
+    "quantization": "NVFP4 ModelOpt (mixto)",
+    "modalities": [
+      "text"
+    ],
+    "drafter": {
+      "enabled": false,
+      "model": null
+    },
+    "context": {
+      "total_tokens": 66560,
+      "input_budget_with_reserved_output": 58368,
+      "output_tokens": 8192,
+      "output_status": "new_explicit_agent_default; measured requests use 200 tokens"
+    },
+    "server_arguments": [
+      "--moe-strategy",
+      "hybrid",
+      "--moe-hybrid-max-fetch",
+      "1",
+      "--moe-cpu-threads",
+      "0",
+      "--max-running-requests",
+      "1",
+      "--text-model-only",
+      "--moe-cache-size",
+      "1024",
+      "--num-tokens",
+      "66560",
+      "--max-seq-len-override",
+      "66560",
+      "--max-output-tokens",
+      "8192",
+      "--memory-ratio",
+      "0.95",
+      "--max-prefill-length",
+      "8192",
+      "--enable-cache-report"
+    ],
+    "cache_rebuild": {
+      "moe_cache_size": 3328,
+      "num_pages": 66560,
+      "num_mamba_slots": 4
+    },
+    "desktop_cache": {
+      "kvSize": 66560,
+      "moeExperts": 3328,
+      "swaTokens": 2048,
+      "mambaSlots": 4
+    },
+    "sampling": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20
+    },
+    "environment": {},
+    "evidence": "evidence/qwen3.6.json",
+    "cache_rebuild_note": "Qwen uses GDN/recurrent state, not a sliding-window pool. Desktop swaTokens=2048 is an unused stored field and must not be sent to the rebuild API.",
+    "cache_report_note": "Enabled for validation to report actual reused prompt tokens in HTTP usage."
+  },
+  "runs": [
+    {
+      "label": "warmup",
+      "usage": {
+        "prompt_tokens": 1024,
+        "completion_tokens": 64,
+        "total_tokens": 1088
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 64,
+      "elapsed_s": 13.251130187999479,
+      "ttft_s": 11.877711826999985,
+      "prefill_effective_tok_s": null,
+      "prefill_including_cached_tok_s": 86.21189122237166,
+      "decode_http_tok_s": 45.899514021207274,
+      "api_output_tok_s": 4.829776712778797,
+      "text_events": 64,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "Here's a thinking process:\n\n1.  **Analyze User Input:**\n   - **Context:** The user provides a synthetic repository background (a Python script for installing/running local inference recipes). It's mostly boilerplate/setup code using `uv`, `subprocess`, `urllib`, etc.\n  "
+      },
+      "forced_length_passed": true
+    }
+  ],
+  "checks": [],
+  "count_adapter_offset_tokens": 0,
+  "error": "KeyboardInterrupt()"
+}

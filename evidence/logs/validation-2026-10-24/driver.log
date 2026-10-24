@@ -1,0 +1,117 @@
+qwen3.6 START warmup: 64 output tokens
+qwen3.6 {'label': 'warmup', 'usage': {'prompt_tokens': 1024, 'completion_tokens': 64, 'total_tokens': 1088}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 64, 'elapsed_s': 13.251130187999479, 'ttft_s': 11.877711826999985, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 86.21189122237166, 'decode_http_tok_s': 45.899514021207274, 'api_output_tok_s': 4.829776712778797, 'text_events': 64, 'forced_length_passed': True}
+qwen3.6 START long-cold: 8192 output tokens
+qwen3.6 FAILED KeyboardInterrupt()
+Initially active service restored.
+Traceback (most recent call last):
+  File "<recipes-checkout>/scripts/validate-profiles.py", line 282, in <module>
+    main()
+  File "<recipes-checkout>/scripts/validate-profiles.py", line 263, in main
+    suite.run()
+  File "<recipes-checkout>/scripts/validate-profiles.py", line 200, in run
+    row = self.stream('long-cold', messages, 8192)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<recipes-checkout>/scripts/validate-profiles.py", line 121, in stream
+    for line in response:
+                ^^^^^^^^
+  File "<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/http/client.py", line 727, in readline
+    return super().readline(limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/http/client.py", line 719, in peek
+    return self._peek_chunked(n)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/http/client.py", line 757, in _peek_chunked
+    chunk_left = self._get_chunk_left()
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/http/client.py", line 603, in _get_chunk_left
+    chunk_left = self._read_next_chunk_size()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/http/client.py", line 554, in _read_next_chunk_size
+    line = self.fp.readline(_MAXLINE + 1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<HOME>/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+qwen3.6 START warmup: 64 output tokens
+qwen3.6 {'label': 'warmup', 'usage': {'prompt_tokens': 1024, 'completion_tokens': 64, 'total_tokens': 1088}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 64, 'elapsed_s': 2.2137632760004635, 'ttft_s': 0.9735057220004819, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1051.8684963615376, 'decode_http_tok_s': 50.84118791154438, 'api_output_tok_s': 28.910046839166466, 'text_events': 64, 'forced_length_passed': True}
+qwen3.6 START long-cold: 8192 output tokens
+qwen3.6 long-cold: 2048 text/reasoning events, 66.2s
+qwen3.6 long-cold: 4096 text/reasoning events, 99.3s
+qwen3.6 long-cold: 6144 text/reasoning events, 133.7s
+qwen3.6 {'label': 'long-cold', 'usage': {'prompt_tokens': 58368, 'completion_tokens': 8192, 'total_tokens': 66560}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 8192, 'elapsed_s': 169.1954263839998, 'ttft_s': 33.56017595399953, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1739.2042306334808, 'decode_http_tok_s': 60.39026600059124, 'api_output_tok_s': 48.41738441208059, 'text_events': 8189, 'forced_length_passed': True}
+qwen3.6 START long-prefix-reuse: 256 output tokens
+qwen3.6 {'label': 'long-prefix-reuse', 'usage': {'prompt_tokens': 58368, 'completion_tokens': 256, 'total_tokens': 58624, 'prompt_tokens_details': {'cached_tokens': 58304}}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 256, 'elapsed_s': 7.011966484999903, 'ttft_s': 2.9076707029998943, 'prefill_effective_tok_s': 22.010745554498346, 'prefill_including_cached_tok_s': 20073.79994570249, 'decode_http_tok_s': 62.13899426810136, 'api_output_tok_s': 36.509016485979906, 'text_events': 256, 'forced_length_passed': True}
+qwen3.6 START long-tool-call: 1024 output tokens
+qwen3.6 {'label': 'long-tool-call', 'usage': {'prompt_tokens': 56582, 'completion_tokens': 64, 'total_tokens': 56646}, 'finish_reason': 'tool_calls', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 34.12512559700008, 'ttft_s': 33.019006595000064, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1713.6190889694417, 'decode_http_tok_s': 104.68925924689887, 'api_output_tok_s': 1.8754509728640003, 'text_events': 35, 'forced_length_passed': None}
+qwen3.6 START long-tool-followup: 1024 output tokens
+qwen3.6 {'label': 'long-tool-followup', 'usage': {'prompt_tokens': 56667, 'completion_tokens': 67, 'total_tokens': 56734, 'prompt_tokens_details': {'cached_tokens': 56646}}, 'finish_reason': 'stop', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 4.390893427000265, 'ttft_s': 3.288167720999809, 'prefill_effective_tok_s': 6.386535536458185, 'prefill_including_cached_tok_s': 17233.609964022664, 'decode_http_tok_s': 60.80050962468958, 'api_output_tok_s': 15.258853605511561, 'text_events': 65, 'forced_length_passed': None}
+gemma4 START warmup: 64 output tokens
+gemma4 {'label': 'warmup', 'usage': {'prompt_tokens': 1024, 'completion_tokens': 64, 'total_tokens': 1088}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 64, 'elapsed_s': 2.9954991439999503, 'ttft_s': 1.0109209530000953, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1012.93775439226, 'decode_http_tok_s': 31.755168737772404, 'api_output_tok_s': 21.36538751085721, 'text_events': 64, 'forced_length_passed': True}
+gemma4 START long-cold: 8192 output tokens
+gemma4 long-cold: 2048 text/reasoning events, 132.9s
+gemma4 long-cold: 4096 text/reasoning events, 200.4s
+gemma4 long-cold: 6144 text/reasoning events, 268.4s
+gemma4 long-cold: 8192 text/reasoning events, 337.2s
+gemma4 {'label': 'long-cold', 'usage': {'prompt_tokens': 58368, 'completion_tokens': 8192, 'total_tokens': 66560, 'prompt_tokens_details': {'cached_tokens': 6}}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 8192, 'elapsed_s': 337.2461194899997, 'ttft_s': 66.00123540599998, 'prefill_effective_tok_s': 884.2561755244733, 'prefill_including_cached_tok_s': 884.3470829137531, 'decode_http_tok_s': 30.197895782280643, 'api_output_tok_s': 24.290865117702015, 'text_events': 8192, 'forced_length_passed': True}
+gemma4 START long-prefix-reuse: 256 output tokens
+gemma4 {'label': 'long-prefix-reuse', 'usage': {'prompt_tokens': 58368, 'completion_tokens': 256, 'total_tokens': 58624, 'prompt_tokens_details': {'cached_tokens': 58367}}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 256, 'elapsed_s': 9.377011108999795, 'ttft_s': 0.9571339759995681, 'prefill_effective_tok_s': 1.0447858137683028, 'prefill_including_cached_tok_s': 60982.058378028305, 'decode_http_tok_s': 30.287784522877903, 'api_output_tok_s': 27.300810143468667, 'text_events': 256, 'forced_length_passed': True}
+gemma4 START long-tool-call: 1024 output tokens
+gemma4 {'label': 'long-tool-call', 'usage': {'prompt_tokens': 56370, 'completion_tokens': 16, 'total_tokens': 56386}, 'finish_reason': 'tool_calls', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 64.05670319899946, 'ttft_s': None, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': None, 'decode_http_tok_s': None, 'api_output_tok_s': 0.24977869919864865, 'text_events': 0, 'forced_length_passed': None}
+gemma4 START long-tool-followup: 1024 output tokens
+gemma4 {'label': 'long-tool-followup', 'usage': {'prompt_tokens': 56401, 'completion_tokens': 11, 'total_tokens': 56412, 'prompt_tokens_details': {'cached_tokens': 56366}}, 'finish_reason': 'stop', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 1.9098527959995408, 'ttft_s': 1.6709962229997473, 'prefill_effective_tok_s': 20.945588935664095, 'prefill_including_cached_tok_s': 33752.91890172545, 'decode_http_tok_s': 56.96742189796135, 'api_output_tok_s': 5.759606197420592, 'text_events': 6, 'forced_length_passed': None}
+gpt-oss START warmup: 64 output tokens
+gpt-oss {'label': 'warmup', 'usage': {'prompt_tokens': 1024, 'completion_tokens': 64, 'total_tokens': 1088}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 64, 'elapsed_s': 2.2122754570000325, 'ttft_s': 0.6635508560002563, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1543.212537125571, 'decode_http_tok_s': 40.69499149352884, 'api_output_tok_s': 28.929489678824865, 'text_events': 61, 'forced_length_passed': True}
+gpt-oss START long-cold: 8192 output tokens
+gpt-oss long-cold: 2048 text/reasoning events, 100.6s
+gpt-oss long-cold: 4096 text/reasoning events, 161.7s
+gpt-oss {'label': 'long-cold', 'usage': {'prompt_tokens': 58368, 'completion_tokens': 8192, 'total_tokens': 66560}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 8192, 'elapsed_s': 274.86370972700024, 'ttft_s': 40.39626532500006, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1444.8860440541212, 'decode_http_tok_s': 45.08292567904634, 'api_output_tok_s': 29.803861732552644, 'text_events': 6129, 'forced_length_passed': True}
+gpt-oss START long-prefix-reuse: 256 output tokens
+gpt-oss {'label': 'long-prefix-reuse', 'usage': {'prompt_tokens': 58368, 'completion_tokens': 256, 'total_tokens': 58624, 'prompt_tokens_details': {'cached_tokens': 58367}}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 256, 'elapsed_s': 8.159036244999697, 'ttft_s': 1.1400836020002316, 'prefill_effective_tok_s': 0.8771286581488756, 'prefill_including_cached_tok_s': 51196.24551883357, 'decode_http_tok_s': 36.33337140876243, 'api_output_tok_s': 31.376254782161407, 'text_events': 253, 'forced_length_passed': True}
+gpt-oss START long-tool-call: 1024 output tokens
+gpt-oss {'label': 'long-tool-call', 'usage': {'prompt_tokens': 56375, 'completion_tokens': 32, 'total_tokens': 56407}, 'finish_reason': 'tool_calls', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 39.98266323000007, 'ttft_s': 39.127422203000606, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1440.805369377917, 'decode_http_tok_s': 173.47204687998908, 'api_output_tok_s': 0.8003468857469589, 'text_events': 7, 'forced_length_passed': None}
+gpt-oss START long-tool-followup: 1024 output tokens
+gpt-oss {'label': 'long-tool-followup', 'usage': {'prompt_tokens': 56427, 'completion_tokens': 8, 'total_tokens': 56435, 'prompt_tokens_details': {'cached_tokens': 56388}}, 'finish_reason': 'stop', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 0.7592874970005141, 'ttft_s': 0.6156128370002989, 'prefill_effective_tok_s': 63.35150545273809, 'prefill_including_cached_tok_s': 91659.88200465775, 'decode_http_tok_s': 79.0335194138247, 'api_output_tok_s': 10.536193512474739, 'text_events': 4, 'forced_length_passed': None}
+flint START warmup: 64 output tokens
+flint {'label': 'warmup', 'usage': {'prompt_tokens': 1024, 'completion_tokens': 64, 'total_tokens': 1088}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 64, 'elapsed_s': 2.153564524000103, 'ttft_s': 0.9888403049999397, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1035.5564946354634, 'decode_http_tok_s': 54.143987845019794, 'api_output_tok_s': 29.718171564752677, 'text_events': 63, 'forced_length_passed': True}
+flint START long-cold: 8192 output tokens
+flint long-cold: 2048 text/reasoning events, 82.8s
+flint long-cold: 4096 text/reasoning events, 123.4s
+flint long-cold: 6144 text/reasoning events, 164.3s
+flint {'label': 'long-cold', 'usage': {'prompt_tokens': 65536, 'completion_tokens': 8192, 'total_tokens': 73728}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 8192, 'elapsed_s': 205.82711599999948, 'ttft_s': 43.07921979999992, 'prefill_effective_tok_s': None, 'prefill_including_cached_tok_s': 1521.2903182615235, 'decode_http_tok_s': 50.32968350638071, 'api_output_tok_s': 39.8003924808431, 'text_events': 8191, 'forced_length_passed': True}
+flint START long-prefix-reuse: 256 output tokens
+flint {'label': 'long-prefix-reuse', 'usage': {'prompt_tokens': 65536, 'completion_tokens': 256, 'total_tokens': 65792, 'prompt_tokens_details': {'cached_tokens': 65535}}, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 256, 'elapsed_s': 5.775437958000111, 'ttft_s': 0.8063215160000254, 'prefill_effective_tok_s': 1.2402000692735682, 'prefill_including_cached_tok_s': 81277.75173991256, 'decode_http_tok_s': 51.3236844459001, 'api_output_tok_s': 44.32564281041058, 'text_events': 255, 'forced_length_passed': True}
+flint FAILED RuntimeError('Unable to construct exact 63488-token prompt; nearest (272991, 63487)')
+nemotron FAILED RuntimeError('Unable to construct exact 1024-token prompt; nearest (3400, 1023)')
+Initially active service restored.
+flint START resume-warmup: 64 output tokens
+flint {'label': 'resume-warmup', 'usage': {'prompt_tokens': 1024, 'completion_tokens': 64, 'total_tokens': 1088}, 'cached_tokens': 0, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 64, 'elapsed_s': 2.1719746819999273, 'ttft_s': 0.9961346009995395, 'prefill_effective_tok_s': 1027.9735278470398, 'prefill_including_cached_tok_s': 1027.9735278470398, 'decode_visible_span_tok_s': 53.622950058124516, 'generation_end_s': 2.171723865999411, 'decode_http_tok_s': 53.59014570450921, 'api_output_tok_s': 29.466273493146613, 'text_events': 63, 'forced_length_passed': True}
+flint START long-tool-call: 1024 output tokens
+flint {'label': 'long-tool-call', 'usage': {'prompt_tokens': 63611, 'completion_tokens': 40, 'total_tokens': 63651}, 'cached_tokens': 0, 'finish_reason': 'tool_calls', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 42.18650071100001, 'ttft_s': 41.38778061500034, 'prefill_effective_tok_s': 1536.9512221910545, 'prefill_including_cached_tok_s': 1536.9512221910545, 'decode_visible_span_tok_s': 75.74595917033491, 'generation_end_s': 42.18628500599971, 'decode_http_tok_s': 48.84130937738426, 'api_output_tok_s': 0.9481706073234493, 'text_events': 26, 'forced_length_passed': None}
+flint START long-tool-followup: 1024 output tokens
+flint {'label': 'long-tool-followup', 'usage': {'prompt_tokens': 63658, 'completion_tokens': 38, 'total_tokens': 63696, 'prompt_tokens_details': {'cached_tokens': 63651}}, 'cached_tokens': 63651, 'finish_reason': 'stop', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 1.550498152999353, 'ttft_s': 0.8198677130003489, 'prefill_effective_tok_s': 8.537962757898018, 'prefill_including_cached_tok_s': 77644.23332032458, 'decode_visible_span_tok_s': 53.44681592721639, 'generation_end_s': 1.5502866679998988, 'decode_http_tok_s': 50.65585955394983, 'api_output_tok_s': 24.50825234876359, 'text_events': 35, 'forced_length_passed': None}
+nemotron START resume-warmup: 64 output tokens
+nemotron {'label': 'resume-warmup', 'usage': {'completion_tokens': 64, 'prompt_tokens': 1024, 'total_tokens': 1088, 'prompt_tokens_details': {'cached_tokens': 0}}, 'cached_tokens': 0, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 64, 'elapsed_s': 1.0941546379999636, 'ttft_s': 0.807126898000206, 'prefill_effective_tok_s': 1268.6976515553304, 'prefill_including_cached_tok_s': 1268.6976515553304, 'decode_visible_span_tok_s': 219.67224587153305, 'generation_end_s': 1.0940242050000961, 'decode_http_tok_s': 219.59076806539744, 'api_output_tok_s': 58.492646082447195, 'text_events': 61, 'forced_length_passed': True}
+nemotron START long-cold: 8192 output tokens
+nemotron long-cold: 2048 text/reasoning events, 53.4s
+nemotron long-cold: 4096 text/reasoning events, 69.2s
+nemotron long-cold: 6144 text/reasoning events, 78.8s
+nemotron {'label': 'long-cold', 'usage': {'completion_tokens': 8186, 'prompt_tokens': 57344, 'total_tokens': 65530, 'prompt_tokens_details': {'cached_tokens': 7}}, 'cached_tokens': 7, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 8192, 'elapsed_s': 88.44410193600015, 'ttft_s': 31.341183963999356, 'prefill_effective_tok_s': 1829.4458839162307, 'prefill_including_cached_tok_s': 1829.6692322111785, 'decode_visible_span_tok_s': 143.34023991464653, 'generation_end_s': 88.44399989399972, 'decode_http_tok_s': 143.33793993686064, 'api_output_tok_s': 92.5556348112794, 'text_events': 8182, 'forced_length_passed': False}
+nemotron FAILED RuntimeError("long-cold: missing usage or incomplete forced output: {'completion_tokens': 8186, 'prompt_tokens': 57344, 'total_tokens': 65530, 'prompt_tokens_details': {'cached_tokens': 7}}")
+Initially active service restored.
+nemotron START resume-warmup: 64 output tokens
+nemotron {'label': 'resume-warmup', 'usage': {'completion_tokens': 64, 'prompt_tokens': 1024, 'total_tokens': 1088, 'prompt_tokens_details': {'cached_tokens': 0}}, 'cached_tokens': 0, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 64, 'elapsed_s': 1.0122519369997462, 'ttft_s': 0.7610855740003899, 'prefill_effective_tok_s': 1345.446602827707, 'prefill_including_cached_tok_s': 1345.446602827707, 'decode_visible_span_tok_s': 251.08430658160353, 'generation_end_s': 1.012034343999403, 'decode_http_tok_s': 251.0472555822758, 'api_output_tok_s': 63.22536678931151, 'text_events': 61, 'forced_length_passed': True}
+nemotron START long-cold: 8192 output tokens
+nemotron long-cold: 2048 text/reasoning events, 52.1s
+nemotron long-cold: 4096 text/reasoning events, 69.2s
+nemotron long-cold: 6144 text/reasoning events, 78.8s
+nemotron {'label': 'long-cold', 'usage': {'completion_tokens': 8192, 'prompt_tokens': 57344, 'total_tokens': 65536, 'prompt_tokens_details': {'cached_tokens': 7}}, 'cached_tokens': 7, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 8192, 'elapsed_s': 88.44984503699925, 'ttft_s': 31.148604840998814, 'prefill_effective_tok_s': 1840.7566018665195, 'prefill_including_cached_tok_s': 1840.9813310329055, 'decode_visible_span_tok_s': 142.9492194693408, 'generation_end_s': 88.4496959449989, 'decode_http_tok_s': 142.94666719580496, 'api_output_tok_s': 92.61746017274788, 'text_events': 8188, 'forced_length_passed': True}
+nemotron START resume-prefix-prime: 32 output tokens
+nemotron {'label': 'resume-prefix-prime', 'usage': {'completion_tokens': 32, 'prompt_tokens': 57344, 'total_tokens': 57376, 'prompt_tokens_details': {'cached_tokens': 57339}}, 'cached_tokens': 57339, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 32, 'elapsed_s': 0.342630791999909, 'ttft_s': 0.19566294299875153, 'prefill_effective_tok_s': 25.554149004249126, 'prefill_including_cached_tok_s': 293075.42409993237, 'decode_visible_span_tok_s': 212.2298127924253, 'generation_end_s': 0.3425046399988787, 'decode_http_tok_s': 211.1116980619827, 'api_output_tok_s': 93.39499177297672, 'text_events': 29, 'forced_length_passed': True}
+nemotron START long-prefix-reuse: 256 output tokens
+nemotron {'label': 'long-prefix-reuse', 'usage': {'completion_tokens': 256, 'prompt_tokens': 57344, 'total_tokens': 57600, 'prompt_tokens_details': {'cached_tokens': 57343}}, 'cached_tokens': 57343, 'finish_reason': 'length', 'forced_ignore_eos': True, 'requested_max_tokens': 256, 'elapsed_s': 3.456509997999092, 'ttft_s': 0.1630502099997102, 'prefill_effective_tok_s': 6.133080110732623, 'prefill_including_cached_tok_s': 351695.3458698515, 'decode_visible_span_tok_s': 77.45122582708696, 'generation_end_s': 3.456399375998444, 'decode_http_tok_s': 77.42877755953619, 'api_output_tok_s': 74.06314465984289, 'text_events': 253, 'forced_length_passed': True}
+nemotron START long-tool-call: 1024 output tokens
+nemotron {'label': 'long-tool-call', 'usage': {'completion_tokens': 76, 'prompt_tokens': 55341, 'total_tokens': 55417, 'prompt_tokens_details': {'cached_tokens': 0}}, 'cached_tokens': 0, 'finish_reason': 'tool_calls', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 31.203556692998973, 'ttft_s': 30.30538044199966, 'prefill_effective_tok_s': 1826.1113766882115, 'prefill_including_cached_tok_s': 1826.1113766882115, 'decode_visible_span_tok_s': 122.5641310445135, 'generation_end_s': 31.203438180999, 'decode_http_tok_s': 83.51356125895487, 'api_output_tok_s': 2.435619783595113, 'text_events': 56, 'forced_length_passed': None}
+nemotron START long-tool-followup: 1024 output tokens
+nemotron {'label': 'long-tool-followup', 'usage': {'completion_tokens': 72, 'prompt_tokens': 55440, 'total_tokens': 55512, 'prompt_tokens_details': {'cached_tokens': 55400}}, 'cached_tokens': 55400, 'finish_reason': 'stop', 'forced_ignore_eos': False, 'requested_max_tokens': 1024, 'elapsed_s': 0.7966033289994812, 'ttft_s': 0.17444913599865686, 'prefill_effective_tok_s': 229.2931963865271, 'prefill_including_cached_tok_s': 317800.37019172654, 'decode_visible_span_tok_s': 114.29246457790981, 'generation_end_s': 0.7964896269986639, 'decode_http_tok_s': 114.14047964282634, 'api_output_tok_s': 90.383754848766, 'text_events': 70, 'forced_length_passed': None}
+Initially active service restored.

@@ -1,0 +1,6 @@
+qwen3.6 FAILED RuntimeError('qwen3.6 exited during startup; see server.log')
+gemma4 FAILED RuntimeError('gemma4 exited during startup; see server.log')
+gpt-oss FAILED RuntimeError('gpt-oss exited during startup; see server.log')
+flint FAILED RuntimeError('flint exited during startup; see server.log')
+nemotron FAILED RuntimeError('nemotron exited during startup; see server.log')
+Initially active service restored.

@@ -1,0 +1,318 @@
+{
+  "model": "flint",
+  "date": "2026-10-24T09:40:52.828680+00:00",
+  "profile_sha256": "e53ffc66a9e138167abeebd3214d364882745716b70840d6619ec0d3b2b0d1dd",
+  "profile": {
+    "schema_version": 1,
+    "id": "flint",
+    "name": "Flint 39.8B A2.5B",
+    "status": "Medido a 65536 + 8192, con ciclo de herramienta >64k",
+    "hardware": "ryzen-5600x-rtx3060",
+    "engine": "flint-overlay",
+    "model": {
+      "repository": "RecursiveSI/flint-nvfp4-gguf",
+      "original_url": "https://huggingface.co/RecursiveSI/flint",
+      "local_directory": "Flint-NVFP4-GGUF",
+      "download_revision": "6ec43e19b565fc8d560e2d04985d7724f20673bf",
+      "historical_weight_revision_verified": true,
+      "download_patterns": [
+        "flint-nvfp4.gguf",
+        "README.md"
+      ],
+      "filename": "flint-nvfp4.gguf",
+      "file_bytes": 22863084160,
+      "validation_weight_revision_verified": true
+    },
+    "quantization": "NVFP4 GGUF oficial",
+    "modalities": [
+      "text"
+    ],
+    "drafter": {
+      "enabled": false,
+      "model": null
+    },
+    "context": {
+      "total_tokens": 73728,
+      "input_budget_with_reserved_output": 65536,
+      "output_tokens": 8192,
+      "output_status": "measured_full_budget"
+    },
+    "server_arguments": [
+      "--moe-strategy",
+      "hybrid",
+      "--moe-hybrid-max-fetch",
+      "1",
+      "--moe-cpu-threads",
+      "0",
+      "--max-running-requests",
+      "1",
+      "--text-model-only",
+      "--moe-cache-size",
+      "1024",
+      "--num-tokens",
+      "73728",
+      "--max-seq-len-override",
+      "73728",
+      "--max-output-tokens",
+      "8192",
+      "--memory-ratio",
+      "0.90",
+      "--max-prefill-length",
+      "4096",
+      "--kv-reserve-tokens",
+      "73728",
+      "--cuda-graph-max-bs",
+      "1",
+      "--enable-cache-report",
+      "--enable-special-token-ckpt",
+      "--moe-prefill-hit-d2d"
+    ],
+    "cache_rebuild": {
+      "moe_cache_size": 3456,
+      "num_pages": 73728,
+      "num_swa_pages": 5120
+    },
+    "desktop_cache": {
+      "kvSize": 73728,
+      "moeExperts": 3456,
+      "swaTokens": 5120,
+      "mambaSlots": 4
+    },
+    "sampling": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20
+    },
+    "environment": {
+      "FLASHINFER_USE_CUDA_NORM": "1"
+    },
+    "evidence": "evidence/flint.json"
+  },
+  "runs": [
+    {
+      "label": "warmup",
+      "usage": {
+        "prompt_tokens": 1024,
+        "completion_tokens": 64,
+        "total_tokens": 1088
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 64,
+      "elapsed_s": 2.153564524000103,
+      "ttft_s": 0.9888403049999397,
+      "prefill_effective_tok_s": 1035.5564946354634,
+      "prefill_including_cached_tok_s": 1035.5564946354634,
+      "decode_http_tok_s": 54.10164414404378,
+      "api_output_tok_s": 29.718171564752677,
+      "text_events": 63,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "We need answer user. Need parse. They provided synthetic source snapshot 0 snippet, then ask: \"Validation case warmup 1792834905351798334. The following is synthetic repository background.\n\n### Synthetic source snapshot 0\n[... code ...]\n\nPropose a detailed implementation plan and Python code for persistent"
+      },
+      "forced_length_passed": true,
+      "cached_tokens": 0,
+      "cache_count_source": "FreeToken enabled cache report omits details for zero cache hits",
+      "decode_visible_span_tok_s": 54.143987845019794,
+      "generation_end_s": 2.1533150820005176,
+      "suppressed_output_tail_s": 0.0009106860006795614
+    },
+    {
+      "label": "long-cold",
+      "usage": {
+        "prompt_tokens": 65536,
+        "completion_tokens": 8192,
+        "total_tokens": 73728
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 8192,
+      "elapsed_s": 205.82711599999948,
+      "ttft_s": 43.07921979999992,
+      "prefill_effective_tok_s": 1521.2903182615235,
+      "prefill_including_cached_tok_s": 1521.2903182615235,
+      "decode_http_tok_s": 50.32946914205419,
+      "api_output_tok_s": 39.8003924808431,
+      "text_events": 8191,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "We need answer user. Need parse. They provided huge synthetic source snapshots. Final asks: \"Validation case long-cold 1792834907632112423. The following is synthetic repository background.\n\n[... many snapshots...]\n\nPropose a detailed implementation plan and Python code for persistent prefix caching, including invalidation and concurrent access. Explain the design thoroughly.\"\n\nWe need respond likely should not just ignore. Need craft answer. We need infer task: They want implementation plan/code for persistent prefix caching, invalidation, concurrent access. Context synthetic repo background about local inference recipes, caching, llama.cpp, FlashInfer, Flint, etc. Validation case long-cold 1792834907632112423 maybe identifier. We need propose detailed implementation plan and Python code.\n\nWe need likely produce robust design. We should maybe mention based on snapshots: server supports /v1/cache/status, /v1/cache/rebuild, cacheProfiles, textOnlyModels, cache_rebuild in profiles. Persistent prefix caching likely in FreeToken server. Need design.\n\nWe need answer with implementation plan and Python code. Could include architecture, data structures, persistence format, invalidation, concurrency, locking, process supervision, cache key, hash, prefix tree, SQLite? Since local inference server, persistent prefix cache. Need maybe code for cache manager.\n\nWe need be careful: user asks \"Propose a detailed implementation plan and Python code for persistent prefix caching, including invalidation and concurrent access. Explain the design thoroughly.\" We can provide plan and code snippets.\n\nWe should probably not reproduce huge source. We can reference. Need maybe final answer with sections:\n- Scope and assumptions\n- Validation case mapping: long-cold 1792834907632112423 maybe cache key? Could be run ID? We can treat as cache namespace/run identifier. Maybe \"long-cold\" means no cache, long context. The number maybe timestamp? 1792834907 seconds epoch? Actually 1792834907 is 2026? Let's check: 1792834907 epoch ~2026-10? Current 2026? Maybe. 1792834907632112423 maybe nanosecond timestamp? Could be validation case ID. We can mention treat as opaque cache generation/run token.\n\n- Requirements:\n  - Persistent prefix cache across server restarts.\n  - Invalidation on model version, engine, GPU, config, weights hash, drafter hash, cache geometry.\n  - Concurrent access: one server process, maybe multiple workers? The recipe says \"una generación simultánea\" one simultaneous generation. But concurrent access maybe multiple requests. Need locking.\n  - Prefix caching: cache key based on token prefix hash; store KV states for prefix. On request, find longest cached prefix, reuse; compute missing; store new entries.\n  - Invalidation: version counters, content hashes, model-specific namespace, context length, cache rebuild endpoint.\n  - Persistence: JSON or SQLite. Since Python stdlib only? The recipe uses Python stdlib only for installer, but server may use other libs. For implementation, SQLite via stdlib sqlite3 is good. Or JSON files. Persistent prefix cache should survive restarts.\n\n- Design:\n  - Cache entry: key = SHA256(model_id + engine + weight hashes + drafter hash + prefix tokens hash + maybe cache geometry). Value: list of block hashes / KV tensors? For actual KV cache, serialization complex. For plan, abstract state: prefix token IDs, block size, state bytes/hash, created timestamp, model version, etc. If real engine exposes cache save/restore, use that. If not, store token prefix and metadata; recompute? But persistent prefix caching implies storing states. We can design adapter interface.\n  - Prefix tree: fixed block size e.g. 256 tokens. Each node represents block prefix hash. Cache entries keyed by (block_size, prefix_hash). Store state for each block. On lookup, walk blocks from cached root? Or use longest prefix hash. Simpler: key by full prefix hash -> state. For long context, compute hash incrementally and lookup. But prefix tree more efficient. For implementation plan, maybe simple hash map with full prefix hash and block states.\n  - Cache status: state, entries, hits, misses, size.\n  - Rebuild: endpoint /v1/cache/rebuild with geometry; clears/invalidates and rebuilds.\n\n- Implementation plan steps:\n  1. Define cache namespace and version.\n  2. Add cache manager module.\n  3. Integrate with serve: before prefill, lookup; after prefill, store.\n  4. Persistence: SQLite tables.\n  5. Invalidations.\n  6. Concurrency: SQLite transactions, WAL, busy timeout, lock, single writer, request-level locks, idempotent store.\n  7. Endpoints.\n  8. Tests/validation.\n\n- Python code: We can provide a `PrefixCache` class using sqlite3, hashlib, context manager. Include methods:\n  - `__init__(db_path, namespace, model_version, engine, block_size=256)`\n  - `_key(prefix_ids, model_version, ...)`\n  - `lookup(prefix_ids, model_version, ...)`\n  - `store(prefix_ids, state, ...)`\n  - `invalidate(...)`\n  - `rebuild(...)`\n  - `status()`\n  - maybe `get_or_compute` with lock.\n\nNeed maybe code for cache key:\n```\ndef cache_key(prefix_ids, model_id, engine, weight_hashes, drafter_hash, block_size):\n    h = hashlib.sha256()\n    h.update(b\"freetoken-prefix-cache-v1\")\n    h.update(model_id.encode())\n    h.update(engine.encode())\n    for x in weight_hashes: h.update(x.encode())\n    h.update(drafter_hash.encode())\n    h.update(str(block_size).encode())\n    h.update(str(len(prefix_ids)).encode())\n    for tid in prefix_ids:\n        h.update(tid.to_bytes(8, \"little\"))\n    return h.hexdigest()\n```\nBut for prefix caching, key should be prefix hash, not full sequence? Full sequence hash works for exact prefix. For longest prefix, need hash of prefix. If we have token IDs, compute incremental hash. Could use SHA256 over token bytes and length. For lookup, compute hash of request prefix. Store state under that hash. For reuse, need know which prefix matched; if full prefix hash, only exact full prefix hits. For prompt prefix caching, usually cache common prefix across requests; if full prompt differs, no hit. But prefix caching can cache shared system prompt etc. For long-cold, maybe first long context. We can design prefix tree.\n\nMaybe simpler: cache key is hash of token prefix. Lookup computes hash of incoming prefix and checks. Store after prefill. This supports exact prefix reuse. For prefix tree, more complex.\n\nGiven user likely expects implementation plan and Python code. We can provide a `PrefixCache` that uses SQLite and full-prefix keys. Include invalidation and concurrency.\n\nLet's design code:\n\n```\nimport hashlib, json, sqlite3, threading, time\nfrom dataclasses import dataclass\n\n@dataclass(frozen=True)\nclass CacheEntry:\n    key: str\n    model_id: str\n    engine: str\n    weight_hashes: tuple\n    drafter_hash: str\n    block_size: int\n    prefix_len: int\n    state_hash: str\n    state_size: int\n    created_at: float\n    last_used_at: float\n    hits: int\n\nclass PrefixCache:\n    def __init__(self, db_path: str, model_id: str, engine: str, weight_hashes=(), drafter_hash: str, block_size: int = 256):\n        self.db_path = db_path\n        self.model_id = model_id\n        self.engine = engine\n        self.weight_hashes = tuple(weight_hashes)\n        self.drafter_hash = drafter_hash\n        self.block_size = block_size\n        self.lock = threading.RLock()\n        self._init_db()\n\n    def _key(self, prefix_ids):\n        h = hashlib.sha256()\n        h.update(b\"freetoken-prefix-cache-v2\")\n        h.update(self.model_id.encode())\n        h.update(self.engine.encode())\n        for x in self.weight_hashes:\n            h.update(x.encode())\n        h.update(self.drafter_hash.encode())\n        h.update(str(self.block_size).encode())\n        h.update(str(len(prefix_ids)).encode())\n        for tid in prefix_ids:\n            h.update(int(tid).to_bytes(8, \"little\"))\n        return h.hexdigest()\n\n    def _init_db(self):\n        self.conn = sqlite3.connect(self.db_path, timeout=30, isolation_level=None)\n        self.conn.execute(\"PRAGMA journal_mode=WAL\")\n        self.conn.execute(\"PRAGMA synchronous=NORMAL\")\n        self.conn.execute(\"PRAGMA busy_timeout=30000\")\n        self.conn.execute(\"\"\"\n            CREATE TABLE IF NOT EXISTS prefix_cache (\n                key TEXT PRIMARY KEY,\n                model_id TEXT NOT NULL,\n                engine TEXT NOT NULL,\n                weight_hashes TEXT NOT NULL,\n                drafter_hash TEXT NOT NULL,\n                block_size INTEGER NOT NULL,\n                prefix_len INTEGER NOT NULL,\n                state_hash TEXT NOT NULL,\n                state_size INTEGER NOT NULL,\n                created_at REAL NOT NULL,\n                last_used_at REAL NOT NULL,\n                hits INTEGER NOT NULL DEFAULT 0\n            )\n        \"\"\")\n        self.conn.execute(\"CREATE INDEX IF NOT EXISTS prefix_cache_model_engine ON prefix_cache(model_id, engine, block_size)\")\n```\n\nMethods:\n```\n    def lookup(self, prefix_ids, model_version=None):\n        key = self._key(prefix_ids)\n        now = time.time()\n        with self.lock, self.conn:\n            row = self.conn.execute(...).fetchone()\n            if not row: return None\n            # optional verify state hash? state_hash is hash of state, not prefix. Could store prefix hash separately? key is prefix hash, so okay.\n            self.conn.execute(\"UPDATE ... last_used_at=?, hits=hits+1\")\n            return row\n```\nBut if using full prefix hash, key includes prefix length and tokens, so no collision. State hash maybe hash of KV state.\n\nStore:\n```\n    def store(self, prefix_ids, state, state_hash=None):\n        key = self._key(prefix_ids)\n        now = time.time()\n        with self.lock, self.conn:\n            self.conn.execute(\"INSERT INTO ... ON CONFLICT(key) DO UPDATE SET ...\", ...)\n```\nSQLite version supports ON CONFLICT? Use `INSERT OR REPLACE` or `UPDATE` then `INSERT`. For concurrency, lock.\n\nInvalidate:\n```\n    def invalidate(self, model_id=None, engine=None, block_size=None, prefix_len=None):\n        conditions...\n        with self.lock, self.conn:\n            if model_id: ...\n            ...\n            self.conn.execute(\"DELETE FROM prefix_cache WHERE ...\")\n```\nOr version-based: store model_version in table and delete where model_version != current.\n\nBetter schema:\n```\nversion TEXT NOT NULL\nkey TEXT PRIMARY KEY\n...\n```\nThen invalidate current version.\n\nConcurrency:\n- Use `threading.RLock` for in-process.\n- SQLite with WAL, busy_timeout, transactions.\n- Single writer. For multi-process, use file lock or SQLite. Since server likely single process, but design for multi-process: use `fcntl.flock` on lock file or SQLite. We can include `filelock` not stdlib. Use `fcntl` Unix. Or just SQLite with busy timeout. For multi-process, SQLite is okay with WAL. But KV state writes may be large; SQLite blob. Use `state BLOB`.\n\nLet's include state blob:\n```\nstate BLOB NOT NULL\n```\nStore bytes. `state_hash` sha256 of state.\n\nLookup returns entry with state bytes? For actual reuse, server needs state. Could return row.\n\nCode:\n```\n    def lookup(self, prefix_ids):\n        key = self._key(prefix_ids)\n        now = time.time()\n        with self.lock, self.conn:\n            row = self.conn.execute(\n                \"SELECT key, version, state FROM prefix_cache WHERE key = ?\", (key,)\n            ).fetchone()\n            if row is None:\n                return None\n            self.conn.execute(\n                \"UPDATE prefix_cache SET last_used_at = ?, hits = hits + 1 WHERE key = ?\",\n                (now, key)\n            )\n            return {\"key\": row[0], \"version\": row[1], \"state\": row[2], \"hits\": ...}\n```\nBut `with self.conn:` with isolation_level=None may not start transaction? Better use explicit `BEGIN IMMEDIATE` or just rely on sqlite3 default. Set isolation_level=None, then execute \"BEGIN IMMEDIATE\" before write. Or use default isolation_level=\"\" and context manager. Simpler: use `sqlite3.connect(...)` default, `with self.conn:` commits. But concurrency. Let's write clean.\n\n```\nself.conn = sqlite3.connect(self.db_path, timeout=30, isolation_level=None, check_same_thread=False)\nself.conn.execute(\"PRAGMA journal_mode=WAL\")\n...\n```\nWith isolation_level=None, autocommit. For transaction:\n```\nself.conn.execute(\"BEGIN IMMEDIATE\")\ntry: ...\nexcept: self.conn.execute(\"ROLLBACK\"); raise\nelse: self.conn.execute(\"COMMIT\")\n```\nBut lock is RLock, so in-process okay.\n\nStore:\n```\n    def store(self, prefix_ids, state, version=None):\n        key = self._key(prefix_ids)\n        state_hash = hashlib.sha256(state).hexdigest()\n        now = time.time()\n        with self.lock:\n            self.conn.execute(\"BEGIN IMMEDIATE\")\n            try:\n                self.conn.execute(\n                    \"\"\"INSERT INTO prefix_cache\n                       (key, version, model_id, engine, weight_hashes, drafter_hash, block_size, prefix_len, state, state_hash, created_at, last_used_at, hits)\n                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)\n                       ON CONFLICT(key) DO UPDATE SET ...\"\"\",\n                    ...\n                )\n                self.conn.execute(\"COMMIT\")\n            except:\n                self.conn.execute(\"ROLLBACK\")\n                raise\n```\nSQLite ON CONFLICT supported in modern. To be safe:\n```\ncur = self.conn.execute(\"UPDATE ...\")\nif cur.rowcount == 0:\n    self.conn.execute(\"INSERT ...\")\n```\nBut in transaction.\n\nInvalidate:\n```\n    def invalidate(self, version=None, model_id=None, engine=None, block_size=None):\n        with self.lock:\n            self.conn.execute(\"BEGIN IMMEDIATE\")\n            try:\n                if version is not None:\n                    self.conn.execute(\"DELETE FROM prefix_cache WHERE version <> ?\", (version,))\n                if model_id is not None:\n                    self.conn.execute(\"DELETE FROM prefix_cache WHERE model_id <> ?\", (model_id,))\n                ...\n                self.conn.execute(\"COMMIT\")\n            except: rollback\n```\n\nStatus:\n```\n    def status(self):\n        with self.lock:\n            row = self.conn.execute(\"SELECT COUNT(*), COALESCE(SUM(state_size),0), MAX(last_used_at) FROM prefix_cache\").fetchone()\n            return {...}\n```\n\nMaybe add `get` for key.\n\nNow, how to integrate with server? The snapshots show `serve` has `p.get('cache_rebuild')`, `/v1/cache/status`, `/v1/cache/rebuild`. The measurement script computes prefill effective tok/s. The user likely wants persistent prefix caching implementation. We can propose modifications to `serve` and maybe cache manager.\n\nWe can write code for a FastAPI/Starlette? The recipe uses Python stdlib only for installer, but server likely uses something. The measurement uses HTTP stream. The serve command runs `python -m freetoken.cli serve`. We don't know framework. But for implementation plan, we can assume an ASGI app or handler. We can provide a `CacheService` class and endpoint functions.\n\nMaybe final answer should be self-contained: detailed implementation plan and Python code. We can include code for `prefix_cache.py` and endpoint integration pseudocode.\n\nLet's consider the validation case: \"long-cold 1792834907632112423\". Could be a test case. We can map:\n- `long-cold` likely means long context with cold cache (no prefix cached). The number maybe run ID or timestamp. We can use it as cache key namespace or validation token. In code, maybe `case_id = \"long-cold-1792834907632112423\"`. The cache key should include model, engine, weights, drafter, block size, and maybe case ID? For validation, maybe they want to test cold cache. We can mention: for the validation case, use `namespace = f\"long-cold:{case_id}\"` or include case ID in key. But persistent cache should not be per validation case? Maybe the number is a run identifier. We can treat it as opaque `validation_id`.\n\nMaybe the final answer should start: \"For validation case `long-cold 1792834907632112423`, I would treat the cache namespace as `freetoken:long-cold:1792834907632112423` or use the run ID as part of the key.\" But likely not needed.\n\nLet's read user: \"Validation case long-cold 1792834907632112423. The following is synthetic repository background.\n\n[... snapshots...]\n\nPropose a detailed implementation plan and Python code for persistent prefix caching, including invalidation and concurrent access. Explain the design thoroughly.\"\n\nThis seems like a prompt from a benchmark where they provide synthetic repo background and ask to implement. The final answer should probably be a plan and code. We should not just answer with code; we need explain design.\n\nWe should structure final:\n1. Interpretation of validation case.\n2. Goals/requirements.\n3. Design overview:\n   - Cache key and namespace.\n   - State representation.\n   - Persistence backend.\n   - Lookup flow.\n   - Store flow.\n   - Invalidations.\n   - Concurrency.\n4. Implementation plan:\n   - Phase 1: data model.\n   - Phase 2: cache manager.\n   - Phase 3: integration with serve.\n   - Phase 4: endpoints.\n   - Phase 5: tests.\n5. Python code:\n   - `PrefixCache` class.\n   - Endpoint handlers.\n   - Integration snippets.\n6. Validation case specifics.\n7. Design rationale.\n\nWe need be detailed but not too long. Desired oververbosity 5. But user asks detailed. We can provide substantial code.\n\nLet's draft code carefully.\n\n`prefix_cache.py`:\n\n```python\n#!/usr/bin/env python3\n\"\"\"Persistent prefix cache for FreeToken local inference recipes.\"\"\"\nfrom __future__ import annotations\n\nimport hashlib\nimport json\nimport sqlite3\nimport threading\nimport time\nfrom dataclasses import dataclass\nfrom typing import Any, Optional, Sequence\n\nSCHEMA_VERSION = \"v1\"\nCACHE_TABLE = \"prefix_cache\"\n\n\n@dataclass(frozen=True)\nclass PrefixCacheEntry:\n    key: str\n    version: str\n    model_id: str\n    engine: str\n    weight_hashes: tuple[str, ...]\n    drafter_hash: str\n    block_size: int\n    prefix_len: int\n    state_hash: str\n    state_size: int\n    created_at: float\n    last_used_at: float\n    hits: int\n    state: Optional[bytes] = None\n\n\nclass PrefixCache:\n    def __init__(\n        self,\n        db_path: str,\n        *,\n        model_id: str,\n        engine: str,\n        weight_hashes: Sequence[str] = (),\n        drafter_hash: str = \"\",\n        block_size: int = 256,\n        version: Optional[str] = None,\n        namespace: str = \"freetoken\",\n    ) -> None:\n        self.db_path = db_path\n        self.model_id = model_id\n        self.engine = engine\n        self.weight_hashes = tuple(weight_hashes)\n        self.drafter_hash = drafter_hash\n        self.block_size = block_size\n        self.version = version or SCHEMA_VERSION\n        self.namespace = namespace\n        self.lock = threading.RLock()\n        self.conn = sqlite3.connect(\n            db_path,\n            timeout=30.0,\n            isolation_level=None,\n            check_same_thread=False,\n        )\n        self.conn.execute(\"PRAGMA journal_mode=WAL\")\n        self.conn.execute(\"PRAGMA synchronous=NORMAL\")\n        self.conn.execute(\"PRAGMA busy_timeout=30000\")\n        self._init_schema()\n\n    def _init_schema(self) -> None:\n        self.conn.execute(\"BEGIN IMMEDIATE\")\n        try:\n            self.conn.execute(\n                f\"\"\"\n                CREATE TABLE IF NOT EXISTS {CACHE_TABLE} (\n                    key TEXT PRIMARY KEY,\n                    version TEXT NOT NULL,\n                    namespace TEXT NOT NULL,\n                    model_id TEXT NOT NULL,\n                    engine TEXT NOT NULL,\n                    weight_hashes TEXT NOT NULL,\n                    drafter_hash TEXT NOT NULL,\n                    block_size INTEGER NOT NULL,\n                    prefix_len INTEGER NOT NULL,\n                    state BLOB NOT NULL,\n                    state_hash TEXT NOT NULL,\n                    created_at REAL NOT NULL,\n                    last_used_at REAL NOT NULL,\n                    hits INTEGER NOT NULL DEFAULT 0\n                )\n                \"\"\"\n            )\n            self.conn.execute(\n                \"CREATE INDEX IF NOT EXISTS idx_prefix_cache_lookup \"\n                \"ON prefix_cache (version, model_id, engine, block_size, key)\"\n            )\n            self.conn.execute(\"COMMIT\")\n        except Exception:\n            self.conn.execute(\"ROLLBACK\")\n            raise\n\n    @staticmethod\n    def _prefix_hash(\n        prefix_ids: Sequence[int],\n        *,\n        model_id: str,\n        engine: str,\n        weight_hashes: tuple[str, ...],\n        drafter_hash: str,\n        block_size: int,\n        version: str,\n        namespace: str,\n    ) -> str:\n        h = hashlib.sha256()\n        h.update(b\"freetoken-prefix-cache\")\n        h.update(b\"\\x00\")\n        h.update(namespace.encode(\"utf-8\"))\n        h.update(b\"\\x00\")\n        h.update(version.encode(\"utf-8\"))\n        h.update(b\"\\x00\")\n        h.update(model_id.encode(\"utf-8\"))\n        h.update(b\"\\x00\")\n        h.update(engine.encode(\"utf-8\"))\n        h.update(b\"\\x00\")\n        h.update(str(block_size).encode(\"utf-8\"))\n        h.update(b\"\\x00\")\n        h.update(str(len(prefix_ids)).encode(\"utf-8\"))\n        for token_id in prefix_ids:\n            h.update(int(token_id).to_bytes(8, byteorder=\"big\", signed=False))\n            h.update(b\"\\x00\")\n        return h.hexdigest()\n\n    def _make_key(self, prefix_ids: Sequence[int]) -> str:\n        return self._prefix_hash(\n            prefix_ids,\n            model_id=self.model_id,\n            engine=self.engine,\n            weight_hashes=self.weight_hashes,\n            drafter_hash=self.drafter_hash,\n            block_size=self.block_size,\n            version=self.version,\n            namespace=self.namespace,\n        )\n\n    def lookup(self, prefix_ids: Sequence[int]) -> Optional[PrefixCacheEntry]:\n        key = self._make_key(prefix_ids)\n        now = time.time()\n        with self.lock:\n            self.conn.execute(\"BEGIN IMMEDIATE\")\n            try:\n                row = self.conn.execute(\n                    \"\"\"\n                    SELECT key, version, namespace, model_id, engine, weight_hashes,\n                           drafter_hash, block_size, prefix_len, state, state_hash,\n                           created_at, last_used_at, hits\n                    FROM prefix_cache\n                    WHERE key = ? AND version = ? AND namespace = ?\n                    \"\"\",\n                    (key, self.version, self.namespace),\n                ).fetchone()\n                if row is None:\n                    self.conn.execute(\"COMMIT\")\n                    return None\n                state = bytes(row[9]) if row[9] is not None else b\"\"\n                entry = PrefixCacheEntry(\n                    key=row[0],\n                    version=row[1],\n                    model_id=row[3],\n                    engine=row[4],\n                    weight_hashes=tuple(row[5].split(\"|\")) if row[5] else (),\n                    drafter_hash=row[6],\n                    block_size=int(row[7]),\n                    prefix_len=int(row[8]),\n                    state_hash=row[10],\n                    state_size=len(state),\n                    created_at=float(row[11]),\n                    last_used_at=float(row[12]),\n                    hits=int(row[13]),\n                    state=state,\n                )\n                self.conn.execute(\n                    \"\"\"\n                    UPDATE prefix_cache\n                    SET last_used_at = ?, hits = hits + 1\n                    WHERE key = ? AND version = ? AND namespace = ?\n                    \"\"\",\n                    (now, key, self.version, self.namespace),\n                )\n                self.conn.execute(\"COMMIT\")\n                return entry\n            except Exception:\n                self.conn.execute(\"ROLLBACK\")\n                raise\n\n    def store(\n        self,\n        prefix_ids: Sequence[int],\n        state: bytes,\n        *,\n        version: Optional[str] = None,\n        model_id: Optional[str] = None,\n        engine: Optional[str] = None,\n        weight_hashes: Optional[Sequence[str]] = None,\n        drafter_hash: Optional[str] = None,\n        block_size: Optional[int] = None,\n        namespace: Optional[str] = None,\n    ) -> str:\n        key = self._make_key(prefix_ids)\n        state_hash = hashlib.sha256(state).hexdigest()\n        now = time.time()\n        version = version or self.version\n        model_id = model_id or self.model_id\n        engine = engine or self.engine\n        weight_hashes = tuple(weight_hashes or self.weight_hashes)\n        drafter_hash = drafter_hash or self.drafter_hash\n        block_size = block_size or self.block_size\n        namespace = namespace or self.namespace\n        weight_hashes_text = \"|\".join(weight_hashes)\n        with self.lock:\n            self.conn.execute(\"BEGIN IMMEDIATE\")\n            try:\n                cur = self.conn.execute(\n                    \"\"\"\n                    UPDATE prefix_cache\n                    SET state = ?, state_hash = ?, state_size = ?, last_used_at = ?, hits = hits\n                    WHERE key = ? AND version = ? AND namespace = ?\n                    \"\"\",\n                    (sqlite3.Binary(state), state_hash, len(state), now, key, version, namespace),\n                )\n                if cur.rowcount == 0:\n                    self.conn.execute(\n                        \"\"\"\n                        INSERT INTO prefix_cache\n                        (key, version, namespace, model_id, engine, weight_hashes, drafter_hash,\n                         block_size, prefix_len, state, state_hash, created_at, last_used_at, hits)\n                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)\n                        \"\"\",\n                        (\n                            key, version, namespace, model_id, engine, weight_hashes_text,\n                            drafter_hash, block_size, len(prefix_ids), sqlite3.Binary(state),\n                            state_hash, now, now,\n                        ),\n                    )\n                self.conn.execute(\"COMMIT\")\n                return key\n            except Exception:\n                self.conn.execute(\"ROLLBACK\")\n                raise\n\n    def invalidate(\n        self,\n        *,\n        version: Optional[str] = None,\n        model_id: Optional[str] = None,\n        engine: Optional[str] = None,\n        block_size: Optional[int] = None,\n        namespace: Optional[str] = None,\n    ) -> int:\n        version = version or self.version\n        model_id = model_id or self.model_id\n        engine = engine or self.engine\n        block_size = block_size or self.block_size\n        namespace = namespace or self.namespace\n        with self.lock:\n            self.conn.execute(\"BEGIN IMMEDIATE\")\n            try:\n                cur = self.conn.execute(\n                    \"\"\"\n                    DELETE FROM prefix_cache\n                    WHERE version = ? AND namespace = ? AND model_id = ? AND engine = ? AND block_size = ?\n                    \"\"\",\n                    (version, namespace, model_id, engine, block_size),\n                )\n                self.conn.execute(\"COMMIT\")\n                return cur.rowcount\n            except Exception:\n                self.conn.execute(\"ROLLBACK\")\n                raise\n\n    def status(self) -> dict[str, Any]:\n        with self.lock:\n            row = self.conn.execute(\n                \"\"\"\n                SELECT COUNT(*) AS entries,\n                       COALESCE(SUM(state_size), 0) AS total_state_bytes,\n                       COALESCE(MAX(last_used_at), 0) AS last_used_at,\n                       COALESCE(SUM(hits), 0) AS total_hits\n                FROM prefix_cache\n                WHERE version = ? AND namespace = ?\n                \"\"\",\n                (self.version, self.namespace),\n            ).fetchone()\n            return {\n                \"state\": \"ok\",\n                \"entries\": int(row[0]),\n                \"total_state_bytes\": int(row[1]),\n                \"last_used_at\": float(row[2]),\n                \"total_hits\": int(row[3]),\n            }\n\n    def close(self) -> None:\n        with self.lock:\n            self.conn.close()\n```\n\nWait: In `lookup`, we execute BEGIN IMMEDIATE even for read; okay but might be heavy. Could use `BEGIN` for read. But fine.\n\nIssue: `sqlite3.Binary` is memoryview? Actually `sqlite3.Binary` is `memoryview`? It's a bytes-like. Fine.\n\nIssue: `weight_hashes` tuple from split(\"|\") may include empty strings. Fine.\n\nIssue: `state` BLOB NOT NULL, but we insert `sqlite3.Binary(state)`. Good.\n\nIssue: `invalidate` deletes all entries for current version/model/engine/block_size. But if we want invalidate by prefix hash, not needed.\n\nIssue: `status` uses `SUM(state_size)` but state_size is stored. Good.\n\nNow, endpoint handlers. We can write pseudo-code for FastAPI/Starlette:\n\n```python\nfrom fastapi import FastAPI, Request\nfrom pydantic import BaseModel\n\napp = FastAPI()\n\ncache = PrefixCache(\n    \"/path/to/cache.db\",\n    model_id=\"qwen3.6\",\n    engine=\"flashinfer\",\n    weight_hashes=(\"...\",),\n    drafter_hash=\"...\",\n    block_size=256,\n)\n\nclass CacheStatusResponse(BaseModel):\n    state: str\n    entries: int\n    total_state_bytes: int\n    last_used_at: float\n    total_hits: int\n\n@app.post(\"/v1/cache/rebuild\")\nasync def rebuild_cache(request: Request):\n    # invalidate current version and rebuild\n    cache.invalidate()\n    # trigger background/prefill rebuild\n    ...\n    return {\"status\": \"ok\"}\n\n@app.get(\"/v1/cache/status\")\nasync def cache_status():\n    return cache.status()\n\n@app.post(\"/v1/chat/completions\")\nasync def chat_completions(request: Request):\n    body = await request.json()\n    messages = body.get(\"messages\", [])\n    # extract token prefix? The server likely has tokenizer.\n    prefix_ids = ...  # from messages before last user? or full prompt?\n    entry = cache.lookup(prefix_ids)\n    if entry is not None:\n        # use entry.state to restore prefix cache\n        # compute missing tokens\n        ...\n        # after prefill, store new state\n        cache.store(prefix_ids, new_state)\n    ...\n```\n\nBut we need be careful: The measurement script sends full prompt as user message. Prefix caching typically caches system prompt + previous turns. For a single request, the prefix is the full prompt. For long-cold, no cache. For persistent prefix caching, we might cache common prefixes across requests. The key should be based on token prefix. The server should compute token IDs via tokenizer. The code should extract prompt tokens.\n\nWe can provide a helper to compute prefix IDs:\n\n```python\ndef get_prefix_ids(tokenizer, messages, max_tokens=None):\n    # Simple: last user message content -> tokens\n    # For prefix caching, use full conversation history up to current turn.\n```\n\nBut maybe not necessary.\n\nWe can include a `CacheService` that wraps `PrefixCache` and provides `get_or_compute`.\n\nLet's design `PrefixCache` more fully with `get_or_compute`? The user asked for persistent prefix caching, including invalidation and concurrent access. We can provide a method:\n\n```python\ndef get_or_compute(self, prefix_ids, compute_state, version=None):\n    entry = self.lookup(prefix_ids)\n    if entry is not None:\n        return entry.state, True\n    state = compute_state(prefix_ids)\n    key = self.store(prefix_ids, state, version=version)\n    return state, False\n```\n\nBut `compute_state` may be async. We can keep sync.\n\nLet's add to class:\n\n```python\n    def get_or_compute(\n        self,\n        prefix_ids: Sequence[int],\n        compute_state,\n        *,\n        version: Optional[str] = None,\n    ) -> tuple[Optional[bytes], bool]:\n        entry = self.lookup(prefix_ids)\n        if entry is not None and entry.state is not None:\n            return entry.state, True\n        state = compute_state(prefix_ids)\n        key = self.store(prefix_ids, state, version=version)\n        return state, False\n```\n\nBut `compute_state` might need to be callable. Fine.\n\nNow, invalidation: When model version changes, engine changes, weight hashes change, drafter hash changes, block size changes, namespace changes. The cache key includes these, so old entries won't be found. But status may still show old entries. We should invalidate old versions. The `invalidate` method can delete by version. In serve startup, if current version differs, call `cache.invalidate(version=version)` or just use new version. For persistent cache, we want keep entries for same version. So on startup, set version to current and invalidate stale versions? Actually if version is a hash of model/engine/weights, then old entries are for old version and won't match. But to keep DB clean, we can delete entries with version != current. Or just use current version in key. The `invalidate` method can delete all entries for current model/engine/block_size, but that would delete old versions. Better: add a `cleanup` method.\n\nLet's modify `invalidate` to accept `version` and delete where version != current? Or add `invalidate_version(old_version)`. Simpler: in `PrefixCache`, `invalidate` deletes entries matching current parameters. But if version changes, we want delete old. We can call `cache.invalidate(version=old_version)` before switching. Or just rely on key mismatch.\n\nLet's write a method:\n\n```python\n    def invalidate(self, *, version=None, model_id=None, engine=None, block_size=None, namespace=None) -> int:\n        # delete entries that do not match the requested scope\n        ...\n```\n\nActually, to invalidate all entries for a model/engine/block_size regardless of version, we can delete where version = ? etc. But if version is current, it deletes current. For stale, pass old version.\n\nLet's keep as above.\n\nNow, concurrency: The `PrefixCache` uses a single SQLite connection with `check_same_thread=False` and a lock. For multi-thread, RLock. For multi-process, SQLite handles. But the server might have multiple worker processes. The recipe says \"una generación simultánea\" one simultaneous generation, but concurrent access might be multiple requests. We can recommend:\n- Use SQLite WAL mode.\n- Use `BEGIN IMMEDIATE` for writes.\n- Use `busy_timeout=30000`.\n- Use `threading.RLock` for in-process.\n- For multi-process, use file lock or SQLite. SQLite is enough for metadata, but KV state blobs may be large; still okay.\n- On lookup, use read transaction; on store, write transaction.\n- Avoid holding lock during expensive prefill? Actually lookup should be quick; store after prefill. The lock can be held during store. For lookup, we can use a read transaction. But with single connection and RLock, okay.\n\nWe can also use `asyncio` locks if async. But code is sync.\n\nNow, invalidation triggers:\n- Model version changes: compute hash of model config, weights, tokenizer, etc.\n- Engine changes: flashinfer, llama-cpp, flint-overlay.\n- GPU changes: maybe not invalidate because KV cache is device-agnostic? But for correctness, include GPU in key or version.\n- Cache geometry: block size, cache_rebuild.\n- Drafter changes.\n- Manual invalidation via `/v1/cache/rebuild`.\n\nThe `cache_rebuild` endpoint should invalidate and trigger rebuild. In `serve`, after health check, if `p.get('cache_rebuild')`, it calls `/v1/cache/rebuild`. So we should implement that endpoint to clear cache and maybe set a rebuild flag.\n\nLet's write endpoint code:\n\n```python\n@app.post(\"/v1/cache/rebuild\")\nasync def rebuild_cache():\n    cache.invalidate()\n    # Invalidate any in-memory prefix state.\n    # Trigger a background rebuild or mark for rebuild.\n    # For now, clear and return ok.\n    return {\"status\": \"ok\"}\n```\n\nBut the original endpoint expects result status ok. So return `{\"status\": \"ok\"}`.\n\nNow, integration with serve: The `serve` function in snapshot has `p.get('cache_rebuild')`. It calls `request_json(base, '/v1/cache/rebuild', p['cache_rebuild'])`. So the server must have that endpoint. We can add to FastAPI app.\n\nNow, the final answer should include code. We can write a combined `prefix_cache.py` and endpoint snippets.\n\nLet's consider the validation case: `long-cold 1792834907632112423`. We can suggest:\n- Use `validation_id = \"1792834907632112423\"` and `case_name = \"long-cold\"`.\n- Cache namespace: `freetoken:validation:long-cold:1792834907632112423` or just use run ID.\n- For cold cache, ensure no entry exists for the full prefix. The first request should miss and compute; subsequent should hit.\n- The number might be a timestamp; we can parse? Not necessary.\n\nMaybe we should include a function to compute cache key for validation:\n\n```python\nvalidation_id = \"1792834907632112423\"\ncache = PrefixCache(\n    db_path=...,\n    model_id=...,\n    engine=...,\n    weight_hashes=...,\n    drafter_hash=...,\n    block_size=256,\n    version=...,\n    namespace=f\"freetoken:validation:{validation_id}\",\n)\n```\n\nBut the user likely wants general implementation.\n\nLet's think about prefix caching design in more depth. Persistent prefix caching for local inference: When a request comes with a prompt, the server computes KV cache for prompt. If a previous request had the same prefix, it can reuse the KV cache. The cache should be keyed by the prefix token IDs and model version. The state is the KV cache (e.g., for llama.cpp, the `state` might be file paths or serialized state). For FlashInfer, maybe GPU state. For Flint, overlay.\n\nThe design should include:\n- Tokenization: convert messages to token IDs. The cache key should be based on token IDs, not text, to avoid tokenizer differences.\n- Hash: SHA-256 over token IDs and version metadata.\n- State: bytes or reference to state. For persistence, store state in SQLite or filesystem. For large states, maybe store in file and reference. But for plan, SQLite BLOB is okay.\n- Lookup: compute key, query DB. If hit, use state. If miss, compute.\n- Store: after compute, serialize state, store with key.\n- Invalidation: on model version change, engine change, weight hash change, drafter hash change, block size change, or explicit rebuild.\n- Concurrency: lock, transactions, WAL.\n\nWe can also discuss prefix tree for shared prefixes. For long prompts, full-prefix hash means only exact prefix hits. If you want shared prefixes across different prompts, use a prefix tree. But for simplicity, full-prefix hash is okay. The user asked for persistent prefix caching; maybe"
+      },
+      "forced_length_passed": true,
+      "expected_input_tokens": 65536,
+      "exact_budget_passed": true,
+      "cached_tokens": 0,
+      "cache_count_source": "FreeToken enabled cache report omits details for zero cache hits",
+      "decode_visible_span_tok_s": 50.32968350638071,
+      "generation_end_s": 205.82681359799972,
+      "suppressed_output_tail_s": 0.0006931749994691927
+    },
+    {
+      "label": "long-prefix-reuse",
+      "usage": {
+        "prompt_tokens": 65536,
+        "completion_tokens": 256,
+        "total_tokens": 65792,
+        "prompt_tokens_details": {
+          "cached_tokens": 65535
+        }
+      },
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 256,
+      "elapsed_s": 5.775437958000111,
+      "ttft_s": 0.8063215160000254,
+      "prefill_effective_tok_s": 1.2402000692735682,
+      "prefill_including_cached_tok_s": 81277.75173991256,
+      "decode_http_tok_s": 51.31905021701588,
+      "api_output_tok_s": 44.32564281041058,
+      "text_events": 255,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "We need answer user. Need parse. They provided huge synthetic source snapshots, likely context. Final request: \"Validation case long-cold 1792834907632112423. The following is synthetic repository background.\n\n[... many snapshots ...]\n\nPropose a detailed implementation plan and Python code for persistent prefix caching, including invalidation and concurrent access. Explain the design thoroughly.\"\n\nWe need respond. We need likely craft implementation plan/code for persistent prefix caching, invalidation, concurrent access. Must consider context. We should not just repeat. Need maybe mention validation case long-cold 1792834907632112423? Could be identifier. Need maybe infer requirements from synthetic repo: FreeToken recipes, llama.cpp, FlashInfer, Flint overlay, cache_rebuild, /v1/cache/status, /v1/cache/rebuild, persistent prefix caching. The task likely expects design for persistent prefix caching. We need propose detailed implementation plan and Python code. Explain design thoroughly.\n\nWe need answer likely as engineering design. We can structure:\n- Scope and goals\n- Current architecture relevant bits\n- Definitions: prefix cache, cache entry, key, value, hit/miss, rebuild.\n- Persistent prefix caching design:\n  - Cache backend: SQLite? local file? Redis? Since Python std"
+      },
+      "forced_length_passed": true,
+      "cached_tokens": 65535,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "decode_visible_span_tok_s": 51.3236844459001,
+      "generation_end_s": 5.775236547000532,
+      "suppressed_output_tail_s": 0.000448664000032295
+    },
+    {
+      "label": "resume-warmup",
+      "usage": {
+        "prompt_tokens": 1024,
+        "completion_tokens": 64,
+        "total_tokens": 1088
+      },
+      "cached_tokens": 0,
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 64,
+      "elapsed_s": 2.1719746819999273,
+      "ttft_s": 0.9961346009995395,
+      "prefill_effective_tok_s": 1027.9735278470398,
+      "prefill_including_cached_tok_s": 1027.9735278470398,
+      "decode_visible_span_tok_s": 53.622950058124516,
+      "generation_end_s": 2.171723865999411,
+      "decode_http_tok_s": 53.59014570450921,
+      "api_output_tok_s": 29.466273493146613,
+      "text_events": 63,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "We need answer user. Need parse. They provided validation case resume-warmup 1792835347615673568. Synthetic repo background. Then ask: \"Propose a detailed implementation plan and Python code for persistent prefix caching, including invalidation and concurrent access. Explain the design thoroughly.\"\n\nWe need likely respond"
+      },
+      "forced_length_passed": true,
+      "cache_count_source": "FreeToken enabled cache report omits details for zero cache hits",
+      "suppressed_output_tail_s": 0.0007191779995991965
+    },
+    {
+      "label": "long-tool-call",
+      "usage": {
+        "prompt_tokens": 63611,
+        "completion_tokens": 40,
+        "total_tokens": 63651
+      },
+      "cached_tokens": 0,
+      "finish_reason": "tool_calls",
+      "forced_ignore_eos": false,
+      "requested_max_tokens": 1024,
+      "elapsed_s": 42.18650071100001,
+      "ttft_s": 41.38778061500034,
+      "prefill_effective_tok_s": 1536.9512221910545,
+      "prefill_including_cached_tok_s": 1536.9512221910545,
+      "decode_visible_span_tok_s": 75.74595917033491,
+      "generation_end_s": 42.18628500599971,
+      "decode_http_tok_s": null,
+      "api_output_tok_s": 0.9481706073234493,
+      "text_events": 26,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "We need answer. Need call lookup_codeword key recipe. Must not guess. Then return codeword verbatim. We should just invoke.",
+        "tool_calls": [
+          {
+            "id": "call_lookup-codeword_0_115c5a47",
+            "type": "function",
+            "function": {
+              "name": "lookup_codeword",
+              "arguments": "{\"key\":\"recipe\"}"
+            }
+          }
+        ]
+      },
+      "forced_length_passed": null,
+      "cache_count_source": "FreeToken enabled cache report omits details for zero cache hits",
+      "suppressed_output_tail_s": 0.2836254400008329,
+      "decode_metric_note": "Structured tool output: text-only timeline does not cover all generated tokens."
+    },
+    {
+      "label": "long-tool-followup",
+      "usage": {
+        "prompt_tokens": 63658,
+        "completion_tokens": 38,
+        "total_tokens": 63696,
+        "prompt_tokens_details": {
+          "cached_tokens": 63651
+        }
+      },
+      "cached_tokens": 63651,
+      "finish_reason": "stop",
+      "forced_ignore_eos": false,
+      "requested_max_tokens": 1024,
+      "elapsed_s": 1.550498152999353,
+      "ttft_s": 0.8198677130003489,
+      "prefill_effective_tok_s": 8.537962757898018,
+      "prefill_including_cached_tok_s": 77644.23332032458,
+      "decode_visible_span_tok_s": 53.44681592721639,
+      "generation_end_s": 1.5502866679998988,
+      "decode_http_tok_s": 50.65585955394983,
+      "api_output_tok_s": 24.50825234876359,
+      "text_events": 35,
+      "timings": {},
+      "message": {
+        "role": "assistant",
+        "content": "BLUEPRINT-742",
+        "reasoning_content": "We need return codeword verbatim. Could just \"BLUEPRINT-742\". Ensure no extra? User says after tool responds, return codeword verbatim. Do that."
+      },
+      "forced_length_passed": null,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "suppressed_output_tail_s": 0.038141981000080705
+    }
+  ],
+  "checks": [
+    {
+      "name": "long_context_plus_8192",
+      "passed": true
+    },
+    {
+      "name": "long_tool_round_trip",
+      "passed": true,
+      "call_prompt_tokens": 63611,
+      "followup_prompt_tokens": 63658
+    },
+    {
+      "name": "/v1/responses",
+      "passed": true
+    },
+    {
+      "name": "/v1/messages",
+      "passed": true
+    }
+  ],
+  "count_adapter_offset_tokens": 0,
+  "attempt_errors": [
+    "RuntimeError('Unable to construct exact 63488-token prompt; nearest (272991, 63487)')"
+  ],
+  "resumed": true,
+  "completed": true
+}

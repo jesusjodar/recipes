@@ -1,0 +1,90 @@
+{
+  "model": "gemma4",
+  "date": "2026-10-24T09:16:04.874981+00:00",
+  "profile_sha256": "9b05573aede1afa0017c54300268acf65f9bbfab7f1e635cccf34cee42b412f5",
+  "profile": {
+    "schema_version": 1,
+    "id": "gemma4",
+    "name": "Gemma 4 26B A4B",
+    "status": "Measured 2026-10-24: three ~4K input + 200 output requests; complete logs",
+    "hardware": "ryzen-5600x-rtx3060",
+    "engine": "desktop-wheel",
+    "model": {
+      "repository": "nvidia/Gemma-4-26B-A4B-NVFP4",
+      "original_url": "https://huggingface.co/google/gemma-4-26B-A4B-it",
+      "local_directory": "Gemma-4-26B-A4B-NVFP4",
+      "download_revision": "a19cfe00be84568a6867111c9a68c9c44fdcffe6",
+      "historical_weight_revision_verified": false,
+      "download_patterns": [
+        "*.json",
+        "*.safetensors",
+        "*.jinja",
+        "*.txt",
+        "*.model",
+        "*.tiktoken",
+        "README.md",
+        "LICENSE*"
+      ]
+    },
+    "quantization": "NVFP4 ModelOpt (mixto)",
+    "modalities": [
+      "text"
+    ],
+    "drafter": {
+      "enabled": false,
+      "model": null
+    },
+    "context": {
+      "total_tokens": 66560,
+      "input_budget_with_reserved_output": 58368,
+      "output_tokens": 8192,
+      "output_status": "new_explicit_agent_default; historical_measurement_used_200_tokens"
+    },
+    "server_arguments": [
+      "--moe-strategy",
+      "hybrid",
+      "--moe-hybrid-max-fetch",
+      "1",
+      "--moe-cpu-threads",
+      "0",
+      "--max-running-requests",
+      "1",
+      "--text-model-only",
+      "--moe-cache-size",
+      "448",
+      "--num-tokens",
+      "66560",
+      "--max-seq-len-override",
+      "66560",
+      "--max-output-tokens",
+      "8192",
+      "--memory-ratio",
+      "0.95",
+      "--max-prefill-length",
+      "1024",
+      "--mm-disable",
+      "vision",
+      "audio",
+      "--enable-cache-report"
+    ],
+    "cache_rebuild": null,
+    "desktop_cache": {
+      "kvSize": 66560,
+      "moeExperts": 448,
+      "swaTokens": 1024,
+      "mambaSlots": 4
+    },
+    "sampling": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 64
+    },
+    "environment": {},
+    "evidence": "evidence/gemma4.json",
+    "prefill_note": "2026-10-24: 8192 ceiling OOMed on a 4109-token request with 66560 context capacity and 448 experts. Lowered to 1024; see preserved failure log and new benchmark.",
+    "cache_report_note": "Enabled for validation to report actual reused prompt tokens in HTTP usage."
+  },
+  "runs": [],
+  "checks": [],
+  "error": "RuntimeError('gemma4 exited during startup; see server.log')"
+}

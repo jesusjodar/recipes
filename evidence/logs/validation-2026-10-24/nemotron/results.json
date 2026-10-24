@@ -1,0 +1,574 @@
+{
+  "model": "nemotron",
+  "date": "2026-10-24T09:46:03.141472+00:00",
+  "profile_sha256": "5cc85b55cc40c15dfc614bdc1335b3c19c54bde5644722ab1c03f44e4d67f1d7",
+  "profile": {
+    "schema_version": 1,
+    "id": "nemotron",
+    "name": "NVIDIA Nemotron 3.5 Bolt E4B",
+    "status": "Measured: 64K capacity, short coding prompts; DFlash BF16",
+    "hardware": "ryzen-5600x-rtx3060",
+    "engine": "llama-cpp",
+    "model": {
+      "repository": "unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF",
+      "original_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
+      "local_directory": "Nemotron-3.5-Bolt-E4B",
+      "filename": "NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf",
+      "download_revision": "b738967d6da3441a7d1c71fcec15e49e32e16ecd",
+      "file_bytes": 8192955584,
+      "sha256": "6176bd788769bd58042c165d3dc8e8c86a8ca5c90d5de188a364b31dc9560810",
+      "historical_weight_revision_verified": true,
+      "local_sha256_matches_pinned_hub_blob": true,
+      "validation_weight_revision_verified": true
+    },
+    "quantization": "Unsloth UD-Q8_K_XL GGUF (mixed)",
+    "modalities": [
+      "text"
+    ],
+    "drafter": {
+      "enabled": true,
+      "type": "draft-dflash",
+      "repository": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash",
+      "download_revision": "0949a2eb7152ec6fda1a91ff9302aecbcd464fbf",
+      "filename": "Nemotron-3.5-Bolt-E4B-DFlash-BF16.gguf",
+      "legacy_local_filename": "dflash-nvidia-BF16.gguf",
+      "file_bytes": 736812096,
+      "sha256": "8103aa42fd31fb661c3fbe8701d04d698ea2c5d09351dc3e8c9da639958de989",
+      "quantization": "BF16 GGUF",
+      "max_draft_tokens": 7
+    },
+    "context": {
+      "total_tokens": 65536,
+      "input_budget_with_reserved_output": 57344,
+      "output_tokens": 8192,
+      "output_status": "new_explicit_agent_default; measured natural completions 1242–1762 tokens",
+      "engine_allocated_tokens": 65792,
+      "reserved_engine_tokens": 256,
+      "allocation_note": "65536 usable client tokens plus 256 internal slots for DFlash/decoder lookahead. At physical 65536, the 57344+8192 test stopped six tokens early with context shifting disabled."
+    },
+    "server_arguments": [
+      "--device",
+      "CUDA0",
+      "--spec-draft-device",
+      "CUDA0",
+      "--spec-type",
+      "draft-dflash",
+      "--spec-draft-n-max",
+      "7",
+      "--spec-draft-ngl",
+      "99",
+      "-ngl",
+      "99",
+      "-fa",
+      "on",
+      "--jinja",
+      "-c",
+      "65792",
+      "-np",
+      "1",
+      "--fit",
+      "off",
+      "--temp",
+      "1.0",
+      "--top-p",
+      "0.95",
+      "-n",
+      "8192",
+      "--no-context-shift"
+    ],
+    "sampling": {
+      "temperature": 1.0,
+      "top_p": 0.95
+    },
+    "cache_rebuild": null,
+    "evidence": "evidence/nemotron.json",
+    "notes": [
+      "All target and drafter layers on the RTX 3060; no CPU expert offload.",
+      "No vision projector loaded.",
+      "Historical measured launcher had unlimited server default output; requests had explicit limits. Catalog adds default 8192.",
+      "64K is total slot capacity, not 64K input plus output.",
+      "Context shift explicitly disabled so capacity tests cannot silently roll the context window.",
+      "Allocate 65792 physical tokens to preserve the advertised 65536-token client budget with DFlash."
+    ]
+  },
+  "runs": [
+    {
+      "label": "long-cold-attempt-1",
+      "usage": {
+        "completion_tokens": 8186,
+        "prompt_tokens": 57344,
+        "total_tokens": 65530,
+        "prompt_tokens_details": {
+          "cached_tokens": 7
+        }
+      },
+      "cached_tokens": 7,
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 8192,
+      "elapsed_s": 88.44410193600015,
+      "ttft_s": 31.341183963999356,
+      "prefill_effective_tok_s": 1829.4458839162307,
+      "prefill_including_cached_tok_s": 1829.6692322111785,
+      "decode_visible_span_tok_s": 143.34023991464653,
+      "generation_end_s": 88.44399989399972,
+      "decode_http_tok_s": 143.33793993686064,
+      "api_output_tok_s": 92.5556348112794,
+      "text_events": 8182,
+      "timings": {
+        "cache_n": 7,
+        "prompt_n": 57337,
+        "prompt_ms": 31199.446,
+        "prompt_per_token_ms": 0.5441415839684671,
+        "prompt_per_second": 1837.7569909414417,
+        "predicted_n": 8186,
+        "predicted_ms": 57140.454,
+        "predicted_per_token_ms": 6.98111838729383,
+        "predicted_per_second": 143.2435241064063,
+        "draft_n": 10863,
+        "draft_n_accepted": 6639
+      },
+      "message": {
+        "role": "assistant",
+        "content": "This request requires designing a robust caching layer that operates outside the immediate scope of the provided recipe scripts, likely integrated into the `freetoken.cli.serve` logic (the non-llama-cpp path).\n\n## 🧠 Design Explanation: Persistent Prefix Caching\n\nThe core challenge is balancing **persistence** (data survives restarts), **concurrency** (multiple requests/threads access it simultaneously), and **freshness** (cache must be invalidated when the model changes).\n\n### 1. Persistence Layer\n*   **Mechanism:** Use a dedicated directory structure (`.freetoken/cache/{model_id}/`) on disk.\n*   **Data Format:** Store cached prefixes (e.g., `prefix_hash.json`) containing the generated tokens, metadata (timestamp, model revision), and usage statistics.\n*   **Metadata:** A central manifest file (e.g., `cache_manifest.json`) tracks which prefixes exist for a given model and their associated metadata.\n\n### 2. Concurrency Control\n*   **Mechanism:** Use **File Locking** (e.g., `fcntl` on Unix, or `msvcrt` on Windows) when reading/writing the central `cache_manifest.json` or when writing a new prefix file. This prevents race conditions where two processes try to update the manifest simultaneously.\n*   **Read Optimization:** Reads of individual prefix files should be lock-free, as long as the file itself is immutable once written.\n\n### 3. Invalidation Strategy\n*   **Trigger:** The cache must be invalidated if the model weights or configuration change.\n*   **Mechanism:** The model profile (`p` in `recipes.py`) contains `p['model']['repository']` and `p['model']['download_revision']`. The cache key should be derived from a combination of the **Model ID** and the **Download Revision/SHA256**.\n*   **Implementation:** When `serve` starts, it checks the current model revision against the revision stored in the cache manifest. If they mismatch, the cache is considered stale and must be rebuilt (`cache_rebuild` logic).\n\n---\n\n## 🛠️ Implementation Plan (Conceptual Python Class)\n\nWe will encapsulate the logic in a `PrefixCacheManager` class.\n\n1.  **Initialization:** Determine the cache path based on `model_id` and `revision`.\n2.  **Load Manifest:** Load the central manifest file, ensuring exclusive lock during read/write.\n3.  **Check Freshness:** Compare the current model revision (from the profile) with the revision stored in the manifest.\n4.  **Lookup:** Given a prefix hash, check the manifest for the file path.\n5.  **Store:** Write the generated prefix data to a unique file, then update the manifest (under lock).\n6.  **Invalidate/Rebuild:** If freshness check fails, clear the manifest and force a rebuild.\n\n## 🐍 Python Code Example\n\nThis example uses standard Python libraries (`pathlib`, `json`, `threading` for conceptual locking, and assumes a platform-specific file locking mechanism would be used in production).\n\n```python\nimport json\nimport os\nimport hashlib\nfrom pathlib import Path\nimport threading\nimport time\nfrom typing import Dict, Optional\n\n# --- Mocking a robust file locking mechanism ---\n# In a real application, use fcntl (Linux/Unix) or msvcrt (Windows)\nclass FileLock:\n    def __init__(self, path):\n        self.path = path\n        self.lock = threading.Lock() # Using threading.Lock for conceptual demonstration\n    \n    def acquire(self, timeout=5):\n        return self.lock.acquire(timeout=timeout)\n    \n    def release(self):\n        self.lock.release()\n\nclass PrefixCacheManager:\n    \"\"\"Manages persistent, concurrent, and validated prefix caching.\"\"\"\n\n    def __init__(self, model_id: str, model_revision: str, base_cache_dir: Path):\n        self.model_id = model_id\n        self.model_revision = model_revision\n        self.cache_dir = base_cache_dir / model_id\n        self.manifest_path = self.cache_dir / 'cache_manifest.json'\n        self.lock = FileLock(self.manifest_path)\n        self.manifest: Dict[str, Dict] = {}\n        self._initialize_cache()\n\n    def _initialize_cache(self):\n        \"\"\"Ensures directory exists and loads manifest safely.\"\"\"\n        self.cache_dir.mkdir(parents=True, exist_ok=True)\n        \n        # Attempt to load manifest under lock\n        if self.lock.acquire(timeout=1):\n            try:\n                if self.manifest_path.exists():\n                    self.manifest = self._load_manifest()\n                else:\n                    self.manifest = {}\n            except Exception as e:\n                print(f\"Warning: Could not load manifest. Starting fresh. Error: {e}\")\n                self.manifest = {}\n            finally:\n                self.lock.release()\n        else:\n            # If lock fails, wait or handle contention (e.g., retry)\n            print(\"Warning: Could not acquire lock during initialization. Manifest might be inconsistent.\")\n            self.manifest = {}\n\n    def _load_manifest(self) -> Dict:\n        \"\"\"Internal helper to read the manifest file.\"\"\"\n        return json.loads(self.manifest_path.read_text())\n\n    def _save_manifest(self):\n        \"\"\"Internal helper to write the manifest file (must be called under lock).\"\"\"\n        with open(self.manifest_path, 'w') as f:\n            json.dump(self.manifest, f, indent=2)\n\n    def check_freshness(self) -> bool:\n        \"\"\"Validates if the current cache is valid for the current model revision.\"\"\"\n        # In a real system, we would store the revision in the manifest itself.\n        # For simplicity, we assume the manifest only exists if the model was previously served.\n        # A more robust check would involve reading a revision tag from the cache_dir.\n        return True # Placeholder: Assume fresh unless explicit invalidation occurs\n\n    def get_prefix_path(self, prefix_hash: str) -> Optional[Path]:\n        \"\"\"Retrieves the file path for a given prefix hash.\"\"\"\n        if prefix_hash in self.manifest:\n            return self.cache_dir / f\"{prefix_hash}.json\"\n        return None\n\n    def store_prefix(self, prefix_hash: str, prefix_data: Dict):\n        \"\"\"Stores a new prefix and updates the manifest (thread-safe).\"\"\"\n        if self.lock.acquire(timeout=5):\n            try:\n                if prefix_hash not in self.manifest:\n                    # 1. Write the immutable data file\n                    file_path = self.cache_dir / f\"{prefix_hash}.json\"\n                    with open(file_path, 'w') as f:\n                        json.dump(prefix_data, f, indent=2)\n                    \n                    # 2. Update the manifest\n                    self.manifest[prefix_hash] = {\n                        'revision': self.model_revision,\n                        'timestamp': time.time(),\n                        'file': str(file_path)\n                    }\n                    # 3. Save the manifest\n                    self._save_manifest()\n                    print(f\"Cache stored successfully for hash: {prefix_hash}\")\n                else:\n                    print(f\"Prefix {prefix_hash} already exists.\")\n            finally:\n                self.lock.release()\n        else:\n            raise RuntimeError(\"Failed to acquire cache lock during write operation.\")\n\n    def invalidate_cache(self):\n        \"\"\"Clears the entire cache for this model ID.\"\"\"\n        if self.lock.acquire(timeout=5):\n            try:\n                print(f\"Invalidating cache for model {self.model_id}...\")\n                self.manifest = {}\n                # Optionally delete all files in self.cache_dir\n                for item in self.cache_dir.glob(\"*.json\"):\n                    item.unlink()\n                self._save_manifest()\n                print(\"Cache successfully invalidated.\")\n            finally:\n                self.lock.release()\n\n# --- Usage Example ---\nif __name__ == '__main__':\n    # Setup environment\n    BASE_CACHE = Path(\"./test_cache\")\n    MODEL_ID = \"qwen3.6\"\n    # Simulate model revision change\n    REVISION_V1 = \"abc1234\"\n    REVISION_V2 = \"def5678\"\n    \n    # 1. Initialize Cache Manager (V1)\n    cache_v1 = PrefixCacheManager(MODEL_ID, REVISION_V1, BASE_CACHE)\n    \n    # 2. Simulate storing a prefix\n    prefix_hash_A = hashlib.sha256(b\"test_prefix_A\").hexdigest()\n    prefix_data_A = {\"tokens\": [\"token1\", \"token2\"], \"usage\": 10}\n    cache_v1.store_prefix(prefix_hash_A, prefix_data_A)\n    \n    # 3. Simulate retrieval\n    path_A = cache_v1.get_prefix_path(prefix_hash_A)\n    print(f\"\\nFound prefix A at: {path_A}\")\n    \n    # 4. Simulate model update and invalidation\n    print(\"\\n--- Simulating Model Update ---\")\n    cache_v1.invalidate_cache()\n    \n    # 5. Initialize Cache Manager (V2)\n    cache_v2 = PrefixCacheManager(MODEL_ID, REVISION_V2, BASE_CACHE)\n    \n    # 6. Check if old prefix is gone (it should be, as the manifest was cleared)\n    path_A_v2 = cache_v2.get_prefix_path(prefix_hash_A)\n    print(f\"Found prefix A after invalidation: {path_A_v2}\") # Should be None\n```\n\n## ✅ Summary of Design Principles\n\n| Feature | Implementation | Benefit |\n| :--- | :--- | :--- |\n| **Persistence** | Dedicated disk directory (`.freetoken/cache/{model_id}`) and manifest file. | Cache survives application restarts. |\n| **Concurrency** | **File Locking** (`FileLock` wrapper around `threading.Lock` or OS-specific locks). | Prevents race conditions when updating the central manifest. Reads are lock-free. |\n| **Invalidation** | Cache key tied to `model_id` and `model_revision` (from profile). `invalidate_cache()` method. | Guarantees that stale prefixes from older model versions are not used. |\n| **Efficiency** | Prefix hashes are used as direct file names/keys. | $O(1)$ lookup time for cache hits. |\n| **Safety** | Atomic write operations (write data file $\\rightarrow$ update manifest $\\rightarrow$ save manifest). | Ensures the manifest is never in a partially updated state. |\n\nThis design provides a scalable, thread-safe, and verifiable caching solution suitable for a high-throughput serving environment like FreeToken. The use of model revision as the primary invalidation trigger is crucial for correctness, ensuring that a model update always forces a cache rebuild. (Note: The provided code uses `threading.Lock` for simplicity; production code must use OS-level file locks like `fcntl` for true cross-process concurrency.)\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**",
+        "reasoning_content": "Here's a plan to address the user's request:\n1.  **Analyze the Request:** The user wants a detailed implementation plan and Python code for *persistent prefix caching*, including *invalidation* and *concurrent access*.\n2.  **Context Review:** The provided source code is a recipe management system (`scripts/recipes.py`) and a benchmarking tool. The `serve` function handles model serving, and the profiles (`.json`) contain configuration, including `cache_rebuild`. This suggests caching is already a concept, but the request is for a robust, persistent, concurrent implementation.\n3.  **Design Goals:**\n    *   Persistence (disk storage).\n    *   Concurrency (safe access by multiple threads/processes).\n    *   Invalidation (mechanism to ensure cache freshness, e.g., based on model hash/revision).\n    *   Efficiency (fast lookup, minimal I/O).\n4.  **Implementation Strategy:** Use a combination of file system storage (for persistence) and locking mechanisms (for concurrency). A simple key-value store (like a JSON file or SQLite) can manage metadata and cache paths.\n5.  **Structure the Output:** Provide a thorough design explanation, followed by a conceptual Python implementation.\n\nConstraint Checklist & Confidence Score:\n1. Detailed implementation plan: Yes.\n2. Python code: Yes.\n3. Persistent prefix caching: Yes.\n4. Invalidation: Yes.\n5. Concurrent access: Yes.\n6. Explain the design thoroughly: Yes.\n\nConfidence Score: 5/5\n\nStart generating the response."
+      },
+      "forced_length_passed": false,
+      "attempt_status": "failed; retained before resume",
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "suppressed_output_tail_s": 0.0009162480000668438
+    },
+    {
+      "label": "resume-warmup",
+      "usage": {
+        "completion_tokens": 64,
+        "prompt_tokens": 1024,
+        "total_tokens": 1088,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "cached_tokens": 0,
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 64,
+      "elapsed_s": 1.0122519369997462,
+      "ttft_s": 0.7610855740003899,
+      "prefill_effective_tok_s": 1345.446602827707,
+      "prefill_including_cached_tok_s": 1345.446602827707,
+      "decode_visible_span_tok_s": 251.08430658160353,
+      "generation_end_s": 1.012034343999403,
+      "decode_http_tok_s": 251.0472555822758,
+      "api_output_tok_s": 63.22536678931151,
+      "text_events": 61,
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 1024,
+        "prompt_ms": 642.281,
+        "prompt_per_token_ms": 0.6272275390625,
+        "prompt_per_second": 1594.3177518874138,
+        "predicted_n": 64,
+        "predicted_ms": 366.768,
+        "predicted_per_token_ms": 5.821714285714285,
+        "predicted_per_second": 171.77071063996863,
+        "draft_n": 57,
+        "draft_n_accepted": 54
+      },
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "Here's a plan to address the request:\n1.  **Analyze the Request:** The user wants a detailed implementation plan and Python code for *persistent prefix caching*, including *invalidation* and *concurrent access*.\n2.  **Analyze the Context:** The provided code snippet is a recipe"
+      },
+      "forced_length_passed": true,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "suppressed_output_tail_s": 3.703099901031237e-05
+    },
+    {
+      "label": "long-cold",
+      "usage": {
+        "completion_tokens": 8192,
+        "prompt_tokens": 57344,
+        "total_tokens": 65536,
+        "prompt_tokens_details": {
+          "cached_tokens": 7
+        }
+      },
+      "cached_tokens": 7,
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 8192,
+      "elapsed_s": 88.44984503699925,
+      "ttft_s": 31.148604840998814,
+      "prefill_effective_tok_s": 1840.7566018665195,
+      "prefill_including_cached_tok_s": 1840.9813310329055,
+      "decode_visible_span_tok_s": 142.9492194693408,
+      "generation_end_s": 88.4496959449989,
+      "decode_http_tok_s": 142.94666719580496,
+      "api_output_tok_s": 92.61746017274788,
+      "text_events": 8188,
+      "timings": {
+        "cache_n": 7,
+        "prompt_n": 57337,
+        "prompt_ms": 31008.928,
+        "prompt_per_token_ms": 0.540818808099482,
+        "prompt_per_second": 1849.0481193029311,
+        "predicted_n": 8192,
+        "predicted_ms": 57337.869,
+        "predicted_per_token_ms": 7.000106092052253,
+        "predicted_per_second": 142.8549777460338,
+        "draft_n": 10920,
+        "draft_n_accepted": 6630
+      },
+      "message": {
+        "role": "assistant",
+        "content": "This request requires designing a robust caching layer that goes beyond simple file existence checks, ensuring data integrity, thread safety, and freshness.\n\n## 🧠 Design Explanation: Persistent Prefix Caching\n\nThe core challenge is balancing fast access (in-memory lookup) with data integrity (persistence and concurrency).\n\n### 1. Persistence Layer (Disk)\n*   **Storage:** Use a dedicated directory (`.cache/`) for storing serialized prefix data (e.g., JSON or binary blobs).\n*   **Keying:** The cache key must be deterministic and unique to the input prefix. A cryptographic hash (e.g., SHA-256) of the input prefix string is the ideal key.\n*   **Metadata:** A central metadata file (e.g., `cache_index.json`) tracks which keys exist, their file paths, and crucially, the **model/config hash** used to generate them.\n\n### 2. Concurrency Control\n*   **Mechanism:** Since multiple serving processes or threads might try to read/write the cache simultaneously, a **File Lock** (e.g., `fcntl` on Unix, or `threading.Lock` if confined to a single process) must be used during write operations (cache generation/update). Read operations can be lock-free if the underlying file system guarantees atomic reads.\n*   **Implementation:** Use `os.open` with `os.O_CREAT | os.O_EXCL` for atomic file creation, and `fcntl.flock` for process-level locking.\n\n### 3. Invalidation Strategy\n*   **Source of Truth:** The model configuration (weights, tokenizer, system prompts) must be hashed. This **Model Hash** is stored in the cache metadata alongside the prefix key.\n*   **Check:** When a request comes in, the system calculates the current Model Hash. It then checks the cache metadata: if the stored Model Hash does not match the current Model Hash, the cache entry is **stale** and must be invalidated/regenerated, regardless of the prefix key.\n*   **Explicit Invalidation:** The `recipes.py` system already supports `cache_rebuild`. This should trigger a full metadata wipe or targeted deletion of specific keys.\n\n---\n\n## 🐍 Python Implementation Plan\n\nWe will define a `PrefixCacheManager` class to encapsulate all logic.\n\n### Prerequisites\n*   `hashlib` (for prefix and model hashing)\n*   `json` (for metadata)\n*   `os`, `pathlib` (for file operations)\n*   `fcntl` (for cross-process locking on Unix-like systems)\n\n### Conceptual Code\n\n```python\nimport hashlib\nimport json\nimport os\nimport fcntl # Requires Unix-like OS\nfrom pathlib import Path\nimport threading\nfrom typing import Optional, Dict, Any\n\nCACHE_DIR = Path(\"./.prefix_cache\")\nMETADATA_FILE = CACHE_DIR / \"cache_index.json\"\nLOCK_FILE = CACHE_DIR / \"cache.lock\"\n\nclass PrefixCacheManager:\n    \"\"\"Manages persistent, concurrent, and validated prefix caching.\"\"\"\n\n    def __init__(self, model_hash: str):\n        self.model_hash = model_hash\n        CACHE_DIR.mkdir(exist_ok=True)\n        self._load_metadata()\n        # Use a threading lock for internal state consistency (e.g., metadata updates)\n        self._internal_lock = threading.Lock()\n\n    def _load_metadata(self) -> Dict[str, Any]:\n        \"\"\"Loads the cache index from disk.\"\"\"\n        if METADATA_FILE.exists():\n            try:\n                with open(METADATA_FILE, 'r') as f:\n                    return json.load(f)\n            except (json.JSONDecodeError, IOError):\n                print(\"Warning: Corrupt cache metadata. Starting fresh.\")\n                return {}\n        return {}\n\n    def _save_metadata(self, metadata: Dict[str, Any]):\n        \"\"\"Saves the cache index to disk.\"\"\"\n        with self._internal_lock:\n            with open(METADATA_FILE, 'w') as f:\n                json.dump(metadata, f, indent=2)\n\n    def _acquire_lock(self):\n        \"\"\"Acquires a file lock for exclusive write access.\"\"\"\n        # Open the lock file descriptor\n        fd = os.open(LOCK_FILE, os.O_CREAT | os.O_RDWR)\n        try:\n            # Acquire exclusive lock (blocking)\n            fcntl.flock(fd, fcntl.LOCK_EX)\n        except BlockingIOError:\n            # Handle non-blocking scenarios if needed\n            raise\n        return fd\n\n    def _release_lock(self, fd):\n        \"\"\"Releases the file lock.\"\"\"\n        fcntl.flock(fd, fcntl.LOCK_UN)\n        os.close(fd)\n\n    def get_cache_path(self, prefix: str) -> Optional[Path]:\n        \"\"\"\n        Checks if the prefix is cached and if the cache is valid (model hash matches).\n        Returns the cache file path if valid, otherwise None.\n        \"\"\"\n        prefix_hash = hashlib.sha256(prefix.encode()).hexdigest()\n        metadata = self._load_metadata()\n\n        if prefix_hash in metadata:\n            entry = metadata[prefix_hash]\n            # CRITICAL VALIDATION STEP: Check model hash\n            if entry['model_hash'] == self.model_hash:\n                return Path(entry['path'])\n            else:\n                print(f\"Cache for {prefix_hash} is stale (Model Hash mismatch).\")\n                # Optionally, trigger automatic invalidation here\n                self.invalidate_prefix(prefix_hash)\n                return None\n        return None\n\n    def store_cache(self, prefix: str, content: bytes) -> Path:\n        \"\"\"\n        Stores the prefix content persistently, ensuring atomic write and concurrency safety.\n        \"\"\"\n        prefix_hash = hashlib.sha256(prefix.encode()).hexdigest()\n        cache_filename = f\"{prefix_hash}.cache\"\n        cache_path = CACHE_DIR / cache_filename\n\n        # 1. Acquire lock for safe metadata/file update\n        fd = self._acquire_lock()\n        try:\n            # 2. Write content atomically (write to temp, then rename)\n            temp_path = cache_path.with_name(cache_path.name + '.tmp')\n            with open(temp_path, 'wb') as f:\n                f.write(content)\n            os.replace(temp_path, cache_path) # Atomic rename\n\n            # 3. Update metadata\n            metadata = self._load_metadata()\n            metadata[prefix_hash] = {\n                'model_hash': self.model_hash,\n                'path': str(cache_path)\n            }\n            self._save_metadata(metadata)\n            return cache_path\n        finally:\n            self._release_lock(fd)\n\n    def invalidate_prefix(self, prefix_hash: str):\n        \"\"\"Removes a specific cache entry.\"\"\"\n        metadata = self._load_metadata()\n        if prefix_hash in metadata:\n            cache_path = Path(metadata[prefix_hash]['path'])\n            if cache_path.exists():\n                cache_path.unlink()\n                del metadata[prefix_hash]\n                self._save_metadata(metadata)\n                print(f\"Invalidated cache for {prefix_hash}\")\n\n    def invalidate_all(self):\n        \"\"\"Clears the entire cache (used by recipes.py cache_rebuild).\"\"\"\n        for item in CACHE_DIR.glob(\"*.cache\"):\n            item.unlink()\n        # Clear metadata\n        self._save_metadata({})\n        print(\"All prefix cache entries cleared.\")\n\n\n# --- Usage Example ---\n\n# 1. Determine the current model configuration hash (e.g., hash of config.json + weights)\ndef calculate_model_hash(model_path: Path) -> str:\n    # In a real system, this would hash all relevant model files (config, weights, tokenizer)\n    return hashlib.sha256(str(model_path).encode()).hexdigest()\n\n# Assume we have a model path and a prefix\nMODEL_PATH = Path(\"/path/to/model\")\nCURRENT_MODEL_HASH = calculate_model_hash(MODEL_PATH)\nTEST_PREFIX = \"Read these synthetic records. \" + ('The subsystem handles jobs and returns results. ' * 1500)\n\n# Initialize the cache manager for the current model version\ncache_manager = PrefixCacheManager(model_hash=CURRENT_MODEL_HASH)\n\n# --- Workflow ---\n\n# 1. Try to retrieve\ncached_path = cache_manager.get_cache_path(TEST_PREFIX)\nif cached_path:\n    print(f\"Cache HIT: Loading from {cached_path}\")\n    with open(cached_path, 'rb') as f:\n        content = f.read()\nelse:\n    print(\"Cache MISS: Generating content...\")\n    # 2. Generate content (e.g., call the LLM inference engine)\n    generated_content = b\"This is the generated response content.\"\n    # 3. Store content\n    cache_manager.store_cache(TEST_PREFIX, generated_content)\n    print(\"Cache stored successfully.\")\n\n# --- Invalidation Test ---\n# If the model changes (e.g., a new fine-tune is loaded):\nNEW_MODEL_HASH = \"a_different_hash_12345\"\nstale_cache_manager = PrefixCacheManager(model_hash=NEW_MODEL_HASH)\n# The check in get_cache_path will now fail due to hash mismatch, forcing regeneration.\n\n# If the user runs 'recipes.py download --model X' (cache_rebuild):\ncache_manager.invalidate_all()\n```\n\n## ✅ Summary of Features\n\n| Feature | Implementation Detail | Benefit |\n| :--- | :--- | :--- |\n| **Persistence** | Files stored in `CACHE_DIR` using SHA-256 of the prefix as the filename. | Data survives process restarts. |\n| **Concurrency** | Uses `fcntl.flock` (file locking) during write operations (`store_cache`). | Prevents race conditions and data corruption when multiple processes write simultaneously. |\n| **Invalidation** | Metadata tracks `model_hash`. If the current model hash differs from the stored hash, the cache is considered **stale** and ignored. | Guarantees that cached results are only used if they were generated by the *exact* model configuration currently running. |\n| **Atomicity** | Writes are performed to a temporary file (`.tmp`) and then atomically renamed (`os.replace`). | Ensures that if a process crashes during writing, the cache file remains intact and readable, preventing partial/corrupt files. |\n| **Recipe Integration** | `invalidate_all()` maps directly to the `cache_rebuild` functionality in `recipes.py`. | Provides a clean, high-level control point for cache management. |\n\n**Note on `fcntl`:** The use of `fcntl` assumes a Unix-like environment (Linux/macOS). For Windows, a different locking mechanism (e.g., `msvcrt.locking` or a dedicated database lock) would be required.\n\n**Note on Model Hash:** The `calculate_model_hash` function is critical. It must hash *all* inputs that define the model's behavior (weights, config, tokenizer, system prompts, etc.), not just the model directory path. This ensures true configuration integrity.\n\nThis design provides a robust, production-ready caching solution suitable for a high-throughput serving environment like FreeToken.cli.serve. You would integrate `PrefixCacheManager` into the serving logic, checking the cache *before* calling the LLM inference engine. If a miss occurs, the engine runs, and the result is immediately stored. If a hit occurs, the cached content is returned instantly.\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**\n**",
+        "reasoning_content": "Here's a plan to address the user's request:\n1.  **Analyze the Request:** The user wants a detailed implementation plan and Python code for *persistent prefix caching*, including *invalidation* and *concurrent access*.\n2.  **Context Review:** The provided source code is a recipe management system (`scripts/recipes.py`) and a benchmarking tool. The `serve` function handles model serving, and the profiles (`.json`) contain configuration, including `cache_rebuild`. This suggests caching is already a concept, but the request is for a robust, persistent, concurrent implementation.\n3.  **Design Goals:**\n    *   Persistence (disk storage).\n    *   Concurrency (safe access by multiple threads/processes).\n    *   Invalidation (mechanism to ensure cache freshness, e.g., based on model hash or explicit commands).\n    *   Efficiency (fast lookup, minimal I/O).\n4.  **Implementation Strategy:** Use a combination of file system storage (for persistence) and locking mechanisms (for concurrency). A simple key-value store (like a JSON file or SQLite) can manage metadata and cache paths.\n5.  **Structure the Output:** Provide a thorough design explanation, followed by a conceptual Python implementation.\n\nConstraint Checklist & Confidence Score:\n1. Detailed implementation plan: Yes.\n2. Python code: Yes.\n3. Persistent prefix caching: Yes.\n4. Invalidation: Yes.\n5. Concurrent access: Yes.\n6. Explain the design thoroughly: Yes.\n\nConfidence Score: 5/5\n\nStart generating the response."
+      },
+      "forced_length_passed": true,
+      "expected_input_tokens": 57344,
+      "exact_budget_passed": true,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "suppressed_output_tail_s": 0.0010230769985355437
+    },
+    {
+      "label": "resume-prefix-prime",
+      "usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 57344,
+        "total_tokens": 57376,
+        "prompt_tokens_details": {
+          "cached_tokens": 57339
+        }
+      },
+      "cached_tokens": 57339,
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 32,
+      "elapsed_s": 0.342630791999909,
+      "ttft_s": 0.19566294299875153,
+      "prefill_effective_tok_s": 25.554149004249126,
+      "prefill_including_cached_tok_s": 293075.42409993237,
+      "decode_visible_span_tok_s": 212.2298127924253,
+      "generation_end_s": 0.3425046399988787,
+      "decode_http_tok_s": 211.1116980619827,
+      "api_output_tok_s": 93.39499177297672,
+      "text_events": 29,
+      "timings": {
+        "cache_n": 57339,
+        "prompt_n": 5,
+        "prompt_ms": 75.24,
+        "prompt_per_token_ms": 15.047999999999998,
+        "prompt_per_second": 66.45401382243489,
+        "predicted_n": 32,
+        "predicted_ms": 183.854,
+        "predicted_per_token_ms": 5.9307741935483875,
+        "predicted_per_second": 168.61205086644839,
+        "draft_n": 31,
+        "draft_n_accepted": 26
+      },
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "Here's a plan to address the user's request:\n1.  **Analyze the Request:** The user wants a detailed implementation plan"
+      },
+      "forced_length_passed": true,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "suppressed_output_tail_s": 0.0007736229999864008
+    },
+    {
+      "label": "long-prefix-reuse",
+      "usage": {
+        "completion_tokens": 256,
+        "prompt_tokens": 57344,
+        "total_tokens": 57600,
+        "prompt_tokens_details": {
+          "cached_tokens": 57343
+        }
+      },
+      "cached_tokens": 57343,
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 256,
+      "elapsed_s": 3.456509997999092,
+      "ttft_s": 0.1630502099997102,
+      "prefill_effective_tok_s": 6.133080110732623,
+      "prefill_including_cached_tok_s": 351695.3458698515,
+      "decode_visible_span_tok_s": 77.45122582708696,
+      "generation_end_s": 3.456399375998444,
+      "decode_http_tok_s": 77.42877755953619,
+      "api_output_tok_s": 74.06314465984289,
+      "text_events": 253,
+      "timings": {
+        "cache_n": 57343,
+        "prompt_n": 1,
+        "prompt_ms": 40.65,
+        "prompt_per_token_ms": 40.65,
+        "prompt_per_second": 24.600246002460025,
+        "predicted_n": 256,
+        "predicted_ms": 3330.533,
+        "predicted_per_token_ms": 13.060913725490195,
+        "predicted_per_second": 76.56432168664895,
+        "draft_n": 635,
+        "draft_n_accepted": 162
+      },
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "Here's a plan to address the user's request:\n1.  **Analyze the Request:** The user wants a detailed implementation plan and Python code for *persistent prefix caching*, including *invalidation* and *concurrent access*.\n2.  **Context Review:** The provided source code is a recipe management system (`scripts/recipes.py`) and a benchmarking tool. The `serve` function handles model serving, and the profiles (`.json`) contain configuration, including `cache_rebuild`. This suggests caching is already a concept, but the request is for a *persistent prefix cache* implementation detail.\n3.  **Design Goals:**\n    *   Persistence (disk storage).\n    *   Prefix matching (keying by input prompt/prefix).\n    *   Concurrency (safe access from multiple threads/processes).\n    *   Invalidation (mechanism to ensure cache freshness, likely tied to model/config changes).\n4.  **Implementation Strategy:** Use a combination of file storage (e.g., SQLite or simple JSON/Pickle files) for persistence and Python's `threading.Lock` or `multiprocessing.Lock` for concurrency. Invalidation should be triggered by metadata checks (e."
+      },
+      "forced_length_passed": true,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "suppressed_output_tail_s": 0.0009545359989715507
+    },
+    {
+      "label": "long-tool-call",
+      "usage": {
+        "completion_tokens": 76,
+        "prompt_tokens": 55341,
+        "total_tokens": 55417,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "cached_tokens": 0,
+      "finish_reason": "tool_calls",
+      "forced_ignore_eos": false,
+      "requested_max_tokens": 1024,
+      "elapsed_s": 31.203556692998973,
+      "ttft_s": 30.30538044199966,
+      "prefill_effective_tok_s": 1826.1113766882115,
+      "prefill_including_cached_tok_s": 1826.1113766882115,
+      "decode_visible_span_tok_s": 122.5641310445135,
+      "generation_end_s": 31.203438180999,
+      "decode_http_tok_s": null,
+      "api_output_tok_s": 2.435619783595113,
+      "text_events": 56,
+      "timings": {
+        "cache_n": 0,
+        "prompt_n": 55341,
+        "prompt_ms": 30004.427,
+        "prompt_per_token_ms": 0.5421735602898393,
+        "prompt_per_second": 1844.4278239341147,
+        "predicted_n": 76,
+        "predicted_ms": 935.418,
+        "predicted_per_token_ms": 12.47224,
+        "predicted_per_second": 80.17805943439188,
+        "draft_n": 182,
+        "draft_n_accepted": 49
+      },
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "The user wants me to call the `lookup_codeword` tool with the key \"recipe\".\nI need to use the provided tool definition: `lookup_codeword(key: str)`.\nThe key is \"recipe\".\nI will generate the tool call.",
+        "tool_calls": [
+          {
+            "id": "kcEio6Ul3kObjVLwawz2GXEG4cNQ0lSG",
+            "type": "function",
+            "function": {
+              "name": "lookup_codeword",
+              "arguments": "{\"key\":\"recipe\"}"
+            }
+          }
+        ]
+      },
+      "forced_length_passed": null,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "suppressed_output_tail_s": 0.28613319500072976,
+      "decode_metric_note": "Structured tool output: text-only timeline does not cover all generated tokens."
+    },
+    {
+      "label": "long-tool-followup",
+      "usage": {
+        "completion_tokens": 72,
+        "prompt_tokens": 55440,
+        "total_tokens": 55512,
+        "prompt_tokens_details": {
+          "cached_tokens": 55400
+        }
+      },
+      "cached_tokens": 55400,
+      "finish_reason": "stop",
+      "forced_ignore_eos": false,
+      "requested_max_tokens": 1024,
+      "elapsed_s": 0.7966033289994812,
+      "ttft_s": 0.17444913599865686,
+      "prefill_effective_tok_s": 229.2931963865271,
+      "prefill_including_cached_tok_s": 317800.37019172654,
+      "decode_visible_span_tok_s": 114.29246457790981,
+      "generation_end_s": 0.7964896269986639,
+      "decode_http_tok_s": 114.14047964282634,
+      "api_output_tok_s": 90.383754848766,
+      "text_events": 70,
+      "timings": {
+        "cache_n": 55400,
+        "prompt_n": 40,
+        "prompt_ms": 92.998,
+        "prompt_per_token_ms": 2.3249500000000003,
+        "prompt_per_second": 430.11677670487535,
+        "predicted_n": 72,
+        "predicted_ms": 621.106,
+        "predicted_per_token_ms": 8.747971830985916,
+        "predicted_per_second": 114.31221079815684,
+        "draft_n": 119,
+        "draft_n_accepted": 54
+      },
+      "message": {
+        "role": "assistant",
+        "content": "BLUEPRINT-742",
+        "reasoning_content": "The user requested me to call `lookup_codeword` with the key \"recipe\" and then return the codeword verbatim after the tool responds.\nThe tool has responded with `{\"value\": \"BLUEPRINT-742\"}`.\nI must now return \"BLUEPRINT-742\" verbatim."
+      },
+      "forced_length_passed": null,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "suppressed_output_tail_s": 0.0008271829992736457
+    }
+  ],
+  "checks": [
+    {
+      "name": "long_context_plus_8192",
+      "passed": true
+    },
+    {
+      "name": "long_tool_round_trip",
+      "passed": true,
+      "call_prompt_tokens": 55341,
+      "followup_prompt_tokens": 55440
+    },
+    {
+      "name": "/v1/responses",
+      "passed": true
+    },
+    {
+      "name": "/v1/messages",
+      "passed": true
+    }
+  ],
+  "attempt_errors": [
+    "RuntimeError('Unable to construct exact 1024-token prompt; nearest (3400, 1023)')",
+    "RuntimeError(\"long-cold: missing usage or incomplete forced output: {'completion_tokens': 8186, 'prompt_tokens': 57344, 'total_tokens': 65530, 'prompt_tokens_details': {'cached_tokens': 7}}\")"
+  ],
+  "resumed": true,
+  "count_adapter_offset_tokens": 0,
+  "attempt_profiles": [
+    {
+      "schema_version": 1,
+      "id": "nemotron",
+      "name": "NVIDIA Nemotron 3.5 Bolt E4B",
+      "status": "Measured: 64K capacity, short coding prompts; DFlash BF16",
+      "hardware": "ryzen-5600x-rtx3060",
+      "engine": "llama-cpp",
+      "model": {
+        "repository": "unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF",
+        "original_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
+        "local_directory": "Nemotron-3.5-Bolt-E4B",
+        "filename": "NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf",
+        "download_revision": "b738967d6da3441a7d1c71fcec15e49e32e16ecd",
+        "file_bytes": 8192955584,
+        "sha256": "6176bd788769bd58042c165d3dc8e8c86a8ca5c90d5de188a364b31dc9560810",
+        "historical_weight_revision_verified": true,
+        "local_sha256_matches_pinned_hub_blob": true,
+        "validation_weight_revision_verified": true
+      },
+      "quantization": "Unsloth UD-Q8_K_XL GGUF (mixed)",
+      "modalities": [
+        "text"
+      ],
+      "drafter": {
+        "enabled": true,
+        "type": "draft-dflash",
+        "repository": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash",
+        "download_revision": "0949a2eb7152ec6fda1a91ff9302aecbcd464fbf",
+        "filename": "Nemotron-3.5-Bolt-E4B-DFlash-BF16.gguf",
+        "legacy_local_filename": "dflash-nvidia-BF16.gguf",
+        "file_bytes": 736812096,
+        "sha256": "8103aa42fd31fb661c3fbe8701d04d698ea2c5d09351dc3e8c9da639958de989",
+        "quantization": "BF16 GGUF",
+        "max_draft_tokens": 7
+      },
+      "context": {
+        "total_tokens": 65536,
+        "input_budget_with_reserved_output": 57344,
+        "output_tokens": 8192,
+        "output_status": "new_explicit_agent_default; measured natural completions 1242–1762 tokens"
+      },
+      "server_arguments": [
+        "--device",
+        "CUDA0",
+        "--spec-draft-device",
+        "CUDA0",
+        "--spec-type",
+        "draft-dflash",
+        "--spec-draft-n-max",
+        "7",
+        "--spec-draft-ngl",
+        "99",
+        "-ngl",
+        "99",
+        "-fa",
+        "on",
+        "--jinja",
+        "-c",
+        "65536",
+        "-np",
+        "1",
+        "--fit",
+        "off",
+        "--temp",
+        "1.0",
+        "--top-p",
+        "0.95",
+        "-n",
+        "8192",
+        "--no-context-shift"
+      ],
+      "sampling": {
+        "temperature": 1.0,
+        "top_p": 0.95
+      },
+      "cache_rebuild": null,
+      "evidence": "evidence/nemotron.json",
+      "notes": [
+        "All target and drafter layers on the RTX 3060; no CPU expert offload.",
+        "No vision projector loaded.",
+        "Historical measured launcher had unlimited server default output; requests had explicit limits. Catalog adds default 8192.",
+        "64K is total slot capacity, not 64K input plus output.",
+        "Context shift explicitly disabled so capacity tests cannot silently roll the context window."
+      ]
+    }
+  ],
+  "completed": true,
+  "superseded_warmups": [
+    {
+      "label": "resume-warmup",
+      "usage": {
+        "completion_tokens": 64,
+        "prompt_tokens": 1024,
+        "total_tokens": 1088,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        }
+      },
+      "cached_tokens": 0,
+      "finish_reason": "length",
+      "forced_ignore_eos": true,
+      "requested_max_tokens": 64,
+      "elapsed_s": 1.0941546379999636,
+      "ttft_s": 0.807126898000206,
+      "prefill_effective_tok_s": 1268.6976515553304,
+      "prefill_including_cached_tok_s": 1268.6976515553304,
+      "decode_visible_span_tok_s": 219.67224587153305,
+      "generation_end_s": 1.0940242050000961,
+      "decode_http_tok_s": 219.59076806539744,
+      "api_output_tok_s": 58.492646082447195,
+      "text_events": 61,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "reasoning_content": "Here's a plan to address the request:\n1.  **Analyze the Request:** The user wants a detailed implementation plan and Python code for *persistent prefix caching*, including *invalidation* and *concurrent access*.\n2.  **Analyze the Context:** The provided code snippet is a recipe"
+      },
+      "forced_length_passed": true,
+      "cache_count_source": "usage.prompt_tokens_details.cached_tokens",
+      "suppressed_output_tail_s": 3.703099901031237e-05,
+      "trace_note": "Superseded warmup, excluded from measurement. Original summary and server timing remain in driver.log and server-attempt-2.log; the earlier warmup SSE filename was reused before archival was fixed."
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "gemma4",
   "name": "Gemma 4 26B A4B",
-  "status": "Measured 2026-10-24: three ~4K input + 200 output requests; complete logs",
+  "status": "Validated full budget: 58368 input + 8192 output; see evidence/validation-2026-10-24.json",
   "hardware": "ryzen-5600x-rtx3060",
   "engine": "desktop-wheel",
   "model": {
@@ -20,7 +20,8 @@
       "*.tiktoken",
       "README.md",
       "LICENSE*"
-    ]
+    ],
+    "validation_weight_revision_verified": true
   },
   "quantization": "NVFP4 ModelOpt (mixto)",
   "modalities": [
@@ -34,7 +35,7 @@
     "total_tokens": 66560,
     "input_budget_with_reserved_output": 58368,
     "output_tokens": 8192,
-    "output_status": "new_explicit_agent_default; historical_measurement_used_200_tokens"
+    "output_status": "Validated 8192 actual tokens in fixed-length throughput test; normal use respects EOS"
   },
   "server_arguments": [
     "--moe-strategy",
@@ -60,7 +61,8 @@
     "1024",
     "--mm-disable",
     "vision",
-    "audio"
+    "audio",
+    "--enable-cache-report"
   ],
   "cache_rebuild": null,
   "desktop_cache": {
@@ -76,5 +78,7 @@
   },
   "environment": {},
   "evidence": "evidence/gemma4.json",
-  "prefill_note": "2026-10-24: 8192 ceiling OOMed on a 4109-token request with 66560 context capacity and 448 experts. Lowered to 1024; see preserved failure log and new benchmark."
+  "prefill_note": "2026-10-24: 8192 ceiling OOMed on a 4109-token request with 66560 context capacity and 448 experts. Lowered to 1024; see preserved failure log and new benchmark.",
+  "cache_report_note": "Enabled for validation to report actual reused prompt tokens in HTTP usage.",
+  "validation": "evidence/validation-2026-10-24.json"
 }

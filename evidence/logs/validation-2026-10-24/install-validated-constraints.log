@@ -1,0 +1,11 @@
++ uv pip install --python <recipes-checkout>/.venv/bin/python --constraint <recipes-checkout>/constraints-validated.txt '<recipes-checkout>/.runtime/wheels/freetoken-0.2.0+gfe5a5ec9c-cp312-cp312-linux_x86_64.whl[accel]' <recipes-checkout>/.runtime/wheels/freetoken_kernel_cache-0.2.0+cu130.gfe5a5ec9c-py3-none-linux_x86_64.whl
+Checked 2 packages in 21ms
++ uv pip install --python <recipes-checkout>/.venv/bin/python --constraint <recipes-checkout>/constraints-validated.txt <recipes-checkout>/.runtime/wheels/flashinfer_cubin-0.6.18.post1-py3-none-any.whl <recipes-checkout>/.runtime/wheels/flashinfer_jit_cache-0.6.18.post1+cu130-cp39-abi3-manylinux_2_28_x86_64.whl
+Checked 2 packages in 1ms
++ git -C <recipes-checkout>/.runtime/FreeToken-flint fetch --depth 1 origin 6ee048e3cca92da2a85cdc9ca6fd21cceed527ad
+From https://github.com/jesusjodar/FreeToken
+ * branch            6ee048e3cca92da2a85cdc9ca6fd21cceed527ad -> FETCH_HEAD
++ git -C <recipes-checkout>/.runtime/FreeToken-flint checkout --detach 6ee048e3cca92da2a85cdc9ca6fd21cceed527ad
+HEAD is now at 6ee048e refactor(flint): address final review scope requests
++ uv pip freeze --python <recipes-checkout>/.venv/bin/python
+Engine preparado. El overlay Flint se aplica solo al servir Flint.

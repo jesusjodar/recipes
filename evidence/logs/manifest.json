@@ -5,7 +5,7 @@
     "GPU UUIDs",
     "ANSI color escapes"
   ],
-  "scope": "LLM benchmark and validation evidence; paths/UUIDs sanitized. Historical terminal captures and new executions are labeled separately. No chat transcript or private network metadata.",
+  "scope": "Historical recovered evidence and new full-context validation; successful measurements, failed attempts, server stdout, exact requests, SSE timelines, GPU traces and tests. Paths/UUIDs sanitized; excludes conversations and private network data.",
   "entries": [
     {
       "path": "evidence/logs/benchmark-runner.snapshot.py",
@@ -511,7 +511,847 @@
       "kind": "new-execution-log",
       "source_sha256": "1fc231842430e0ef510537bd3bcd1d0d474fa69f5eb35e11ede9f92925c9aea8",
       "sha256": "ce3e8965e50edca0620e01c9787514abb5f424010445749cdeec81016c2caa84"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/checkpoint-integrity.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "6584f4ea1d88fc17cbad81f30a38af90217cffae3627a6cf6396f71355d3767a",
+      "sha256": "6584f4ea1d88fc17cbad81f30a38af90217cffae3627a6cf6396f71355d3767a"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/download-access.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "7b93e33347372ef0744b233086b5b819715642e187b30881242ce51d05966431",
+      "sha256": "7b93e33347372ef0744b233086b5b819715642e187b30881242ce51d05966431"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/driver.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "d553f51d868d2932458f8cfcf03c10e25b4555780ab09c41560c971f0d128298",
+      "sha256": "10d2122c8ce6431f8ff7431974d89659ee0193422f39bedf87f7898356151614"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/environment.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "4a1d2880cbc8927e527da953bc3fccb9ec6d301ed48fc62a120d24d0b0d9a06e",
+      "sha256": "4a1d2880cbc8927e527da953bc3fccb9ec6d301ed48fc62a120d24d0b0d9a06e"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/gpu-attempt-1.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "f98af4001c7ed247c259912ca75737035b22d9a8df3d5fa29d93d067530907e5",
+      "sha256": "f98af4001c7ed247c259912ca75737035b22d9a8df3d5fa29d93d067530907e5"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "22adb557a94bab18e9892ba414d2031f63b629671508d36bcbf83da9d1caf4d5",
+      "sha256": "22adb557a94bab18e9892ba414d2031f63b629671508d36bcbf83da9d1caf4d5"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/long-cold-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "d9492c475b9728df1b97a5b8c2258b23bb5b53dc8064f1bde410ad031d38f52f",
+      "sha256": "d9492c475b9728df1b97a5b8c2258b23bb5b53dc8064f1bde410ad031d38f52f"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/long-cold-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "db73482d05e5f47d92cd1938e646f5dc47a6ee4f1f191975618e85a7c5ffec2a",
+      "sha256": "db73482d05e5f47d92cd1938e646f5dc47a6ee4f1f191975618e85a7c5ffec2a"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/long-prefix-reuse-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ee404019ac8e4ad7acc0814ca39796580fd484ad04320dd4764671924406e8db",
+      "sha256": "ee404019ac8e4ad7acc0814ca39796580fd484ad04320dd4764671924406e8db"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/long-prefix-reuse-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "c938515fa2074ea9b00c699cdad6cdc90eb4c97d6a2ca96f7c91ad83950036fc",
+      "sha256": "c938515fa2074ea9b00c699cdad6cdc90eb4c97d6a2ca96f7c91ad83950036fc"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/long-tool-call-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "d3714e6c9df91fdc2117de4b4dea76b99b65fe0e6689af213f5fa294fc1f591e",
+      "sha256": "d3714e6c9df91fdc2117de4b4dea76b99b65fe0e6689af213f5fa294fc1f591e"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/long-tool-call-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ecf7aca67377c99ef0a8bf772119c2b606b337c42bfa0f4c11dd421b91fa87d7",
+      "sha256": "ecf7aca67377c99ef0a8bf772119c2b606b337c42bfa0f4c11dd421b91fa87d7"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/long-tool-followup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "7a9eb9264b4a3f5435c40f45cd30303c2063c3762d27cc49cd9b5ab7898a480c",
+      "sha256": "7a9eb9264b4a3f5435c40f45cd30303c2063c3762d27cc49cd9b5ab7898a480c"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/long-tool-followup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "de37c886fb4408941345fc10c82a5ce07b6599f69d64b6c6c6077de2e6e9dfde",
+      "sha256": "de37c886fb4408941345fc10c82a5ce07b6599f69d64b6c6c6077de2e6e9dfde"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/messages-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "8e18a997701e2b9291eeee952aa6b2e9719084695ede39f425c819d204a7cf82",
+      "sha256": "8e18a997701e2b9291eeee952aa6b2e9719084695ede39f425c819d204a7cf82"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/responses-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "94b157d25d1a8aa148b66d3a5b7af14d29b96872bc2412225c94340d369b76e6",
+      "sha256": "94b157d25d1a8aa148b66d3a5b7af14d29b96872bc2412225c94340d369b76e6"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "174cb9768bfc65dcde32f827442a93c97f875fe03a8d68d4335c0f9461c52da3",
+      "sha256": "174cb9768bfc65dcde32f827442a93c97f875fe03a8d68d4335c0f9461c52da3"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/resume-warmup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "9de1a04e830c1733a710fcb24294ae2f5f5956c67b24854845ab081403888c3e",
+      "sha256": "9de1a04e830c1733a710fcb24294ae2f5f5956c67b24854845ab081403888c3e"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/resume-warmup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "d6996353b8bd5e17005c4888c53aba34b90fe08f44a02a3f21e371c98806b863",
+      "sha256": "d6996353b8bd5e17005c4888c53aba34b90fe08f44a02a3f21e371c98806b863"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/server-attempt-1.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "f65e7fb76b5aac4a8372bbfac73f7e8ea17e114bb76ca1bef30b10c3036a2152",
+      "sha256": "93ce8fc2398673f2cc52536afb4a9c3539e39559b5199c7c920a243770aa1a47"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "be2b01cff9a42d73a6b89295d31c8d1c6acd0f8b9ee86a51dc7552c9c4d03313",
+      "sha256": "f43989a31360de1c9a0bde2d807746360ec555d873833141510dc21edcc22556"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/warmup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "0dc16ea42baddea4611c05da72f7604b90c268f1f552290fe399db6d0ddc8651",
+      "sha256": "0dc16ea42baddea4611c05da72f7604b90c268f1f552290fe399db6d0ddc8651"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/flint/warmup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "27f96c01455cc883c8b9b585eb1af9b3d8f16f49635ce9f38b3516f0c9651514",
+      "sha256": "27f96c01455cc883c8b9b585eb1af9b3d8f16f49635ce9f38b3516f0c9651514"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "d2509fd9a51de0ac142609d9d5b44a19b09a06b6a98b00da477cbc43e9cd6a20",
+      "sha256": "d2509fd9a51de0ac142609d9d5b44a19b09a06b6a98b00da477cbc43e9cd6a20"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/long-cold-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "264a1efe0408a7419a1229363b2b5c4268bda5de1ba293a8661d56212aaf260f",
+      "sha256": "264a1efe0408a7419a1229363b2b5c4268bda5de1ba293a8661d56212aaf260f"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/long-cold-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "8fdde970cff8037d79eee05028b8a30ddc6ad39291cfd7884ed4b30ed752a21a",
+      "sha256": "8fdde970cff8037d79eee05028b8a30ddc6ad39291cfd7884ed4b30ed752a21a"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/long-prefix-reuse-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "a32b0968296f76bc488856acf5bbafb4d0ec0ca20b199323845b539768b39cf3",
+      "sha256": "a32b0968296f76bc488856acf5bbafb4d0ec0ca20b199323845b539768b39cf3"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/long-prefix-reuse-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "c8b498b8d2eee441807292aac7b3e97421ef4799adf40aed96bc2cdbdc9f93ff",
+      "sha256": "c8b498b8d2eee441807292aac7b3e97421ef4799adf40aed96bc2cdbdc9f93ff"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/long-tool-call-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "2053ea4b7e634ea839b071063f2c7ee6ad6e4ee14d558bc44c93fd3408aa080f",
+      "sha256": "2053ea4b7e634ea839b071063f2c7ee6ad6e4ee14d558bc44c93fd3408aa080f"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/long-tool-call-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "27c49cc98862e7607bac11f0f04af3262b60f814492a3eb27247c8eb1b3a5f9d",
+      "sha256": "27c49cc98862e7607bac11f0f04af3262b60f814492a3eb27247c8eb1b3a5f9d"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/long-tool-followup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ce610ad45a69d39e3477688d3b8d91425acb02ceeccde84dbb7667a6a9f5a44c",
+      "sha256": "ce610ad45a69d39e3477688d3b8d91425acb02ceeccde84dbb7667a6a9f5a44c"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/long-tool-followup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "c6cd4715308a3ac4985258af2ac8182065924e34bf5c18b249f3715877ac44b5",
+      "sha256": "c6cd4715308a3ac4985258af2ac8182065924e34bf5c18b249f3715877ac44b5"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/messages-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "9d781b830c06008f07c0504cc33c7748027536012899d78087cdf5564f16f768",
+      "sha256": "9d781b830c06008f07c0504cc33c7748027536012899d78087cdf5564f16f768"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/responses-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "08d9d4afe1199ef0d260a2e86785034fe153297bed742d88f9034f32eedae89f",
+      "sha256": "08d9d4afe1199ef0d260a2e86785034fe153297bed742d88f9034f32eedae89f"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "61d92499adabf6805d407ecd18943d23727f2b8f296a3d832e21aee84998f0d3",
+      "sha256": "61d92499adabf6805d407ecd18943d23727f2b8f296a3d832e21aee84998f0d3"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "1251580d78d41a61a1465a7c2fa9999c8b31b13ca95562a3e5caa5da97def0d5",
+      "sha256": "17473b18af6d52dd489dc0391e75bcd31402fddef5a3fd33dd75332d11b7d733"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/warmup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "9d916c6c4e437598d79bd59e458578b6638e443c81b3dbf891d4201a28ca223c",
+      "sha256": "9d916c6c4e437598d79bd59e458578b6638e443c81b3dbf891d4201a28ca223c"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gemma4/warmup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "03bc27d67b7f809baa214af27810761b5c76106af944c6c781ed99dfe274798d",
+      "sha256": "03bc27d67b7f809baa214af27810761b5c76106af944c6c781ed99dfe274798d"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "8f1246b39e587ade65f0887c1069fd718bb7b0d40234484cd252c8a7ea6b86cf",
+      "sha256": "8f1246b39e587ade65f0887c1069fd718bb7b0d40234484cd252c8a7ea6b86cf"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/long-cold-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ee9e0083467c169d9332b06283f6890604d99a0aea56a38f898125938e4e1a61",
+      "sha256": "ee9e0083467c169d9332b06283f6890604d99a0aea56a38f898125938e4e1a61"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/long-cold-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "6b6910c1b91f4113f90f113ea7ca92e2b5c223666e827d2effeb9ee4a82e55bb",
+      "sha256": "6b6910c1b91f4113f90f113ea7ca92e2b5c223666e827d2effeb9ee4a82e55bb"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/long-prefix-reuse-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "7fe3435ae0d358486cd88e91e496af03167062121a8ed19ea4c805c3ca0792f0",
+      "sha256": "7fe3435ae0d358486cd88e91e496af03167062121a8ed19ea4c805c3ca0792f0"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/long-prefix-reuse-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "de0d86be65e8697207e34c7ec6efd1b916508dc842ce36f1dde4adb070121978",
+      "sha256": "de0d86be65e8697207e34c7ec6efd1b916508dc842ce36f1dde4adb070121978"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/long-tool-call-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "055318e2365e9c5e926d850841f79890c9019b709df8f1e6ec7ee851fdefae74",
+      "sha256": "055318e2365e9c5e926d850841f79890c9019b709df8f1e6ec7ee851fdefae74"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/long-tool-call-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "b0af85b49d0a21560d0b20e8cb598da360a705da0403ce08665452e3c8543302",
+      "sha256": "b0af85b49d0a21560d0b20e8cb598da360a705da0403ce08665452e3c8543302"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/long-tool-followup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "38536f6b1f22f1d7ddd526a430b14df74d6e251341f58ae64bc787d6f7a6cec4",
+      "sha256": "38536f6b1f22f1d7ddd526a430b14df74d6e251341f58ae64bc787d6f7a6cec4"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/long-tool-followup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "5613a41a2800be89a9971fbe54cd8f5f00cf07d916c1759f7ed29ad602828f5a",
+      "sha256": "5613a41a2800be89a9971fbe54cd8f5f00cf07d916c1759f7ed29ad602828f5a"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/messages-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "7aa939abccdf8d96adda682701e25d548532251556097820934844dc7455be20",
+      "sha256": "7aa939abccdf8d96adda682701e25d548532251556097820934844dc7455be20"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/responses-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "08fc4ed9ab96df0d337b0385f1586650ba80dcf6de4e0ca1fbc71c1be448fa6a",
+      "sha256": "08fc4ed9ab96df0d337b0385f1586650ba80dcf6de4e0ca1fbc71c1be448fa6a"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "8762a606cf69b235de859e87f047583d384091d4faf7d919f796382d34c6bfd7",
+      "sha256": "8762a606cf69b235de859e87f047583d384091d4faf7d919f796382d34c6bfd7"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ae99e10d89b1ebd10c1373b353987a196f33ddf9b4ff054314295ed9d0e26451",
+      "sha256": "3e42ceed71aea392195ed0caf06891da65bf875ca65a3715ef282b966f31dfa9"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/warmup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "05d0349e70d8bcc136e65f1b1fb3507e746832f40b2cdc7aabebf574c7efeaa0",
+      "sha256": "05d0349e70d8bcc136e65f1b1fb3507e746832f40b2cdc7aabebf574c7efeaa0"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/gpt-oss/warmup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "a29bad8bf2830f6f70f2a8b6c366408543d99607471d83f9120b59611c34b227",
+      "sha256": "a29bad8bf2830f6f70f2a8b6c366408543d99607471d83f9120b59611c34b227"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/install-freetoken.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "543d3622f65d1b4731d47d47b275bff9d8f7e0b29422f8d7093577dc88fe2020",
+      "sha256": "8d7e34e0932511ec416c282184ea647b9c4efb1238858820c2aef352d27552ec"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/install-validated-constraints.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "220571ee5a08b2e4c719bfe390b1f329e04b3fd8293061b46eadf19eb920bcf8",
+      "sha256": "28afe87fd97eac5cd4c914965081b4feb772ffce7ce5ef3d6a0e809ef204032b"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/installed-packages.txt",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "5bced769fa13edcd1269fd30772ea83b877213b633ad2c2398c62fe39cebd0b2",
+      "sha256": "3df3a9eb1f548030f33d5bf3cb816e403d2533bd4a3af5e1bc28060641f45c39"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/gpu-attempt-1.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ad48203f1fa0d772bd2a4dad9c1d07e2cfedc42ed119a2fc2b84fbd1d6e7e5f0",
+      "sha256": "ad48203f1fa0d772bd2a4dad9c1d07e2cfedc42ed119a2fc2b84fbd1d6e7e5f0"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/gpu-attempt-2.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "22b7011c1a1044bc207aefa8aa5445aef02c3eb07cc12685fd92d118d566e0a9",
+      "sha256": "22b7011c1a1044bc207aefa8aa5445aef02c3eb07cc12685fd92d118d566e0a9"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "258e4c4225c3ea82824d4ab6b802f1b8d3a4ce828e28f011108c65d0c9fdbd0f",
+      "sha256": "258e4c4225c3ea82824d4ab6b802f1b8d3a4ce828e28f011108c65d0c9fdbd0f"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-cold-attempt-1-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "2340796aa4dd475038001800421e85c30eeec481069a7fa58f97379b79e212b7",
+      "sha256": "2340796aa4dd475038001800421e85c30eeec481069a7fa58f97379b79e212b7"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-cold-attempt-1-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "f065aef3fa39ec7f9473f47791d13c8c16faee84ef85e9fefbe8afeed9915e4f",
+      "sha256": "f065aef3fa39ec7f9473f47791d13c8c16faee84ef85e9fefbe8afeed9915e4f"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-cold-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "a62251a7d3ade8eb9865797b90d46b39fd6b3455092520c810d70adffd4f0878",
+      "sha256": "a62251a7d3ade8eb9865797b90d46b39fd6b3455092520c810d70adffd4f0878"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-cold-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "09b868f58030a1b2fc8a72068cab1799fffbab449db307ed454389ade5344cab",
+      "sha256": "09b868f58030a1b2fc8a72068cab1799fffbab449db307ed454389ade5344cab"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-prefix-reuse-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "a449acd6bf5a21b084040e13706c505ca828675760f8d79c72518a6e5ac37b4a",
+      "sha256": "a449acd6bf5a21b084040e13706c505ca828675760f8d79c72518a6e5ac37b4a"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-prefix-reuse-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "fdfca35e3185065b21b4068aa5aa3166dbeaeba89f7b603f8a74e16af84da3de",
+      "sha256": "fdfca35e3185065b21b4068aa5aa3166dbeaeba89f7b603f8a74e16af84da3de"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-tool-call-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "53a62fa6b2d2101b7967af037b362cdd6383eb9ec6f6293783a1aa95a9e2f4a3",
+      "sha256": "53a62fa6b2d2101b7967af037b362cdd6383eb9ec6f6293783a1aa95a9e2f4a3"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-tool-call-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "831e2236c853b3fa7b88a26567c15c78d1c8eeb629cb3f8babfac7525be4fa77",
+      "sha256": "831e2236c853b3fa7b88a26567c15c78d1c8eeb629cb3f8babfac7525be4fa77"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-tool-followup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "6acf0b674820f7233aaac0504a3d67031a31806936ecfb591a884279ff25e3d0",
+      "sha256": "6acf0b674820f7233aaac0504a3d67031a31806936ecfb591a884279ff25e3d0"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/long-tool-followup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "f57fef95301e63cd0510c3e4bcc2b07834bf5eee0187919b919f3447a0a74b58",
+      "sha256": "f57fef95301e63cd0510c3e4bcc2b07834bf5eee0187919b919f3447a0a74b58"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/messages-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "315b68929e1e7b8c80d2dfcc92bb5e856642a99261634fd54e166e5000e3d427",
+      "sha256": "315b68929e1e7b8c80d2dfcc92bb5e856642a99261634fd54e166e5000e3d427"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/responses-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "2d6a3bae38f58d175d226db8a956c4a53d8213ebb5e2e217e648c284f3713c32",
+      "sha256": "2d6a3bae38f58d175d226db8a956c4a53d8213ebb5e2e217e648c284f3713c32"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ad8c600be0d176e68030554f55e74b44610c3494a0dc1d4ed528994a860e48ba",
+      "sha256": "ad8c600be0d176e68030554f55e74b44610c3494a0dc1d4ed528994a860e48ba"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/resume-prefix-prime-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "563fc19767a008d15ea29c597f497644a97dc4ff89ed356f41312255a7a212aa",
+      "sha256": "563fc19767a008d15ea29c597f497644a97dc4ff89ed356f41312255a7a212aa"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/resume-prefix-prime-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "d66404780ce02685a8b2805e81e8f1718cbb0994b5ecd3f22c57b3561f3699e4",
+      "sha256": "d66404780ce02685a8b2805e81e8f1718cbb0994b5ecd3f22c57b3561f3699e4"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/resume-warmup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "0d8e728e55ff43dd9c00c4bfd7bd0b6c6745fb0ac03e8325fa9dcb638925f22b",
+      "sha256": "0d8e728e55ff43dd9c00c4bfd7bd0b6c6745fb0ac03e8325fa9dcb638925f22b"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/resume-warmup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "123985203082e13b6b6f8244e165572e6351b529bd0c25bb15f87640dc921981",
+      "sha256": "123985203082e13b6b6f8244e165572e6351b529bd0c25bb15f87640dc921981"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/server-attempt-1.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "532c7aa7f9a1bd6186ec6e225b3590f3440f30b9d77b463793271551699409bc",
+      "sha256": "d3e8ff3edc2fbdd00cb0805138f88b46eeb7ab030a4dfdbd8852982e75128a09"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/server-attempt-2.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "e9a13d5cc6d5eb9a5e29087b5e8f774e4ea4bad3c0fdc11b54f274f00a5e3fff",
+      "sha256": "2089cde391676f6b858a0404105c49f1754fe5681f8ffe469c5d062c7c9c234f"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/nemotron/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "aa0f368f492fe7255623bdac29fd2859b4497ca1fb8e27176d62c1cf8ccefd8b",
+      "sha256": "ec421fd8d4538bb1d0c51dc26e6531022b7a40455e08a442e572a9b43d442219"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "24b5e5ebffcac7098b48a4e6054ace9e244c60968df48562486a2e9e8c6a53bd",
+      "sha256": "24b5e5ebffcac7098b48a4e6054ace9e244c60968df48562486a2e9e8c6a53bd"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/long-cold-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "7d9ff153b840a204c9c936a0162fcdc936451212988b4ce278e16e4075156c31",
+      "sha256": "7d9ff153b840a204c9c936a0162fcdc936451212988b4ce278e16e4075156c31"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/long-cold-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ba26b0dbe235abbb9b81b84468e3638f0752b309b191fcb9c35349905b4fb9d6",
+      "sha256": "ba26b0dbe235abbb9b81b84468e3638f0752b309b191fcb9c35349905b4fb9d6"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/long-prefix-reuse-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "9d481020b8bbec8e31ace36fb6554b97cf943cfddb61708a5bbc983ca27b91cb",
+      "sha256": "9d481020b8bbec8e31ace36fb6554b97cf943cfddb61708a5bbc983ca27b91cb"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/long-prefix-reuse-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "6f84c7a6114152fa8f7f5c2782ec99c3e19fc3ff882d2463cf4061f3c92935ce",
+      "sha256": "6f84c7a6114152fa8f7f5c2782ec99c3e19fc3ff882d2463cf4061f3c92935ce"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/long-tool-call-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "007960671e10b917c0eb70b7f4648b63be8115c417eed1257ccbbbc9845aa2b4",
+      "sha256": "007960671e10b917c0eb70b7f4648b63be8115c417eed1257ccbbbc9845aa2b4"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/long-tool-call-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "8c3e6417d2a0e0ef90bfa578a5489ea924fc04f5f631e2a14cbf9566233b682d",
+      "sha256": "8c3e6417d2a0e0ef90bfa578a5489ea924fc04f5f631e2a14cbf9566233b682d"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/long-tool-followup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "b379859f8ee7a4c928620cda1eb6ceb257187220523df336608fa8c5d16f16b3",
+      "sha256": "b379859f8ee7a4c928620cda1eb6ceb257187220523df336608fa8c5d16f16b3"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/long-tool-followup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "717f1dd60952d2ad1a52b4be4e2df87e681d6ac3fa1ade065685246b90288d26",
+      "sha256": "717f1dd60952d2ad1a52b4be4e2df87e681d6ac3fa1ade065685246b90288d26"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/messages-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "1488797b3d8d07ed4bf1244b0fb654d089bf29b489880fd988fe77cf64eaeaa3",
+      "sha256": "1488797b3d8d07ed4bf1244b0fb654d089bf29b489880fd988fe77cf64eaeaa3"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/responses-smoke.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "e6ef797bbf304abc66a3d319398b203d68afccf64fbabb1bf9e3d15b5ee745ce",
+      "sha256": "e6ef797bbf304abc66a3d319398b203d68afccf64fbabb1bf9e3d15b5ee745ce"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "371a34341678dbeac7abae6e4d78a2a48a7758f12e84952feeead6fa330af1d3",
+      "sha256": "371a34341678dbeac7abae6e4d78a2a48a7758f12e84952feeead6fa330af1d3"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "852ac5aa39055d35ca0d6dbbe65da7308ebdd7657efe8e67b349eb073db2c8c4",
+      "sha256": "17eabba96dcf389577a3ce9d460a09d773faf9fc33b0ab8aeae7160761ca32fe"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/warmup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "34263e3ac1b3d08441811630412ff39ba1847baf900629fd7f7f50a5190cde3e",
+      "sha256": "34263e3ac1b3d08441811630412ff39ba1847baf900629fd7f7f50a5190cde3e"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6/warmup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "9077fa2c9dbd7035a9b790a503d17a3404a71364c16a378ba500c08d03f9b86d",
+      "sha256": "9077fa2c9dbd7035a9b790a503d17a3404a71364c16a378ba500c08d03f9b86d"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6-failed-chunk8192/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "570cb1fefcd80fb8fc42c04f49aee62c973dd86cfe853f8bcfc4294395e52b4a",
+      "sha256": "570cb1fefcd80fb8fc42c04f49aee62c973dd86cfe853f8bcfc4294395e52b4a"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6-failed-chunk8192/long-cold-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ea09a34f8ffdde90b9fc1686566690161244c05938d3b465c98eaca0018a1995",
+      "sha256": "ea09a34f8ffdde90b9fc1686566690161244c05938d3b465c98eaca0018a1995"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6-failed-chunk8192/long-cold-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "d0efb19ca0d494cf75e0f323ab9d8dfde2619e7774cdb4242dca2e95fff3b21c",
+      "sha256": "d0efb19ca0d494cf75e0f323ab9d8dfde2619e7774cdb4242dca2e95fff3b21c"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6-failed-chunk8192/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "855525f80bb97f2ffa2fdee559b2093d81c940ebdf943bffaad3496d82271cdc",
+      "sha256": "855525f80bb97f2ffa2fdee559b2093d81c940ebdf943bffaad3496d82271cdc"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6-failed-chunk8192/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "cdbf14566dea5cd61ccca5ea178121794436b87ac4990cb76e3f63403315a6b1",
+      "sha256": "b90c0465bf38347f91d37dfef8f7fe3347852acecb1a7167c308a9aa4f7244c0"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6-failed-chunk8192/warmup-events.jsonl",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "2f67ac48de0ba04e58b81369ba76827db9fdb758640e86305752d24e3d915f30",
+      "sha256": "2f67ac48de0ba04e58b81369ba76827db9fdb758640e86305752d24e3d915f30"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/qwen3.6-failed-chunk8192/warmup-request.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "5c34873559e751e3a9b21bdeeefd8d3989e8c0dfd7a8164bc5e5f1e945651360",
+      "sha256": "5c34873559e751e3a9b21bdeeefd8d3989e8c0dfd7a8164bc5e5f1e945651360"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24/unit-tests.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "fee3ca08cc1be72695cfbb669c043a944bb9d7981d16c189a88153e8ffe8a19e",
+      "sha256": "fee3ca08cc1be72695cfbb669c043a944bb9d7981d16c189a88153e8ffe8a19e"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/driver.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "b8bb9a400fb685243eac5eac8e801d37b28d8820c73e625841a6461b418219de",
+      "sha256": "b8bb9a400fb685243eac5eac8e801d37b28d8820c73e625841a6461b418219de"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/flint/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "23d53d98925ff6c02ae993a70d2f155b69d232787d048b750b63074e09733858",
+      "sha256": "23d53d98925ff6c02ae993a70d2f155b69d232787d048b750b63074e09733858"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/flint/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "905fa12e17cee6c12a59c8fe758d06a2da25303fc6350c7553ebba7ee293a351",
+      "sha256": "905fa12e17cee6c12a59c8fe758d06a2da25303fc6350c7553ebba7ee293a351"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/flint/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "79de06728048b7876dc0d8116770ce31db4d489ee9773e7fe5fd1225830aef66",
+      "sha256": "79de06728048b7876dc0d8116770ce31db4d489ee9773e7fe5fd1225830aef66"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/gemma4/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "8bc3a8321c6f2e5e0b9f6076fc1b4e7d6260da9dccfb7d7959f13ddb626f562f",
+      "sha256": "8bc3a8321c6f2e5e0b9f6076fc1b4e7d6260da9dccfb7d7959f13ddb626f562f"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/gemma4/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "5f33135dd633bbfda74e667932dd93721a90dec3942553c9daa58825550c531f",
+      "sha256": "5f33135dd633bbfda74e667932dd93721a90dec3942553c9daa58825550c531f"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/gemma4/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "79de06728048b7876dc0d8116770ce31db4d489ee9773e7fe5fd1225830aef66",
+      "sha256": "79de06728048b7876dc0d8116770ce31db4d489ee9773e7fe5fd1225830aef66"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/gpt-oss/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "fec413c8844c9d7362504f7e201903e07627e9f96e7e0659f975b2d60444968b",
+      "sha256": "fec413c8844c9d7362504f7e201903e07627e9f96e7e0659f975b2d60444968b"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/gpt-oss/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "ce0293625d2e990d09750fbf64424dbe5c5626a8247bd8640ebac8ce7ef1b727",
+      "sha256": "ce0293625d2e990d09750fbf64424dbe5c5626a8247bd8640ebac8ce7ef1b727"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/gpt-oss/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "79de06728048b7876dc0d8116770ce31db4d489ee9773e7fe5fd1225830aef66",
+      "sha256": "79de06728048b7876dc0d8116770ce31db4d489ee9773e7fe5fd1225830aef66"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/install-freetoken.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "19ffa7e97e2300085ec843017ba7b235e201928c3bf3a0227b3bc56807c74d0b",
+      "sha256": "dbc54bf7691219660077f8d58f78b57b54ab4295abf37e012baf746280242fda"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/installed-packages.txt",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "302bb10e233d71a4e21a2c7da8c48c96c0bedf6f87380be62bece7c9eb1ef41f",
+      "sha256": "ea71bb3328b872e6933a538f1f0877593fa7b81aa88a437bb2de4963a0481329"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/nemotron/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "033145f41872fe6bbae10c6b1af86f7619f56938086d2f057c1fd216276201bd",
+      "sha256": "033145f41872fe6bbae10c6b1af86f7619f56938086d2f057c1fd216276201bd"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/nemotron/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "3b9051b179ae6a48d4bb680ce0a72902649950797909a48fa7e2774de9c08739",
+      "sha256": "3b9051b179ae6a48d4bb680ce0a72902649950797909a48fa7e2774de9c08739"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/nemotron/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "79de06728048b7876dc0d8116770ce31db4d489ee9773e7fe5fd1225830aef66",
+      "sha256": "79de06728048b7876dc0d8116770ce31db4d489ee9773e7fe5fd1225830aef66"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/qwen3.6/gpu.csv",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "5c600bce2061e88a52e77cc6b4f3469290b4397f22f662fc9da63363a2d3ddea",
+      "sha256": "5c600bce2061e88a52e77cc6b4f3469290b4397f22f662fc9da63363a2d3ddea"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/qwen3.6/results.json",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "c52cabc2d363b8be8309053a2f30326cf99fb264ed78baa713a33abd25425651",
+      "sha256": "c52cabc2d363b8be8309053a2f30326cf99fb264ed78baa713a33abd25425651"
+    },
+    {
+      "path": "evidence/logs/validation-2026-10-24-bootstrap-failed/qwen3.6/server.log",
+      "source": "New local validation, 2026-10-24",
+      "kind": "new-execution-evidence",
+      "source_sha256": "d30db0d1e313851f08c0af4ce53925f5f8129985526e6838c1bbbff40c5c5739",
+      "sha256": "bf9d97efbb442ea9431b13715ab50bfc440c4d70f006c872ea533b19e35d61da"
     }
   ],
-  "file_count": 74
+  "file_count": 194
 }

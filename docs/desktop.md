@@ -27,3 +27,5 @@ Flint depende del [PR #797](https://github.com/FlashML-org/FreeToken/pull/797), 
 - Qwen: el valor Desktop `swaTokens=2048` permanece en el inventario, pero es un campo sin uso para este modelo GDN. No se envía `num_swa_pages` al rebuild CLI: el engine rechaza el campo porque no hay pool SWA.
 - Gemma: la receta CLI ahora usa prefill de 1024 tras un OOM con el techo anterior de 8192. Esta opción no se escribe mediante el comando `desktop`, que solo mezcla cachés/modo texto. Las cifras nuevas pertenecen a la CLI indicada en el perfil.
 - Nemotron: la receta medida es de llama.cpp, no hay un perfil FreeToken Desktop equivalente. `desktop nemotron` devuelve un mensaje explicativo y no escribe el archivo.
+
+La validación larga posterior ajustó además el prefill CLI de Qwen a **2048** tras un OOM del workspace GDN con 8192. La caché Desktop capturada se conserva; el comando `desktop` no cambia ese ajuste de prefill global. Consulta los perfiles CLI y el informe de contexto completo para las velocidades medidas.

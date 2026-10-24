@@ -1,0 +1,90 @@
+{
+  "model": "nemotron",
+  "date": "2026-10-24T09:16:08.080973+00:00",
+  "profile_sha256": "04aad3af410eb3021698f014c9284c8ba390996425c14f92aae51556f7309cba",
+  "profile": {
+    "schema_version": 1,
+    "id": "nemotron",
+    "name": "NVIDIA Nemotron 3.5 Bolt E4B",
+    "status": "Measured: 64K capacity, short coding prompts; DFlash BF16",
+    "hardware": "ryzen-5600x-rtx3060",
+    "engine": "llama-cpp",
+    "model": {
+      "repository": "unsloth/NVIDIA-Nemotron-3.5-Bolt-E4B-GGUF",
+      "original_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
+      "local_directory": "Nemotron-3.5-Bolt-E4B",
+      "filename": "NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf",
+      "download_revision": "b738967d6da3441a7d1c71fcec15e49e32e16ecd",
+      "file_bytes": 8192955584,
+      "sha256": "6176bd788769bd58042c165d3dc8e8c86a8ca5c90d5de188a364b31dc9560810",
+      "historical_weight_revision_verified": true,
+      "local_sha256_matches_pinned_hub_blob": true
+    },
+    "quantization": "Unsloth UD-Q8_K_XL GGUF (mixed)",
+    "modalities": [
+      "text"
+    ],
+    "drafter": {
+      "enabled": true,
+      "type": "draft-dflash",
+      "repository": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-DFlash",
+      "download_revision": "0949a2eb7152ec6fda1a91ff9302aecbcd464fbf",
+      "filename": "Nemotron-3.5-Bolt-E4B-DFlash-BF16.gguf",
+      "legacy_local_filename": "dflash-nvidia-BF16.gguf",
+      "file_bytes": 736812096,
+      "sha256": "8103aa42fd31fb661c3fbe8701d04d698ea2c5d09351dc3e8c9da639958de989",
+      "quantization": "BF16 GGUF",
+      "max_draft_tokens": 7
+    },
+    "context": {
+      "total_tokens": 65536,
+      "input_budget_with_reserved_output": 57344,
+      "output_tokens": 8192,
+      "output_status": "new_explicit_agent_default; measured natural completions 1242–1762 tokens"
+    },
+    "server_arguments": [
+      "--device",
+      "CUDA0",
+      "--spec-draft-device",
+      "CUDA0",
+      "--spec-type",
+      "draft-dflash",
+      "--spec-draft-n-max",
+      "7",
+      "--spec-draft-ngl",
+      "99",
+      "-ngl",
+      "99",
+      "-fa",
+      "on",
+      "--jinja",
+      "-c",
+      "65536",
+      "-np",
+      "1",
+      "--fit",
+      "off",
+      "--temp",
+      "1.0",
+      "--top-p",
+      "0.95",
+      "-n",
+      "8192"
+    ],
+    "sampling": {
+      "temperature": 1.0,
+      "top_p": 0.95
+    },
+    "cache_rebuild": null,
+    "evidence": "evidence/nemotron.json",
+    "notes": [
+      "All target and drafter layers on the RTX 3060; no CPU expert offload.",
+      "No vision projector loaded.",
+      "Historical measured launcher had unlimited server default output; requests had explicit limits. Catalog adds default 8192.",
+      "64K is total slot capacity, not 64K input plus output."
+    ]
+  },
+  "runs": [],
+  "checks": [],
+  "error": "RuntimeError('nemotron exited during startup; see server.log')"
+}

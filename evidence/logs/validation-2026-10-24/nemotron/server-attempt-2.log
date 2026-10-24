@@ -1,0 +1,83 @@
++ <recipes-checkout>/.runtime/llama-cpp/llama-b11828/llama-server -m <HOME>/Desktop/AI/models/NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf -md <HOME>/Desktop/AI/models/dflash-nvidia-BF16.gguf --host 127.0.0.1 --port 22802 --alias nemotron --device CUDA0 --spec-draft-device CUDA0 --spec-type draft-dflash --spec-draft-n-max 7 --spec-draft-ngl 99 -ngl 99 -fa on --jinja -c 65536 -np 1 --fit off --temp 1.0 --top-p 0.95 -n 8192 --no-context-shift
+0.00.562.589 I srv  llama_server: initializing ...
+0.00.562.607 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.562.941 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.564.529 I srv    load_model: loading model '<HOME>/Desktop/AI/models/NVIDIA-Nemotron-3.5-Bolt-E4B-UD-Q8_K_XL.gguf'
+0.00.898.823 W load: control-looking token:    212 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.00.898.848 W load: control-looking token:     50 '<|tool_response>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.00.901.630 W load: '</s>' is a normal token here, removing it from EOG list
+0.01.642.463 I cmn          init: llama threadpool init, n_threads = 6
+0.01.740.007 I common_speculative_init_result: loading draft model '<HOME>/Desktop/AI/models/dflash-nvidia-BF16.gguf'
+0.01.959.363 W load: control-looking token:    212 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.01.959.400 W load: control-looking token:     50 '<|tool_response>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.01.962.910 W load: '</s>' is a normal token here, removing it from EOG list
+0.02.097.654 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 65536, kv_unified = 'false'
+0.02.097.682 I common_speculative_impl_draft_dflash: adding speculative implementation 'draft-dflash'
+0.02.097.683 I common_speculative_impl_draft_dflash: - n_max=7, n_min=0, p_min=0.00
+0.02.097.683 I common_speculative_impl_draft_dflash: - block_size=8, mask_token_id=4, n_extract=5, sample_from_anchor=true
+0.02.126.838 I srv  llama_server: model loaded
+0.02.126.843 I srv  llama_server: listening on http://127.0.0.1:22802
+LISTO: nemotron en http://127.0.0.1:22802/v1 (una generación simultánea)
+0.02.433.083 I slot get_availabl: id  0 | task -1 | selected slot by LRU, n_tokens = 0, t_last = -1
+0.02.433.121 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.03.524.269 I slot print_timing: id  0 | task 0 | prompt eval time =     688.43 ms /  1024 tokens (    0.67 ms per token,  1487.44 tokens per second)
+0.03.524.272 I slot print_timing: id  0 | task 0 |        eval time =     402.63 ms /    64 tokens (    6.39 ms per token,   156.47 tokens per second)
+0.03.524.272 I slot print_timing: id  0 | task 0 |       total time =    1091.06 ms /  1088 tokens
+0.03.524.276 I slot print_timing: id  0 | task 0 |    graphs reused =          8
+0.03.524.276 I slot print_timing: id  0 | task 0 |   graph reallocs =          0    /     0        (same size) / (changed size)
+0.03.524.279 I slot print_timing: id  0 | task 0 | draft acceptance = 0.84127 (   53 accepted /    63 generated), mean len =  6.30
+0.03.524.339 I slot      release: id  0 | task 0 | stop processing: n_tokens = 1087, truncated = 0
+0.05.072.214 I slot get_availabl: id  0 | task -1 | selected slot by LRU, n_tokens = 1087, t_last = 8244781320
+0.05.095.197 I slot launch_slot_: id  0 | task 15 | processing task, is_child = 0
+0.08.864.498 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  10241, progress = 0.18, t =   3.57 s / 2867.73 tokens per second
+0.09.720.739 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  12289, progress = 0.21, t =   4.41 s / 2789.12 tokens per second
+0.10.608.430 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  14337, progress = 0.25, t =   5.30 s / 2705.54 tokens per second
+0.11.512.018 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  16385, progress = 0.29, t =   6.20 s / 2643.43 tokens per second
+0.12.444.650 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  18433, progress = 0.32, t =   7.13 s / 2586.84 tokens per second
+0.13.411.631 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  20481, progress = 0.36, t =   8.08 s / 2533.59 tokens per second
+0.14.419.523 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  22529, progress = 0.39, t =   9.08 s / 2480.37 tokens per second
+0.15.448.833 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  24577, progress = 0.43, t =  10.11 s / 2431.35 tokens per second
+0.16.509.856 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  26625, progress = 0.46, t =  11.16 s / 2385.23 tokens per second
+0.17.602.925 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  28673, progress = 0.50, t =  12.25 s / 2340.85 tokens per second
+0.18.736.355 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  30721, progress = 0.54, t =  13.38 s / 2296.54 tokens per second
+0.19.894.399 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  32769, progress = 0.57, t =  14.53 s / 2255.93 tokens per second
+0.21.087.846 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  34817, progress = 0.61, t =  15.72 s / 2215.40 tokens per second
+0.22.303.319 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  36865, progress = 0.64, t =  16.92 s / 2178.19 tokens per second
+0.23.550.510 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  38913, progress = 0.68, t =  18.16 s / 2142.30 tokens per second
+0.24.843.156 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  40961, progress = 0.71, t =  19.45 s / 2106.28 tokens per second
+0.26.151.949 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  43009, progress = 0.75, t =  20.75 s / 2072.38 tokens per second
+0.27.493.060 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  45057, progress = 0.79, t =  22.09 s / 2039.94 tokens per second
+0.28.881.473 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  47105, progress = 0.82, t =  23.46 s / 2007.66 tokens per second
+0.30.285.730 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  49153, progress = 0.86, t =  24.87 s / 1976.66 tokens per second
+0.31.723.110 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  51201, progress = 0.89, t =  26.30 s / 1947.13 tokens per second
+0.33.203.642 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  53249, progress = 0.93, t =  27.77 s / 1917.37 tokens per second
+0.34.701.527 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  55297, progress = 0.96, t =  29.26 s / 1889.66 tokens per second
+0.35.845.863 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  56821, progress = 0.99, t =  30.41 s / 1868.19 tokens per second
+0.36.253.919 I slot print_timing: id  0 | task 15 | prompt processing, n_tokens =  57333, progress = 1.00, t =  30.83 s / 1859.38 tokens per second
+0.39.309.027 I slot print_timing: id  0 | task 15 | n_gen =    240, tg =  79.29 t/s, tg_3s =  79.62 t/s
+0.42.334.274 I slot print_timing: id  0 | task 15 | n_gen =    478, tg =  78.98 t/s, tg_3s =  78.67 t/s
+0.45.363.212 I slot print_timing: id  0 | task 15 | n_gen =    714, tg =  78.62 t/s, tg_3s =  77.92 t/s
+0.48.391.410 I slot print_timing: id  0 | task 15 | n_gen =    976, tg =  80.60 t/s, tg_3s =  86.52 t/s
+0.51.401.796 I slot print_timing: id  0 | task 15 | n_gen =   1302, tg =  86.12 t/s, tg_3s = 108.29 t/s
+0.54.420.180 I slot print_timing: id  0 | task 15 | n_gen =   1625, tg =  89.60 t/s, tg_3s = 107.01 t/s
+0.57.441.994 I slot print_timing: id  0 | task 15 | n_gen =   1961, tg =  92.68 t/s, tg_3s = 111.19 t/s
+1.00.458.727 I slot print_timing: id  0 | task 15 | n_gen =   2277, tg =  94.19 t/s, tg_3s = 104.75 t/s
+1.03.476.298 I slot print_timing: id  0 | task 15 | n_gen =   2617, tg =  96.24 t/s, tg_3s = 112.67 t/s
+1.06.479.433 I slot print_timing: id  0 | task 15 | n_gen =   2816, tg =  93.26 t/s, tg_3s =  66.26 t/s
+1.09.481.739 I slot print_timing: id  0 | task 15 | n_gen =   3194, tg =  96.21 t/s, tg_3s = 125.90 t/s
+1.12.486.593 I slot print_timing: id  0 | task 15 | n_gen =   3745, tg = 103.45 t/s, tg_3s = 183.37 t/s
+1.15.518.186 I slot print_timing: id  0 | task 15 | n_gen =   4393, tg = 111.97 t/s, tg_3s = 213.75 t/s
+1.18.523.425 I slot print_timing: id  0 | task 15 | n_gen =   5033, tg = 119.16 t/s, tg_3s = 212.96 t/s
+1.21.540.253 I slot print_timing: id  0 | task 15 | n_gen =   5673, tg = 125.36 t/s, tg_3s = 212.14 t/s
+1.24.551.631 I slot print_timing: id  0 | task 15 | n_gen =   6313, tg = 130.80 t/s, tg_3s = 212.53 t/s
+1.27.566.676 I slot print_timing: id  0 | task 15 | n_gen =   6953, tg = 135.59 t/s, tg_3s = 212.27 t/s
+1.30.592.260 I slot print_timing: id  0 | task 15 | n_gen =   7593, tg = 139.82 t/s, tg_3s = 211.53 t/s
+1.33.435.183 I slot print_timing: id  0 | task 15 | prompt eval time =   31199.45 ms / 57337 tokens (    0.54 ms per token,  1837.76 tokens per second)
+1.33.435.186 I slot print_timing: id  0 | task 15 |        eval time =   57140.45 ms /  8186 tokens (    6.98 ms per token,   143.24 tokens per second)
+1.33.435.186 I slot print_timing: id  0 | task 15 |       total time =   88339.90 ms / 65523 tokens
+1.33.435.187 I slot print_timing: id  0 | task 15 |    graphs reused =       1527
+1.33.435.187 I slot print_timing: id  0 | task 15 |   graph reallocs =          0    /     0        (same size) / (changed size)
+1.33.435.191 I slot print_timing: id  0 | task 15 | draft acceptance = 0.61116 ( 6639 accepted / 10863 generated), mean len =  5.28
+1.33.436.133 I slot      release: id  0 | task 15 | stop processing: n_tokens = 65535, truncated = 1
+1.33.687.989 I srv    operator(): operator(): cleaning up before exit...
+1.33.689.066 W ~llama_context:  CUDA_Host compute buffer size of  25.0098 MiB, does not match expectation of   6.5117 MiB
